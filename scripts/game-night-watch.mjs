@@ -85,7 +85,11 @@ const played = (g) => g.teamScore != null && g.opponentScore != null;
  * not appear on the D1 scoreboard at all, so the watcher would poll a game
  * that can never turn final and burn a 4.5-hour job finding nothing.
  */
-export const isExhibition = (g) => /\(exh\.?\)/i.test(g.opponent || '');
+// Both spellings: the women's page writes "(exh.)", the men's writes
+// "(Exhibition)" in full. Matching only the short one let every men's
+// exhibition through, and the watcher would then sit on a 4.5-hour job
+// waiting for a game that is not on the D1 scoreboard to turn final.
+export const isExhibition = (g) => /\(exh(?:\.|ibition)?\)/i.test(g.opponent || '');
 
 /**
  * Whether a scrape at `now` should start a watcher: KU plays today (Central),

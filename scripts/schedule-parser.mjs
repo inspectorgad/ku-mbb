@@ -97,7 +97,17 @@ export function parseSchedule(schedText) {
   // first ("2026-27 Men's Basketball Schedule") and Jan-Jul belongs to the
   // year after it.
   const seasonYear = Number(/\b(20\d{2})\b/.exec(schedText)?.[1]) || new Date().getUTCFullYear();
-  const SHORT = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2})$/;
+  // "Nov 23", and "Nov 6(Fri)" once the game has been played: a finished row
+  // glues the weekday on, where an upcoming one puts it on its own line. With
+  // the weekday optional this matches both. Anchored to the end on purpose -
+  // without that the pattern would also take the first half of a date range.
+  //
+  // This is not cosmetic. Anchored to "Nov 6" alone it matched no finished
+  // game at all, so the schedule page contributed nothing for anything
+  // already played: six of this season's rows, three of them real games. The
+  // NCAA feed usually covers those, but it does not always - a 502 hid Middle
+  // Tennessee on 6 Nov, and with the page silent too, nothing had it.
+  const SHORT = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2})(?:\s*\([A-Za-z]{3,}\.?\))?$/;
   // "Lawrence, Kan." / "Cancun, Mexico" — a place, then a region, nothing else.
   const CITY = /^[A-Z][A-Za-z.'\- ]*, ?[A-Z][A-Za-z. ]*\.?$/;
   const lines = schedText.split('\n').map((l) => l.trim());
@@ -281,8 +291,16 @@ export function parseSchedule(schedText) {
  * Pentagon in Sioux Falls, which is neither team's floor. So "at" means away,
  * and a "vs" anywhere other than KU's own building is a neutral floor.
  */
-export function siteOf(fixture, homeVenue = 'Allen Fieldhouse') {
+export function siteOf(fixture, homeVenue = 'Allen Fieldhouse', homeCity = 'Lawrence, KS') {
   if (fixture.away) return 'away';
-  if (!fixture.venue) return 'home';  // rotator-only row; the table settles it
-  return fixture.venue === homeVenue ? 'home' : 'neutral';
+  if (fixture.venue) return fixture.venue === homeVenue ? 'home' : 'neutral';
+  // No venue named. The page does that for a showcase it has not settled a
+  // building for - the Champions Classic row carries "Chicago, Ill." and
+  // nothing above it - and the city still answers the question: a "vs" game
+  // played anywhere but Lawrence is on neither team's floor.
+  //
+  // Falling straight through to "home" here is how KU v Kentucky in Chicago
+  // came out a home game.
+  if (fixture.city && fixture.city !== homeCity) return 'neutral';
+  return 'home';
 }

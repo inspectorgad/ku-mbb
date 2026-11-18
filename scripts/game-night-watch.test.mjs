@@ -64,7 +64,15 @@ test('a played game is never watched again', () => {
 test('exhibitions are skipped — they never reach the D1 scoreboard', () => {
   assert.equal(isExhibition({ opponent: 'Northeastern State (exh.)' }), true);
   assert.equal(isExhibition({ opponent: 'Washburn (exh)' }), true);
+  // kuathletics writes it out in full on the men's page, and matching only
+  // the short form let every one of them through: seven rows on the 18 Nov
+  // capture, and a 4.5-hour watcher job for each, waiting on a game that is
+  // not on the D1 scoreboard to turn final.
+  assert.equal(isExhibition({ opponent: 'Pittsburg State (Exhibition)' }), true);
+  assert.equal(isExhibition({ opponent: 'Louisville (Exhibition)' }), true);
   assert.equal(isExhibition({ opponent: 'Omaha' }), false);
+  // Not every opponent with those letters in it.
+  assert.equal(isExhibition({ opponent: 'Duke' }), false);
   // Watching one would burn a 4.5-hour job polling for a final that the D1
   // scoreboard will never report.
   const p = plan(games, Date.parse('2026-10-22T21:37:00Z'));

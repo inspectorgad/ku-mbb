@@ -111,7 +111,17 @@ jobs:
           # which an unchanged committed copy would otherwise hide: the old
           # file still matches itself while nothing regenerates it. Room's
           # output path moves with Room's compiler, so this has to be caught.
-          untracked="$(git ls-files --others --exclude-standard -- '*schemas*')"
+          # Checked against the index directly rather than with
+          # `git ls-files --others --exclude-standard`, which honours
+          # .gitignore. Room's output path moves with Room's compiler, and if
+          # it ever moves inside a build/ directory - which .gitignore
+          # excludes wholesale - the ignore would hide exactly the case this
+          # guard exists to catch, and it would pass in silence.
+          untracked=""
+          for f in $(find app shared -type d -name schemas -exec find {} -name '*.json' \; 2>/dev/null | sort); do
+            git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 || untracked="$untracked $f"
+          done
+          untracked="$(echo $untracked)"
           if [ -n "$untracked" ]; then
             echo "Room wrote a schema where none is committed:" >&2
             echo "$untracked" >&2

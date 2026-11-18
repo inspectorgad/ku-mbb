@@ -20,7 +20,9 @@ import androidx.room.RoomDatabaseConstructor
  *
  * So the schema as it stood at v9 on the toolchain that built the installed
  * app was recorded first, and is diffed after every move since. The hash to
- * watch is 2c20466365b2a25ef4beb786cf1e9928. See PORT-PLAN.md, phase 0.
+ * watch is 2c20466365b2a25ef4beb786cf1e9928. The plan that set this up is
+ * PORT-PLAN.md in inspectorgad/ku-wbb, phase 0; it was not copied across,
+ * because it describes work already finished.
  */
 @Database(
     entities = [Player::class, Game::class, StatLine::class,

@@ -164,14 +164,15 @@ test('site is home, away or neutral — "vs" alone does not mean home', () => {
 
 test('the saved schedule page yields the whole season', () => {
   const got = parseSchedule(page);
-  // As of the 18 Nov capture of the 2026-27 men's season: 30 fixtures, every
-  // one of them with a venue and a city, and 24 with a tip time. The six
-  // without a time are tournament games whose hour the page has not settled
-  // - two of them print "6:30 or 9 p.m. CT", which is not an hour.
-  assert.equal(got.length, 30);
-  assert.equal(got.filter((f) => f.venue).length, 30);
-  assert.equal(got.filter((f) => f.city).length, 30);
-  assert.equal(got.filter((f) => f.time).length, 24);
+  // As of the 18 Nov capture of the 2026-27 men's season: 36 fixtures - the
+  // same count as the page's own game rows - every one with a city, 35 with a
+  // venue, and 29 with a tip time. The one without a venue is the Champions
+  // Classic, which the page gives a city and no building; the times that are
+  // missing belong to rows whose hour the page has not settled.
+  assert.equal(got.length, 36);
+  assert.equal(got.filter((f) => f.venue).length, 35);
+  assert.equal(got.filter((f) => f.city).length, 36);
+  assert.equal(got.filter((f) => f.time).length, 29);
 
   const opener = got.find((f) => f.opponent === 'UNLV');
   assert.deepEqual(
@@ -222,8 +223,10 @@ test('the real page carries only genuine tournament names', () => {
   assert.deepEqual(events.sort(), [
     'CBS Sports Classic',
     'Dillons Sunflower Showdown',
+    'Late Night in the Phog',
     'Phillips 66 Big 12 Tournament',
     'Players Era',
+    'State Farm Champions Classic',
     'StorageMart Border Showdown',
   ]);
 });
@@ -250,8 +253,56 @@ test('a tournament game the table has not drawn yet still gets its venue', () =>
   }
   assert.deepEqual(undrawn.map((f) => f.opponent).sort(), ['Auburn/West Virginia', 'TBD']);
 
-  // Nothing anywhere is left guessing a home floor it was never told about.
-  assert.equal(got.filter((f) => !f.venue).length, 0);
+  // One row legitimately has no venue - see the test below - and it is not
+  // one of these.
+  assert.equal(got.filter((f) => !f.venue).length, 1);
+});
+
+test('a game the page gives a city but no building is not a home game', () => {
+  // The Champions Classic row carries "Chicago, Ill." and nothing above it,
+  // so there is no venue to compare against Allen Fieldhouse. Reading a
+  // missing venue as home put KU v Kentucky in Chicago on the home record.
+  const kentucky = parseSchedule(page).find((f) => f.opponent === 'Kentucky');
+
+  assert.equal(kentucky.venue, null);
+  assert.equal(kentucky.city, 'Chicago, IL');
+  assert.equal(siteOf(kentucky), 'neutral');
+
+  // A venue-less row in Lawrence is still home, which is what makes the city
+  // worth consulting rather than giving up and calling everything neutral.
+  assert.equal(siteOf({ away: false, venue: null, city: 'Lawrence, KS' }), 'home');
+  assert.equal(siteOf({ away: true, venue: null, city: 'Chicago, IL' }), 'away');
+});
+
+test('a game that has been played is read, not skipped', () => {
+  // A finished row glues the weekday to the date - "Nov 6(Fri)" - where an
+  // upcoming one puts "(Fri)" on its own line. Anchored to "Nov 6" alone the
+  // date pattern matched no finished game at all, so the page contributed
+  // nothing for anything already played: six rows on this capture, three of
+  // them real games. The NCAA feed usually has those, but a 502 hid Middle
+  // Tennessee on 6 Nov and then nothing did.
+  const got = parseSchedule(page);
+
+  const mtsu = got.find((f) => f.opponent === 'Middle Tennessee');
+  assert.ok(mtsu, 'Middle Tennessee, a played game, is missing');
+  assert.deepEqual(
+    [mtsu.date, mtsu.venue, mtsu.time, siteOf(mtsu)],
+    ['2026-11-06', 'Allen Fieldhouse', '20:00', 'home']
+  );
+
+  // The result line sits between the venue and the date and must not be
+  // mistaken for either.
+  assert.notEqual(mtsu.venue, 'W, 89-45');
+  assert.equal(mtsu.city, 'Lawrence, KS');
+
+  // Both spellings of the date line parse.
+  for (const [line, label] of [['Nov 6(Fri)', 'played'], ['Nov 23', 'upcoming']]) {
+    const one = parseSchedule([
+      "2026-27 Men's Basketball Schedule",
+      'vs', 'Denver', '', 'Allen Fieldhouse', 'Lawrence, Kan.', '', line, '', '7 p.m. CT',
+    ].join('\n'));
+    assert.equal(one.length, 1, `${label} date line did not parse`);
+  }
 });
 
 test('the no-marker pass invents nothing and overwrites nothing', () => {
