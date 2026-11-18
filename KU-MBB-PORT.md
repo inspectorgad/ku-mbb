@@ -269,14 +269,20 @@ A fork arrives carrying a complete women's season. None of it is yours.
 - `scraped/` — 52 files of captured pages and API responses. Delete all of it. Its
   `*-index.json` files are caches keyed by game id and date; stale entries would
   suppress fetches you need.
-- `probe/` — captured sample pages. Delete.
+- `probe/` — the women's captured sample pages. Delete. (This repo's `probe/` is
+  the *men's* capture from step 1 and is kept on purpose: it is the evidence behind
+  every claim in section 1.)
 - `docs/ask-data.json`, `docs/dashboard.html`, `docs/ku-wbb.ics` — all generated.
   Delete; CI regenerates them.
 - `scripts/fixtures/` — the frozen schedule page the parser tests run against. You need
   a **men's** capture here, or `schedule-parser.test.mjs` is testing the women's page
   layout. Capture one during step 1.
-- `.env.example` — contains a `GEMINI_API_KEY` placeholder that nothing in this repo
-  reads. Vestigial from a template. Delete it.
+- `.env.example` — contains a `GEMINI_API_KEY` placeholder that no *code* in this
+  repo reads. **Do not delete it.** An earlier draft of this plan said to, and doing
+  so broke the Android build before it compiled a line: `app/build.gradle.kts` names
+  it as the Secrets Gradle plugin's `defaultPropertiesFileName`, and the plugin fails
+  configuration when the file is absent. The placeholder is vestigial; the file is
+  not.
 
 **Seasons.** `SEASONS: '2025 2026'` in `scrape-data.yml` are season *start* years.
 Set what you want; the men's and women's NCAA season boundaries are the same.
