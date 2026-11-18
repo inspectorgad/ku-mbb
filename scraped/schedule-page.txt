@@ -2,6 +2,7 @@
 Skip to main content
 Pause All Rotators
 University of Kansas Athletics
+Skip Ad
 Skip Scoreboard
 Scoreboard
 Coming Up
@@ -118,9 +119,9 @@ Las Vegas, Nev.
 Days
 6
 Hours
-20
+6
 Minutes
-4
+39
 Seconds
 Add To Calendar
 Text Only
