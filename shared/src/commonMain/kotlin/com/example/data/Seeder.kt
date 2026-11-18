@@ -18,7 +18,7 @@ import com.example.platform.Device
  * {
  *   "date": "2025-11-05", "opponent": "Kansas City", "season": "2025-26",
  *   "teamScore": 74, "opponentScore": 64,
- *   "periodScores": "8-11, 26-17, 17-16, 23-20",
+ *   "periodScores": "38-31, 36-33",
  *   "lines": [{"player": "<player name>", "min": 29, "fgm": 7, "fga": 15,
  *              "tpm": 1, "tpa": 4, "ftm": 6, "fta": 6, "oreb": 1, "reb": 4,
  *              "ast": 6, "to": 2, "stl": 1, "blk": 0, "pf": 2, "pts": 21,

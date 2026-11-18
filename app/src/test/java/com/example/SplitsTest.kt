@@ -120,13 +120,13 @@ class SplitsTest {
         val halves = halfSplits(
             listOf(
                 game("a", "A", 74, 64, periods = "38-31, 36-33"),
-                game("b", "B", 73, 70, periods = "35-35, 30-32, 8-3"),
+                game("b", "B", 73, 70, periods = "35-30, 30-35, 8-5"),
             )
         )
         assertEquals(listOf("H1", "H2", "OT"), halves.map { it.label })
         val h2 = halves.single { it.label == "H2" }
         assertEquals(66, h2.pointsFor)       // 36 + 30
-        assertEquals(65, h2.pointsAgainst)   // 33 + 32
+        assertEquals(68, h2.pointsAgainst)   // 33 + 35
         assertEquals(1, h2.won)
         assertEquals(1, h2.lost)
         // Only the game that needed one contributes to overtime.

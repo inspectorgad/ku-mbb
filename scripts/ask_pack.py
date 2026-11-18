@@ -32,7 +32,7 @@ DEFINITIONS = {
     "ast": "assists", "to": "turnovers", "stl": "steals", "blk": "blocked shots",
     "pf": "personal fouls", "pts": "points",
     "started": "in the starting five for that game",
-    "height": "an opposing player's listed height, from her own school's roster page — a box "
+    "height": "an opposing player's listed height, from their own school's roster page — a box "
               "score carries no height for anyone but Kansas. Null for about five lines in six, "
               "and the reason is the calendar, not a failed scrape: a roster page lists whoever "
               "is on the team now, so matched against a season already played it only reaches "

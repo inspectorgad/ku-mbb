@@ -180,12 +180,18 @@ fine — it's only needed while installing.
 
 ## Data validation
 
-The 2025-26 source data was validated before the app was built — see
-[DATA-VALIDATION.md](DATA-VALIDATION.md). Raw evidence lives in `probe/`.
+The men's data sources were checked against the live NCAA API before the app
+was built — see [DATA-VALIDATION.md](DATA-VALIDATION.md). Raw evidence lives in
+`probe/`, captured by the `probe-data.yml` workflow.
 
-Site splits reproduce the NCAA's published ones exactly, the conference record
-is the Big 12's own 18-game figure rather than a naive membership count, and
-every game's half scores add up to its final.
+Across 32 games and 64 team-games: every box score captured, the per-player
+points formula `2×FG2 + 3×FG3 + FT = PTS` holding on every line, and
+two-period linescores with a third only for overtime. One team-game's player
+lines do not sum to its final, which is the reason nothing here derives either
+of those from the other.
+
+The conference record is the Big 12's own 18-game figure rather than a naive
+membership count, and every game's half scores add up to its final.
 
 ## Run locally
 

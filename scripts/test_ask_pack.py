@@ -18,7 +18,7 @@ SEED = {
     "games": [
         {"date": "2025-12-07", "opponent": "Missouri St.", "season": "2025-26", "site": "home",
          "home": True, "conference": False, "teamScore": 73, "opponentScore": 70, "overtime": 1,
-         "periodScores": "35-35, 30-32, 8-3", "opponentRecord": "6-3",
+         "periodScores": "35-30, 30-35, 8-5", "opponentRecord": "6-3",
          "venue": "Allen Fieldhouse", "city": "Lawrence, KS",
          "lines": [{"player": "S'Mya Nichols", "min": 38, "fgm": 9, "fga": 20, "tpm": 2, "tpa": 6,
                     "ftm": 4, "fta": 5, "oreb": 1, "reb": 5, "ast": 6, "to": 3, "stl": 2, "blk": 0,
@@ -68,6 +68,9 @@ class AskPackTest(unittest.TestCase):
         rows = [r for r in self.p["periods"] if r["opponent"] == "Missouri St."]
         self.assertEqual([r["name"] for r in rows], ["H1", "H2", "OT1"])
         self.assertEqual(rows[-1]["ku_points"], 8)
+        # A game only reaches overtime level: the two halves must tie.
+        self.assertEqual(sum(r["ku_points"] for r in rows[:2]),
+                         sum(r["opp_points"] for r in rows[:2]))
         self.assertEqual([r["overtime"] for r in rows], [False, False, True])
         # The halves must add up to the final score, or a split built from
         # them would quietly disagree with the game row.

@@ -82,13 +82,14 @@ class GameFactsTest {
 
     @Test
     fun `coming from behind is reported, and only when it happened`() {
-        // Trailed 6-16 after one, 24-18 the next: down 10 at the half, won by 12.
-        val comeback = game("2025-12-03", "Northwestern", 74, 62, periods = "6-16, 24-18, 26-13, 18-15")
+        // Down 6 at the break, won by 12. Halftime is the first period: a
+        // reading that added both would see 74-62 and call it leading.
+        val comeback = game("2025-12-03", "Northwestern", 74, 62, periods = "30-36, 44-26")
         val facts = gameFacts(comeback, listOf(comeback), emptyList(), emptyMap())
-        assertTrue(facts.any { it.contains("Trailed by 4 at the half and won") })
+        assertTrue(facts.any { it.contains("Trailed by 6 at the half and won") })
 
         // Led the whole way: no comeback claim.
-        val wire = game("2025-11-09", "B", 75, 60, periods = "22-12, 17-11, 17-21, 19-16")
+        val wire = game("2025-11-09", "B", 75, 60, periods = "40-30, 35-30")
         assertTrue(
             gameFacts(wire, listOf(wire), emptyList(), emptyMap())
                 .none { it.contains("Trailed") }
