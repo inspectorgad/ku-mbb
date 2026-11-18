@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T13:15:58Z",
+ "generatedAt": "2026-11-18T13:21:17Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -7668,8 +7668,7 @@
      "blk": 0,
      "pf": 1,
      "pts": 2,
-     "gs": 0,
-     "height": "6-2"
+     "gs": 0
     },
     {
      "player": "Brenen Lorient",
@@ -7690,8 +7689,7 @@
      "blk": 1,
      "pf": 4,
      "pts": 18,
-     "gs": 1,
-     "height": "6-9"
+     "gs": 1
     },
     {
      "player": "Chance Moore",
@@ -8960,8 +8958,7 @@
      "blk": 0,
      "pf": 3,
      "pts": 17,
-     "gs": 1,
-     "height": "6-1"
+     "gs": 1
     },
     {
      "player": "Jalin Holland",
@@ -8982,8 +8979,7 @@
      "blk": 0,
      "pf": 2,
      "pts": 2,
-     "gs": 0,
-     "height": "6-5"
+     "gs": 0
     },
     {
      "player": "Isaiah Johnson",
@@ -9109,8 +9105,7 @@
      "blk": 0,
      "pf": 0,
      "pts": 0,
-     "gs": 0,
-     "height": "6-5"
+     "gs": 0
     }
    ],
    "teamStats": {
@@ -11021,8 +11016,7 @@
      "blk": 0,
      "pf": 2,
      "pts": 13,
-     "gs": 1,
-     "height": "6-7"
+     "gs": 1
     },
     {
      "player": "Motiejus Krivas",
@@ -11043,8 +11037,7 @@
      "blk": 6,
      "pf": 4,
      "pts": 14,
-     "gs": 1,
-     "height": "7-2"
+     "gs": 1
     },
     {
      "player": "Koa Peat",
@@ -11857,8 +11850,7 @@
      "blk": 0,
      "pf": 4,
      "pts": 2,
-     "gs": 0,
-     "height": "6-10"
+     "gs": 0
     },
     {
      "player": "Kanye Clary",
@@ -11879,8 +11871,7 @@
      "blk": 0,
      "pf": 2,
      "pts": 5,
-     "gs": 1,
-     "height": "6-0"
+     "gs": 1
     },
     {
      "player": "Kirk Cole",
@@ -11964,8 +11955,7 @@
      "blk": 0,
      "pf": 0,
      "pts": 3,
-     "gs": 0,
-     "height": "6-6"
+     "gs": 0
     },
     {
      "player": "Jaylen Curry",
@@ -12007,8 +11997,7 @@
      "blk": 0,
      "pf": 2,
      "pts": 21,
-     "gs": 1,
-     "height": "6-10"
+     "gs": 1
     },
     {
      "player": "Daniel Guetta",
@@ -12071,8 +12060,7 @@
      "blk": 0,
      "pf": 0,
      "pts": 0,
-     "gs": 0,
-     "height": "6-11"
+     "gs": 0
     },
     {
      "player": "Anthony Roy",
@@ -13219,8 +13207,7 @@
      "blk": 0,
      "pf": 0,
      "pts": 0,
-     "gs": 0,
-     "height": "6-3"
+     "gs": 0
     },
     {
      "player": "Tobe Awaka",
@@ -13367,8 +13354,7 @@
      "blk": 1,
      "pf": 2,
      "pts": 11,
-     "gs": 1,
-     "height": "6-7"
+     "gs": 1
     },
     {
      "player": "Motiejus Krivas",
@@ -13389,8 +13375,7 @@
      "blk": 2,
      "pf": 3,
      "pts": 13,
-     "gs": 1,
-     "height": "7-2"
+     "gs": 1
     },
     {
      "player": "Evan Nelson",
@@ -13676,8 +13661,7 @@
      "blk": 0,
      "pf": 5,
      "pts": 5,
-     "gs": 0,
-     "height": "6-4"
+     "gs": 0
     },
     {
      "player": "Andrija Grbovic",
@@ -18225,19 +18209,6 @@
    "conference": false
   },
   {
-   "date": "2026-11-06",
-   "opponent": "Middle Tennessee",
-   "season": "2026-27",
-   "opponentRank": null,
-   "venue": "Allen Fieldhouse",
-   "city": "Lawrence, KS",
-   "tv": "ESPNU",
-   "time": "20:00",
-   "site": "home",
-   "home": true,
-   "conference": false
-  },
-  {
    "date": "2026-11-10",
    "opponent": "Kentucky",
    "season": "2026-27",
@@ -22551,7 +22522,7 @@
     "opponent": "West Virginia",
     "site": "neutral",
     "conference": true,
-    "key": "west virginia",
+    "key": "west va",
     "p": 0.834
    },
    {
@@ -22575,7 +22546,7 @@
     "opponent": "Missouri",
     "site": "neutral",
     "conference": false,
-    "key": "missouri",
+    "key": "mo",
     "p": 0.8469
    },
    {
@@ -22599,7 +22570,7 @@
     "opponent": "Indiana State",
     "site": "home",
     "conference": false,
-    "key": "indiana st",
+    "key": "ind st",
     "p": 0.9844
    },
    {
@@ -22607,7 +22578,7 @@
     "opponent": "West Virginia",
     "site": "home",
     "conference": true,
-    "key": "west virginia",
+    "key": "west va",
     "p": 0.8821
    },
    {
@@ -22631,7 +22602,7 @@
     "opponent": "Colorado",
     "site": "home",
     "conference": true,
-    "key": "colorado",
+    "key": "colo",
     "p": 0.9169
    },
    {
@@ -22663,7 +22634,7 @@
     "opponent": "Oklahoma State",
     "site": "home",
     "conference": true,
-    "key": "oklahoma st",
+    "key": "okla st",
     "p": 0.9226
    },
    {
@@ -22687,7 +22658,7 @@
     "opponent": "Arizona State",
     "site": "home",
     "conference": true,
-    "key": "arizona st",
+    "key": "ariz st",
     "p": 0.9131
    },
    {
@@ -22711,7 +22682,7 @@
     "opponent": "Arizona",
     "site": "away",
     "conference": true,
-    "key": "arizona",
+    "key": "ariz",
     "p": 0.44
    },
    {
@@ -22750,7 +22721,7 @@
   "others": [
    {
     "team": "Arizona St.",
-    "key": "arizona st",
+    "key": "ariz st",
     "confW": 0,
     "confL": 0,
     "remaining": 17,
@@ -22795,7 +22766,7 @@
    },
    {
     "team": "West Virginia",
-    "key": "west virginia",
+    "key": "west va",
     "confW": 0,
     "confL": 0,
     "remaining": 16,
@@ -22813,7 +22784,7 @@
    },
    {
     "team": "Arizona",
-    "key": "arizona",
+    "key": "ariz",
     "confW": 0,
     "confL": 0,
     "remaining": 17,
@@ -22858,7 +22829,7 @@
    },
    {
     "team": "Oklahoma St.",
-    "key": "oklahoma st",
+    "key": "okla st",
     "confW": 0,
     "confL": 0,
     "remaining": 17,
@@ -22876,7 +22847,7 @@
    },
    {
     "team": "Colorado",
-    "key": "colorado",
+    "key": "colo",
     "confW": 0,
     "confL": 0,
     "remaining": 17,
