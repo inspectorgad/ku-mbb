@@ -55,9 +55,9 @@ Boxscore
 Upcoming Event: Men's Basketball versus UNLV on November 17, 2026 at 8:30 p.m. CT
 Live
 Men's Basketball
-10
+15
 vs UNLV
-24
+37
 Audio
 Upcoming Event: Men's Basketball versus Auburn/West Virginia on November 18, 2026 at 6:30 or 9 p.m. CT
 Wed. 11/18/26
@@ -118,9 +118,9 @@ Las Vegas, Nev.
 Days
 2
 Hours
-54
+42
 Minutes
-6
+17
 Seconds
 Add To Calendar
 Text Only
