@@ -66,17 +66,45 @@ def norm_name(name):
     return re.sub(r"[^a-z]", "", folded.lower())
 
 
+# State names the NCAA abbreviates inside a school's name where kuathletics
+# spells them out: "Middle Tenn." against "Middle Tennessee". Collapsed to the
+# short form rather than expanded to the long one, because collapsing cannot
+# invent a word - expanding "miss" would turn Ole Miss into Ole Mississippi,
+# and "la" would turn La Salle into Louisiana Salle.
+#
+# Both sides of every comparison run through this, so the direction does not
+# matter as long as it is the same one and no two real schools collide. That
+# second part is not assumed: test_seed_text.py runs this over the whole NET
+# table and fails if any two of its 365 names come out equal.
+_STATES = {
+    "alabama": "ala", "arizona": "ariz", "arkansas": "ark", "california": "calif",
+    "carolina": "caro", "colorado": "colo", "connecticut": "conn", "florida": "fla",
+    "georgia": "ga", "illinois": "ill", "indiana": "ind", "kentucky": "ky",
+    "louisiana": "la", "maryland": "md", "massachusetts": "mass", "michigan": "mich",
+    "minnesota": "minn", "mississippi": "miss", "missouri": "mo", "nebraska": "neb",
+    "oklahoma": "okla", "oregon": "ore", "pennsylvania": "pa", "tennessee": "tenn",
+    "virginia": "va", "washington": "wash", "wisconsin": "wis",
+}
+_STATE_RE = re.compile(r"\b(" + "|".join(_STATES) + r")\b")
+
+
 def norm_team(name):
     """Canonical key for cross-source name matching ('Iowa State'/'Iowa St.').
 
     kuathletics writes a schedule opponent as "South Dakota State" while the
     NCAA box score for the same game says "South Dakota St." — without this the
     fixture and its result key differently and the season shows two games.
+
+    The same goes for a state name inside the school's: the feed says "Middle
+    Tenn." where the page says "Middle Tennessee". That one only started to
+    matter once the parser learned to read games already played, which gave the
+    two sources a row apiece for the same night.
     """
     n = re.sub(r"\s*\(\d+\)\s*$", "", name or "").lower()  # strip poll votes
     n = n.replace(".", "")
     n = re.sub(r"\bstate\b", "st", n)
     n = re.sub(r"\buniversity\b", "", n)
+    n = _STATE_RE.sub(lambda m: _STATES[m.group(1)], n)
     return re.sub(r"\s+", " ", n).strip()
 
 

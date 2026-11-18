@@ -40,6 +40,8 @@ on:
       - 'scripts/opponent-roster-parser.mjs'
       - 'scripts/roster-cache.mjs'
       - 'scripts/opponent-sites.json'
+      - 'scripts/neutral-sites.json'
+      - 'scripts/seed_text.py'
       - 'scripts/game-night-watch.mjs'
       - 'scripts/ics_feed.py'
       - 'scripts/update-seed.py'

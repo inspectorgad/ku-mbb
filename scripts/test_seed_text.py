@@ -72,6 +72,52 @@ class NormTeam(unittest.TestCase):
         # suffix to match, and an exhibition has no box score to attach to.
         self.assertEqual(norm_team("Northeastern State (exh.)"), "northeastern st (exh)")
 
+    def test_an_abbreviated_state_name_matches_the_spelled_out_one(self):
+        # The NCAA feed abbreviates a state name inside a school's name where
+        # kuathletics spells it out. Keyed apart, the fixture and its own box
+        # score become two games on the same night - which is what happened to
+        # Middle Tennessee on 2026-11-06 as soon as the parser learned to read
+        # games already played.
+        self.assertEqual(norm_team("Middle Tennessee"), norm_team("Middle Tenn."))
+        self.assertEqual(norm_team("North Carolina"), norm_team("North Caro."))
+        self.assertEqual(norm_team("Western Kentucky"), norm_team("Western Ky."))
+
+    def test_a_state_abbreviation_is_never_expanded_into_a_name(self):
+        # Collapsing the long form cannot invent a word; expanding the short
+        # one would. These are the two that would break.
+        self.assertEqual(norm_team("Ole Miss"), "ole miss")
+        self.assertEqual(norm_team("La Salle"), "la salle")
+
+
+class NormTeamKeepsTeamsApart(unittest.TestCase):
+    """Any collapsing rule can merge two real schools. This proves it does not.
+
+    Run over the whole Division I field rather than a handful of examples: if
+    two of the NET table's names ever come out with the same key, every number
+    computed for one of them is being attributed to the other.
+    """
+
+    def test_no_two_division_one_teams_share_a_key(self):
+        import collections
+        import json
+        import os
+
+        path = os.path.join(os.path.dirname(__file__), "..",
+                            "scraped", "rankings-net.json")
+        if not os.path.exists(path):
+            self.skipTest("no NET table scraped yet")
+        with open(path) as f:
+            names = [r["School"] for r in json.load(f)["data"]]
+
+        self.assertGreater(len(names), 300, "the NET table should be the whole field")
+
+        by_key = collections.defaultdict(set)
+        for name in names:
+            by_key[norm_team(name)].add(name)
+        collisions = {k: sorted(v) for k, v in by_key.items() if len(v) > 1}
+
+        self.assertEqual(collisions, {}, f"these teams share a key: {collisions}")
+
 
 if __name__ == "__main__":
     unittest.main()
