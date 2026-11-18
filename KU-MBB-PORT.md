@@ -63,36 +63,56 @@ The exact NCAA paths in use (read `scripts/scrape-ku-wbb.mjs`):
 /rankings/basketball-women/d1/ncaa-womens-basketball-net-rankings
 ```
 
-**What I could and could not verify.** `https://kuathletics.com/sports/mens-basketball/schedule`
-is confirmed to exist. Everything else below is an inference from the women's pattern
-that I could **not** check: this session's network blocks both `ncaa-api.henrygd.me`
-and `kuathletics.com`.
+**VERIFIED — probe run #1, 18 Nov 2026, `PASS`.** Everything below was checked against
+the live endpoints from GitHub Actions. Evidence is committed under `probe/`.
 
-Presumed men's equivalents — **verify every one**:
+| Men's endpoint | Result |
+|---|---|
+| `/scoreboard/basketball-men/d1/{Y}/{M}/{D}` | works — found a full 2025-26 Kansas season |
+| `/game/{id}` and `/game/{id}/boxscore` | works — 32/32 box scores captured, 0 failed |
+| `/rankings/basketball-men/d1/associated-press` | works — 25 rows |
+| `/rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings` | **works — 365 rows** |
+| `https://kuathletics.com/sports/mens-basketball/roster` | works — 17 players parsed |
+| `https://kuathletics.com/sports/mens-basketball/schedule` | works — 8,360 chars captured |
 
+Two NET slug candidates were tried and 404'd: `net-rankings` and
+`ncaa-mens-basketball-net`. The women's pattern with one word changed is correct.
+
+**Halves are confirmed, not assumed.** A real men's box score returns exactly two
+linescore entries:
+
+```json
+"linescore": [
+  {"period": "1", "home": "39", "visit": "32"},
+  {"period": "2", "home": "32", "visit": "29"}
+]
 ```
-/scoreboard/basketball-men/d1/{YYYY}/{MM}/{DD}
-/rankings/basketball-men/d1/associated-press
-/rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings      ← slug is a guess
-https://kuathletics.com/sports/mens-basketball/roster               ← pattern, unverified
-```
 
-The repo already has the tool for this: `scripts/probe-ku-wbb.mjs` and
-`.github/workflows/probe-data.yml`. Point the probe at the men's paths and run it in
-Actions, where the hosts are reachable. Confirm you get: a scoreboard with games, a
-box score with a linescore, an AP poll, and a NET table with ~360 teams.
+The player stat fields are identical to the women's feed — `points`,
+`fieldGoalsMade/Attempted`, `threePointsMade/Attempted`, `freeThrowsMade/Attempted`,
+`offensiveRebounds`, `totalRebounds`, `assists`, `steals`, `blockedShots`, `turnovers`,
+`personalFouls`, `minutesPlayed`, `starter`. The whole stats layer ports untouched.
+Points summed per player matched the final score in 64/64 team-games.
 
-Two things to check carefully while you are in there:
+**One operational finding.** The public NCAA API instance returns intermittent `502`s —
+7 of ~160 scoreboard days in this run. That is why the probe found 32 games rather than
+the full season; it has no retry and no index. **The scraper already handles this
+correctly** — `scripts/scrape-ku-wbb.mjs` marks a date scanned only on a 404, and
+leaves it unscanned on any other failure so a transient error retries the next night.
+Do not "simplify" that. Read the comment at the `catch`.
 
-- **The NET.** Men's NET and women's NET are separate products with separate release
-  schedules. The women's app knows the NET is last season's table until the NCAA
-  publishes the first one of the new season (around the first Monday of December) and
-  says so in the Ask prompt. Confirm the men's date and keep that caveat honest.
-- **Postseason.** The women's app models the WBIT. The men's equivalents are the NCAA
-  tournament and the NIT. Grep for `WBIT` and decide what it becomes.
+Note what the PASS does and does not say: the data is retrievable and internally
+consistent. It does not claim completeness, because the probe cannot know what a 502
+hid from it.
 
-**Gate the whole project on this step.** If `basketball-men` is not a valid path on
-that API, you need a different data source and the plan below changes substantially.
+Still open, and cheap to settle when you get there:
+
+- **The NET's season boundary.** The women's app knows the NET is last season's table
+  until the NCAA publishes the first of the new season, and says so in the Ask prompt.
+  The row above is a 365-team table with a 37-3 leader, i.e. a *final* table. Confirm
+  the men's publication date and keep the caveat honest.
+- **Postseason.** The women's app models the WBIT. Grep `WBIT` and decide what it
+  becomes — the NCAA tournament and the NIT.
 
 ---
 
@@ -151,8 +171,9 @@ log lines are confusing enough that it is worth the five seconds.)
 ## 3. Quarters → halves: the one real domain change
 
 **Men's college basketball plays two 20-minute halves. Women's plays four 10-minute
-quarters.** This is the only genuine sporting difference that reaches the code, and
-it is smaller than it first looks — about 20 files mention a quarter, but very few
+quarters.** Confirmed against a real box score in step 1 — the feed returns two
+linescore periods. This is the only genuine sporting difference that reaches the code,
+and it is smaller than it first looks — about 20 files mention a quarter, but very few
 actually assume *four of them*.
 
 ### What is already generic
@@ -351,9 +372,8 @@ browser storage on the dashboard. Sent only to `api.anthropic.com`. Never log it
 
 Each step has a checkpoint. Do not proceed past a red one.
 
-1. **Verify the data sources** (§1). Point `probe-ku-wbb.mjs` at the men's paths, run
-   `probe-data.yml`. ✅ when you have a real men's scoreboard, box score, AP poll and
-   NET table in hand.
+1. ~~**Verify the data sources** (§1).~~ **DONE** — probe run #1, `PASS`. Every endpoint
+   in the table above is confirmed live, and `probe/` holds the evidence.
 2. **Fork and rename** (§2). Mechanical. ✅ when `grep -ri wbb` is clean and the Android
    app builds.
 3. **Purge the women's data** (§4). ✅ when `scraped/`, `probe/` and the seed are empty
@@ -395,9 +415,9 @@ Each step has a checkpoint. Do not proceed past a red one.
 - **An "upcoming" game can be in the past** — the date passed but the box score has not
   landed. Branch on whether there is a result, never on the date. The dashboard shows
   "awaiting result" for exactly this.
-- **Check a men's box score for a `linescore` with two entries.** The overtime detector
-  reads the linescore's period labels; if the men's shape differs, overtime detection
-  breaks silently.
+- ~~Check a men's box score for a `linescore` with two entries.~~ Confirmed in step 1.
+  The overtime detector reads the linescore's period labels, so re-check it the first
+  time a men's game actually goes to overtime — that shape is still unverified.
 
 ---
 
