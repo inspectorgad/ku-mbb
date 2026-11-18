@@ -20,6 +20,26 @@
   "match": true
  },
  {
+  "gameId": "6501513",
+  "date": "2025-11-07",
+  "team": "North Carolina",
+  "ku": false,
+  "players": 9,
+  "playerPtsSum": 87,
+  "finalScore": 87,
+  "match": true
+ },
+ {
+  "gameId": "6501513",
+  "date": "2025-11-07",
+  "team": "Kansas",
+  "ku": true,
+  "players": 11,
+  "playerPtsSum": 74,
+  "finalScore": 74,
+  "match": true
+ },
+ {
   "gameId": "6529265",
   "date": "2025-11-11",
   "team": "Kansas",
@@ -38,6 +58,26 @@
   "playerPtsSum": 46,
   "finalScore": 46,
   "match": true
+ },
+ {
+  "gameId": "6501514",
+  "date": "2025-11-15",
+  "team": "Kansas",
+  "ku": true,
+  "players": 14,
+  "playerPtsSum": 76,
+  "finalScore": 76,
+  "match": true
+ },
+ {
+  "gameId": "6501514",
+  "date": "2025-11-15",
+  "team": "Princeton",
+  "ku": false,
+  "players": 14,
+  "playerPtsSum": 61,
+  "finalScore": 57,
+  "match": false
  },
  {
   "gameId": "6501515",
@@ -260,23 +300,23 @@
   "match": true
  },
  {
-  "gameId": "6503878",
-  "date": "2026-01-10",
-  "team": "West Virginia",
-  "ku": false,
-  "players": 8,
-  "playerPtsSum": 86,
-  "finalScore": 86,
+  "gameId": "6504399",
+  "date": "2026-01-13",
+  "team": "Kansas",
+  "ku": true,
+  "players": 12,
+  "playerPtsSum": 84,
+  "finalScore": 84,
   "match": true
  },
  {
-  "gameId": "6503878",
-  "date": "2026-01-10",
-  "team": "Kansas",
-  "ku": true,
+  "gameId": "6504399",
+  "date": "2026-01-13",
+  "team": "Iowa St.",
+  "ku": false,
   "players": 10,
-  "playerPtsSum": 75,
-  "finalScore": 75,
+  "playerPtsSum": 63,
+  "finalScore": 63,
   "match": true
  },
  {
@@ -577,46 +617,6 @@
   "players": 16,
   "playerPtsSum": 73,
   "finalScore": 73,
-  "match": true
- },
- {
-  "gameId": "6593574",
-  "date": "2026-03-13",
-  "team": "Houston",
-  "ku": false,
-  "players": 14,
-  "playerPtsSum": 69,
-  "finalScore": 69,
-  "match": true
- },
- {
-  "gameId": "6593574",
-  "date": "2026-03-13",
-  "team": "Kansas",
-  "ku": true,
-  "players": 16,
-  "playerPtsSum": 47,
-  "finalScore": 47,
-  "match": true
- },
- {
-  "gameId": "6534599",
-  "date": "2026-03-20",
-  "team": "Kansas",
-  "ku": true,
-  "players": 13,
-  "playerPtsSum": 68,
-  "finalScore": 68,
-  "match": true
- },
- {
-  "gameId": "6534599",
-  "date": "2026-03-20",
-  "team": "California Baptist",
-  "ku": false,
-  "players": 16,
-  "playerPtsSum": 60,
-  "finalScore": 60,
   "match": true
  },
  {
