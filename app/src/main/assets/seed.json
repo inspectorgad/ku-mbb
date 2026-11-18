@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T03:17:43Z",
+ "generatedAt": "2026-11-18T03:47:30Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -16928,6 +16928,46 @@
    "conference": false
   },
   {
+   "date": "2026-10-16",
+   "opponent": "Pittsburg State (Exhibition)",
+   "season": "2026-27",
+   "opponentRank": null,
+   "venue": "Allen Fieldhouse",
+   "city": "Lawrence, KS",
+   "tv": "ESPN+",
+   "event": "Late Night in the Phog",
+   "time": "19:00",
+   "site": "home",
+   "home": true,
+   "conference": false
+  },
+  {
+   "date": "2026-10-21",
+   "opponent": "Louisville (Exhibition)",
+   "season": "2026-27",
+   "opponentRank": null,
+   "venue": "Allen Fieldhouse",
+   "city": "Lawrence, KS",
+   "tv": "ESPNU",
+   "time": "18:00",
+   "site": "home",
+   "home": true,
+   "conference": false
+  },
+  {
+   "date": "2026-10-25",
+   "opponent": "Duke (Exhibition)",
+   "season": "2026-27",
+   "opponentRank": null,
+   "venue": "Allen Fieldhouse",
+   "city": "Lawrence, KS",
+   "tv": "ESPN",
+   "time": "12:00",
+   "site": "home",
+   "home": true,
+   "conference": false
+  },
+  {
    "date": "2026-11-02",
    "opponent": "Fordham",
    "season": "2026-27",
@@ -18185,6 +18225,19 @@
    "conference": false
   },
   {
+   "date": "2026-11-06",
+   "opponent": "Middle Tennessee",
+   "season": "2026-27",
+   "opponentRank": null,
+   "venue": "Allen Fieldhouse",
+   "city": "Lawrence, KS",
+   "tv": "ESPNU",
+   "time": "20:00",
+   "site": "home",
+   "home": true,
+   "conference": false
+  },
+  {
    "date": "2026-11-10",
    "opponent": "Kentucky",
    "season": "2026-27",
@@ -19392,16 +19445,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Utah",
-   "seo": "utah",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 3,
-   "overallL": 0,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "West Virginia",
    "seo": "west-virginia",
    "confW": 0,
@@ -19474,6 +19517,16 @@
    "season": "2026-27",
    "team": "Oklahoma St.",
    "seo": "oklahoma-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 3,
+   "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Utah",
+   "seo": "utah",
    "confW": 0,
    "confL": 0,
    "overallW": 3,
@@ -22146,15 +22199,6 @@
     "rating": 1.5549
    },
    {
-    "team": "Utah",
-    "key": "utah",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.1842,
-    "rating": 0.2626
-   },
-   {
     "team": "West Virginia",
     "key": "west virginia",
     "confW": 0,
@@ -22225,6 +22269,15 @@
     "remaining": 17,
     "pVsAverage": 0.3118,
     "rating": 0.5773
+   },
+   {
+    "team": "Utah",
+    "key": "utah",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.1842,
+    "rating": 0.2626
    },
    {
     "team": "Colorado",
