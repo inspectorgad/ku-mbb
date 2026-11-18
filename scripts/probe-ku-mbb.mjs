@@ -1,4 +1,4 @@
-// Data-source validation probe for the KU Women's Basketball app.
+// Data-source validation probe for the KU Men's Basketball app.
 //
 // Runs in GitHub Actions (open outbound network — the same pattern the
 // ku-volleyball app uses, since interactive sessions have restricted egress).
@@ -19,7 +19,9 @@ import fs from 'fs';
 
 const API = 'https://ncaa-api.henrygd.me';
 const TEAM_SEO = 'kansas';
-// 2025-26 D1 women's basketball: early November through the April final.
+// 2025-26 D1 men's basketball: early November through the April final. A
+// COMPLETE season on purpose - a season still being played proves the
+// endpoint answers but not that a box score is whole.
 const SEASON_START = '2025-11-01';
 const SEASON_END = '2026-04-10';
 
@@ -54,7 +56,7 @@ for (
   const [y, m, day] = date.split('-');
   let data;
   try {
-    data = await getJson(`${API}/scoreboard/basketball-women/d1/${y}/${m}/${day}`);
+    data = await getJson(`${API}/scoreboard/basketball-men/d1/${y}/${m}/${day}`);
   } catch (e) {
     // Days with no D1 games return 404; anything else is worth counting.
     if (!String(e.message).startsWith('404')) {
@@ -135,6 +137,34 @@ for (const mm of mismatches) {
 }
 note(`Player stat fields seen: ${[...statFields].sort().join(', ')}`);
 
+// --- 2b. Rankings: which slugs actually exist -------------------------------
+// The men's AP and NET paths here are inferred from the women's. A wrong slug
+// 404s rather than returning something wrong, so every candidate is tried and
+// reported - the point of this probe is to find out, not to assume.
+const RANKING_CANDIDATES = [
+  'rankings/basketball-men/d1/associated-press',
+  'rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings',
+  'rankings/basketball-men/d1/net-rankings',
+  'rankings/basketball-men/d1/ncaa-mens-basketball-net',
+];
+note('');
+note('Rankings endpoints:');
+const rankingResults = {};
+for (const path of RANKING_CANDIDATES) {
+  try {
+    const data = await getJson(`${API}/${path}`);
+    const rows = data?.data ?? data?.rankings ?? [];
+    const n = Array.isArray(rows) ? rows.length : 0;
+    const first = Array.isArray(rows) && rows[0] ? JSON.stringify(rows[0]).slice(0, 160) : '';
+    note(`  OK    ${path} - ${n} rows${first ? ` - first: ${first}` : ''}`);
+    rankingResults[path] = { ok: true, rows: n };
+  } catch (e) {
+    note(`  FAIL  ${path} - ${e.message}`);
+    rankingResults[path] = { ok: false, error: e.message };
+  }
+}
+fs.writeFileSync('probe/rankings.json', JSON.stringify(rankingResults, null, 1));
+
 // --- 3. kuathletics.com roster + schedule (best-effort) --------------------
 try {
   const browser = await chromium.launch();
@@ -157,7 +187,7 @@ try {
     return text;
   }
 
-  const rosterText = await pageText('https://kuathletics.com/sports/womens-basketball/roster');
+  const rosterText = await pageText('https://kuathletics.com/sports/mens-basketball/roster');
   fs.writeFileSync('probe/roster-page.txt', rosterText);
   const rosterLines = rosterText.split('\n').map((l) => l.trim());
   const roster = [];
@@ -174,7 +204,7 @@ try {
   fs.writeFileSync('probe/roster.json', JSON.stringify(roster, null, 1));
   note(`kuathletics roster: parsed ${roster.length} players`);
 
-  const schedText = await pageText('https://kuathletics.com/sports/womens-basketball/schedule/season/2025-26');
+  const schedText = await pageText('https://kuathletics.com/sports/mens-basketball/schedule');
   fs.writeFileSync('probe/schedule-page.txt', schedText);
   note(`kuathletics schedule page: ${schedText.length} chars captured`);
 
