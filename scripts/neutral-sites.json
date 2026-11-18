@@ -24,6 +24,7 @@
   "venues": {
     "T-Mobile Center": "Kansas City — the Missouri showcase and the Big 12 Tournament",
     "Michelob Ultra Arena": "Las Vegas — the Players Era Festival",
-    "Madison Square Garden": "New York — the CBS Sports Classic. A single visit, so the two-opponent auto-detect cannot find it and this entry is the only thing keeping it off the road record."
+    "Madison Square Garden": "New York — the CBS Sports Classic. A single visit, so the two-opponent auto-detect cannot find it and this entry is the only thing keeping it off the road record.",
+    "United Center": "Chicago — the State Farm Champions Classic against Kentucky. Another single visit. The schedule page names no building for this game, only the city, so the venue arrives from the NCAA feed and lands here rather than in the parser's hands."
   }
 }
