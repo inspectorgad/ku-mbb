@@ -1,8 +1,8 @@
 # The iPhone app's Xcode project, described for XcodeGen. CI runs
-# `xcodegen generate` to turn this into KUWBB.xcodeproj, so the project file
+# `xcodegen generate` to turn this into KUMBB.xcodeproj, so the project file
 # itself is never committed or hand-edited; to open it in Xcode on a Mac,
 # install XcodeGen (`brew install xcodegen`) and run the same command here.
-name: KUWBB
+name: KUMBB
 options:
   deploymentTarget:
     iOS: "16.0"
@@ -14,7 +14,7 @@ settings:
     # TestFlight needs a build number higher than the last.
     CURRENT_PROJECT_VERSION: "1"
 targets:
-  KUWBB:
+  KUMBB:
     type: application
     platform: iOS
     sources:
@@ -40,7 +40,7 @@ targets:
     info:
       path: Info.plist
       properties:
-        CFBundleDisplayName: KU WBB
+        CFBundleDisplayName: KU MBB
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSRequiresIPhoneOS: true
@@ -57,8 +57,8 @@ targets:
         CADisableMinimumFrameDurationOnPhone: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: io.github.inspectorgad.kuwbb
-        PRODUCT_NAME: KUWBB
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.inspectorgad.kumbb
+        PRODUCT_NAME: KUMBB
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1"
         SWIFT_VERSION: "5.0"

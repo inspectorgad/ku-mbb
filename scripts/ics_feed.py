@@ -38,7 +38,7 @@ VTIMEZONE = [
     "END:VTIMEZONE",
 ]
 
-# Two hours covers a women's college basketball game and its buffer; the
+# Two hours covers a men's college basketball game and its buffer; the
 # calendar only needs a block, not a precise finish.
 GAME_LENGTH = timedelta(hours=2)
 
@@ -64,7 +64,7 @@ def _fold(line):
 def _uid(g):
     """Stable per game, so an edit updates the event rather than adding one."""
     key = re.sub(r"[^a-z0-9]+", "-", (g.get("opponent") or "").lower()).strip("-")
-    return f"{g['date']}-{key}@ku-wbb"
+    return f"{g['date']}-{key}@ku-mbb"
 
 
 def _summary(g):
@@ -72,7 +72,7 @@ def _summary(g):
     us, them = g.get("teamScore"), g.get("opponentScore")
     if us is not None and them is not None:
         return f"KU {'W' if us > them else 'L'} {us}-{them} {site} {g['opponent']}"
-    return f"KU WBB {site} {g['opponent']}"
+    return f"KU MBB {site} {g['opponent']}"
 
 
 def _description(g):
@@ -96,10 +96,10 @@ def build_ics(games, stamp):
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//ku-wbb//schedule//EN",
+        "PRODID:-//ku-mbb//schedule//EN",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
-        "X-WR-CALNAME:KU Women's Basketball",
+        "X-WR-CALNAME:KU Men's Basketball",
         "X-WR-TIMEZONE:America/Chicago",
         # A hint to refresh twice a day; iOS sets its own interval regardless.
         "REFRESH-INTERVAL;VALUE=DURATION:PT12H",
@@ -158,7 +158,7 @@ def main():
     current = seasons[-1] if seasons else None
     games = [g for g in seed.get("games", []) if g["season"] == current]
 
-    out = "docs/ku-wbb.ics"
+    out = "docs/ku-mbb.ics"
     feed = build_ics(games, datetime.now(timezone.utc))
     existing = None
     if os.path.exists(out):

@@ -9,7 +9,11 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
+# Gradle output. `/build` is only the root project's; app/ and shared/ each
+# have one of their own, and an unanchored rule covers all three. A local
+# build otherwise leaves hundreds of untracked files in `git status`, which is
+# how they get committed.
+build/
 /captures
 .externalNativeBuild
 .cxx

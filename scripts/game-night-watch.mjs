@@ -29,8 +29,9 @@ const HOUR = 60 * MIN;
 // little over the four-hour cron spacing, so one scrape always falls inside
 // it; a second one inside it is harmless (the concurrency group holds it).
 export const PLAN_WINDOW = 4.5 * HOUR;
-// Women's college basketball runs 40 minutes of clock; with stoppages and a
-// halftime, a game rarely ends inside 100 minutes, so polling starts then.
+// Men's college basketball runs 40 minutes of clock, two halves of 20; with
+// stoppages and a halftime, a game rarely ends inside 100 minutes, so polling
+// starts then.
 const FIRST_POLL_AFTER = 100 * MIN;
 const POLL_EVERY = 5 * MIN;
 // Give up this long after tip: a postponed game, or a scoreboard that never
@@ -149,7 +150,7 @@ async function watch(date) {
   while (Date.now() < deadline) {
     if (Date.now() >= budgetEnd) return handOver(date);
     try {
-      const resp = await fetch(`${API}/scoreboard/basketball-women/d1/${y}/${mo}/${d}`,
+      const resp = await fetch(`${API}/scoreboard/basketball-men/d1/${y}/${mo}/${d}`,
         { headers: { accept: 'application/json' } });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const g = kuGame(await resp.json());

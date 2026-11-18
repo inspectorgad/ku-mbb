@@ -24,7 +24,7 @@ import jwt
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 
-BUNDLE_ID = "io.github.inspectorgad.kuwbb"
+BUNDLE_ID = "io.github.inspectorgad.kumbb"
 ASC = "https://api.appstoreconnect.apple.com/v1"
 
 results = []

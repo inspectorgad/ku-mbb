@@ -27,7 +27,7 @@ sealed interface SyncResult {
 object SeasonSync {
 
     private const val DATA_URL =
-        "https://github.com/inspectorgad/ku-wbb/releases/latest/download/season-data.json"
+        "https://github.com/inspectorgad/ku-mbb/releases/latest/download/season-data.json"
     private const val PREFS = "season_sync"
     private const val KEY_HASH = "last_hash"
     private const val KEY_SUCCESS_MS = "last_success_ms"

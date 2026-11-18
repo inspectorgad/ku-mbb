@@ -1,4 +1,4 @@
-// The KU WBB mark, in one place: a basketball on KU blue.
+// The KU MBB mark, in one place: a basketball on KU blue.
 //
 // Two generators draw from this — make-icons.mjs for the Android launcher
 // (vector drawables plus legacy webp) and make-web-icons.mjs for the

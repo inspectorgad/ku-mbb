@@ -138,9 +138,12 @@ for (const mm of mismatches) {
 note(`Player stat fields seen: ${[...statFields].sort().join(', ')}`);
 
 // --- 2b. Rankings: which slugs actually exist -------------------------------
-// The men's AP and NET paths here are inferred from the women's. A wrong slug
-// 404s rather than returning something wrong, so every candidate is tried and
-// reported - the point of this probe is to find out, not to assume.
+// The men's AP and NET paths started as guesses from the women's slugs. A
+// wrong slug 404s rather than returning something wrong, so every candidate is
+// tried and reported - the point of this probe is to find out, not to assume.
+// The 18 Nov run settled it: 'ncaa-mens-basketball-net-rankings' answered with
+// 365 rows, the other two NET candidates 404'd. The list stays so a re-run
+// says so again rather than trusting this comment.
 const RANKING_CANDIDATES = [
   'rankings/basketball-men/d1/associated-press',
   'rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings',

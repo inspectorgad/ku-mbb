@@ -1,6 +1,6 @@
 # iPhone app
 
-The iPhone version of KU WBB, built by GitHub Actions and delivered through
+The iPhone version of KU MBB, built by GitHub Actions and delivered through
 TestFlight.
 
 It is a thin shell around the shared Kotlin code in `shared/`: the same

@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "KU WBB"
+rootProject.name = "KU MBB"
 
 include(":app", ":shared")

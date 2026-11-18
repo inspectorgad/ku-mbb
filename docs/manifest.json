@@ -1,7 +1,7 @@
 {
-  "name": "KU Women's Basketball",
-  "short_name": "KU WBB",
-  "description": "Kansas Jayhawks women's basketball — season stats, splits, Big 12 standings and the AP poll.",
+  "name": "KU Men's Basketball",
+  "short_name": "KU MBB",
+  "description": "Kansas Jayhawks men's basketball — season stats, splits, Big 12 standings and the AP poll.",
   "start_url": "dashboard.html",
   "scope": ".",
   "display": "standalone",

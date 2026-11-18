@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-// Opening the database on Android: the same file, ku_wbb.db, and the
+// Opening the database on Android: the same file, ku_mbb.db, and the
 // migrations every older install has come through. These stay Android-only —
 // an iPhone install starts at the current version and never needs them — and
 // they are unchanged from when they shipped. A migration that has run on
@@ -200,6 +200,6 @@ fun JayhawksDatabase.Companion.get(context: Context): JayhawksDatabase =
         instance ?: Room.databaseBuilder(
             context.applicationContext,
             JayhawksDatabase::class.java,
-            "ku_wbb.db"
+            "ku_mbb.db"
         ).addMigrations(*migrations()).build().also { instance = it }
     }

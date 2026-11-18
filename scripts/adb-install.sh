@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs the latest KU WBB APK onto a USB-connected Android phone via adb.
+# Installs the latest KU MBB APK onto a USB-connected Android phone via adb.
 #
 # Android's Advanced Protection mode blocks browser/sideload APK installs but
 # allows installs from a computer over ADB, so this is the supported path.
@@ -13,8 +13,8 @@
 # On macOS: brew install android-platform-tools
 set -euo pipefail
 
-APK_URL="https://github.com/inspectorgad/ku-wbb/releases/latest/download/app-debug.apk"
-APK_PATH="$(mktemp -d)/ku-wbb.apk"
+APK_URL="https://github.com/inspectorgad/ku-mbb/releases/latest/download/app-debug.apk"
+APK_PATH="$(mktemp -d)/ku-mbb.apk"
 
 if ! command -v adb > /dev/null; then
   echo "adb not found. Install Android platform-tools first:"
@@ -23,7 +23,7 @@ if ! command -v adb > /dev/null; then
   exit 1
 fi
 
-echo "Downloading latest KU WBB APK..."
+echo "Downloading latest KU MBB APK..."
 curl -fsSL -o "$APK_PATH" "$APK_URL"
 
 echo "Waiting for a connected device (accept the USB debugging prompt on the phone)..."
@@ -33,4 +33,4 @@ echo "Installing..."
 # -r reinstalls over an existing copy, keeping the app's data.
 adb install -r "$APK_PATH"
 
-echo "Done — KU WBB is installed. You can unplug the phone."
+echo "Done — KU MBB is installed. You can unplug the phone."

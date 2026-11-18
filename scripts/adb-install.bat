@@ -1,5 +1,5 @@
 @echo off
-REM Installs the latest KU WBB APK onto a USB-connected Android phone via adb.
+REM Installs the latest KU MBB APK onto a USB-connected Android phone via adb.
 REM
 REM Android's Advanced Protection mode blocks browser/sideload APK installs but
 REM allows installs from a computer over ADB, so this is the supported path.
@@ -21,15 +21,15 @@ if errorlevel 1 (
   exit /b 1
 )
 
-echo Downloading latest KU WBB APK...
-curl -fsSL -o "%TEMP%\ku-wbb.apk" https://github.com/inspectorgad/ku-wbb/releases/latest/download/app-debug.apk
+echo Downloading latest KU MBB APK...
+curl -fsSL -o "%TEMP%\ku-mbb.apk" https://github.com/inspectorgad/ku-mbb/releases/latest/download/app-debug.apk
 if errorlevel 1 exit /b 1
 
 echo Waiting for a connected device (accept the USB debugging prompt on the phone)...
 adb wait-for-device
 
 echo Installing...
-adb install -r "%TEMP%\ku-wbb.apk"
+adb install -r "%TEMP%\ku-mbb.apk"
 if errorlevel 1 exit /b 1
 
-echo Done - KU WBB is installed. You can unplug the phone.
+echo Done - KU MBB is installed. You can unplug the phone.

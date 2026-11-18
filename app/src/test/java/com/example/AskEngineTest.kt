@@ -341,7 +341,7 @@ class AskEngineTest {
                     .put("stop_reason", "end_turn")
                     .put("content", JSONArray(listOf(
                         text("Here is what I found."),
-                        search("srv_1", "Nebraska women's basketball injuries"),
+                        search("srv_1", "Nebraska men's basketball injuries"),
                         results("srv_1"),
                         text("Nebraska "),
                         cited("lost their point guard to injury", "https://huskers.com/a"),
@@ -360,7 +360,7 @@ class AskEngineTest {
         )
         assertEquals(listOf("https://huskers.com/a", "https://huskers.com/b"), answer.sources.map { it.url })
         assertEquals(listOf(1, 2), answer.sources.map { it.number })
-        assertEquals(listOf("Nebraska women's basketball injuries"), answer.searches)
+        assertEquals(listOf("Nebraska men's basketball injuries"), answer.searches)
         // 10k at $4 + 1k at $20 = 6 cents, plus 2 searches at 1 cent.
         assertTrue(answer.notes.last(), answer.notes.last().startsWith("Claude Opus 5.5 · about 8.0¢ · 2 web searches included"))
 

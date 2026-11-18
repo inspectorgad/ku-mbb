@@ -148,20 +148,20 @@ jobs:
       - name: Upload Room schema
         uses: actions/upload-artifact@v4
         with:
-          name: ku-wbb-room-schema
+          name: ku-mbb-room-schema
           path: shared/schemas/
           if-no-files-found: error
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ku-wbb-debug-apk
+          name: ku-mbb-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload Play bundle artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ku-wbb-release-aab
+          name: ku-mbb-release-aab
           path: app/build/outputs/bundle/release/app-release.aab
 
       # A branch build otherwise leaves only an Actions artifact, which is a
@@ -193,13 +193,13 @@ jobs:
               --prerelease \
               --latest=false \
               --target "$GITHUB_SHA"
-          cp app/build/outputs/apk/debug/app-debug.apk ku-wbb-ask-test.apk
-          gh release upload "$tag" ku-wbb-ask-test.apk --repo "$GITHUB_REPOSITORY" --clobber
-          echo "Test APK: https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/ku-wbb-ask-test.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk ku-mbb-ask-test.apk
+          gh release upload "$tag" ku-mbb-ask-test.apk --repo "$GITHUB_REPOSITORY" --clobber
+          echo "Test APK: https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/ku-mbb-ask-test.apk"
 
       # Publish the APK to a rolling "latest-apk" release for one-tap phone
       # download:
-      # https://github.com/inspectorgad/ku-wbb/releases/latest/download/app-debug.apk
+      # https://github.com/inspectorgad/ku-mbb/releases/latest/download/app-debug.apk
       #
       # Trunk only. The push trigger above is already limited to main, but
       # workflow_dispatch is not, and the release this writes to is the one a
@@ -219,7 +219,7 @@ jobs:
             gh release create latest-apk \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
-              --title "KU WBB - latest build" \
+              --title "KU MBB - latest build" \
               --notes "Rolling release: always carries the newest APK with current season data. Download app-debug.apk below and install it on your Android device." \
               --latest
 

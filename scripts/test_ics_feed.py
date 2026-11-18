@@ -63,8 +63,8 @@ class BuildIcsTest(unittest.TestCase):
 
     def test_summaries_say_site_and_result(self):
         joined = "\r\n".join(self.lines)
-        self.assertIn("SUMMARY:KU WBB vs Omaha", joined)
-        self.assertIn("SUMMARY:KU WBB vs Nebraska", joined)       # neutral reads "vs"
+        self.assertIn("SUMMARY:KU MBB vs Omaha", joined)
+        self.assertIn("SUMMARY:KU MBB vs Nebraska", joined)       # neutral reads "vs"
         self.assertIn("SUMMARY:KU W 71-64 at Minnesota", joined)  # played
 
     def test_description_carries_tv_event_and_neutral(self):
@@ -147,7 +147,7 @@ class StampComparisonTest(unittest.TestCase):
                 first, second = io.StringIO(), io.StringIO()
                 with contextlib.redirect_stdout(first):
                     ics_feed.main()
-                written = open("docs/ku-wbb.ics", newline="").read()
+                written = open("docs/ku-mbb.ics", newline="").read()
                 with contextlib.redirect_stdout(second):
                     ics_feed.main()
             finally:

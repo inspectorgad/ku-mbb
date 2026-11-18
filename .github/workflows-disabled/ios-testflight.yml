@@ -92,11 +92,11 @@ jobs:
         run: |
           # Run number and attempt, so a re-run still uploads a new build number.
           xcodebuild archive \
-            -project ios/KUWBB.xcodeproj \
-            -scheme KUWBB \
+            -project ios/KUMBB.xcodeproj \
+            -scheme KUMBB \
             -configuration Release \
             -destination 'generic/platform=iOS' \
-            -archivePath "$RUNNER_TEMP/KUWBB.xcarchive" \
+            -archivePath "$RUNNER_TEMP/KUMBB.xcarchive" \
             CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT" \
             CODE_SIGNING_ALLOWED=NO
 
@@ -127,7 +127,7 @@ jobs:
           </plist>
           PLIST
           xcodebuild -exportArchive \
-            -archivePath "$RUNNER_TEMP/KUWBB.xcarchive" \
+            -archivePath "$RUNNER_TEMP/KUMBB.xcarchive" \
             -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
             -exportPath "$RUNNER_TEMP/export" \
             -allowProvisioningUpdates \

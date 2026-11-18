@@ -166,7 +166,7 @@ const TOOLS = [
   { type: "code_execution_20260120", name: "code_execution" },
   {
     name: "get_table",
-    description: "Returns one table of the Kansas women's basketball season data (or, for " +
+    description: "Returns one table of the Kansas men's basketball season data (or, for " +
       "opponent_roster, team_records and big12_results, data on other teams) as a JSON string: " +
       "a list of records (one per row) for every table except 'definitions' (a dict of column " +
       "meanings) and 'poll' (a dict with season, name, updated and rows). Call it from Python and " +
@@ -204,9 +204,9 @@ const store = {
   },
   del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch { /* ignore */ } },
 };
-const KEY_SLOT = "ku-wbb-ask-api-key";
-const MODEL_SLOT = "ku-wbb-ask-model";
-const WEB_SLOT = "ku-wbb-ask-web";
+const KEY_SLOT = "ku-mbb-ask-api-key";
+const MODEL_SLOT = "ku-mbb-ask-model";
+const WEB_SLOT = "ku-mbb-ask-web";
 
 let memoryKey = null; // used when browser storage is blocked
 let pack = null;

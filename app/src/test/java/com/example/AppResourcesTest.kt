@@ -15,9 +15,9 @@ import org.robolectric.annotation.Config
 class AppResourcesTest {
 
     @Test
-    fun `app name is KU WBB`() {
+    fun `app name is KU MBB`() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        assertEquals("KU WBB", context.getString(R.string.app_name))
+        assertEquals("KU MBB", context.getString(R.string.app_name))
     }
 
     /**

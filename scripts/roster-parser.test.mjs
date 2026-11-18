@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import { parseRoster, tidyHeight } from './roster-parser.mjs';
 
 const page = fs.readFileSync(
-  new URL('./fixtures/roster-page-2026-09-27.txt', import.meta.url), 'utf8'
+  new URL('./fixtures/roster-page-2026-11-18.txt', import.meta.url), 'utf8'
 );
 
 test('heights read as feet-inches, and anything odd passes through', () => {
@@ -48,28 +48,25 @@ test('a block missing a field simply omits it rather than shifting the others', 
 test('page furniture is not mistaken for a player', () => {
   // The roster page carries the schedule rotator above it, which also has
   // numbers and capitalized words.
-  const noise = ['Upcoming Event: Women\'s Basketball versus Omaha on November 3, 2026',
-    'Thu. 10/22/26', '6:30 p.m. CT', 'vs Northeastern State (exh.)'].join('\n');
+  const noise = ['Upcoming Event: Men\'s Basketball versus UNLV on November 17, 2026',
+    'Tue. 11/17/26', '8:30 p.m. CT', 'vs Washburn (exh.)'].join('\n');
   assert.deepEqual(parseRoster(noise), []);
 });
 
 test('the saved roster page yields the whole squad with bios', () => {
   const got = parseRoster(page);
-  // As of the 27 Sep capture: 13 players, every one with all five bio fields.
-  assert.equal(got.length, 13);
+  // As of the 18 Nov capture: 17 players, every one with all five bio fields.
+  assert.equal(got.length, 17);
   for (const field of ['position', 'academicYear', 'height', 'hometown', 'lastSchool']) {
-    assert.equal(got.filter((p) => p[field]).length, 13, `every player has ${field}`);
+    assert.equal(got.filter((p) => p[field]).length, 17, `every player has ${field}`);
   }
-  const nichols = got.find((p) => p.name === "S'Mya Nichols");
+  const kinney = got.find((p) => p.name === 'Taylen Kinney');
   assert.deepEqual(
-    [nichols.jerseyNumber, nichols.position, nichols.academicYear, nichols.height],
-    ['12', 'G', 'Sr.', '6-0']
+    [kinney.jerseyNumber, kinney.position, kinney.academicYear, kinney.height],
+    ['0', 'G', 'Fr.', '6-3']
   );
-  // A transfer keeps the whole path, not just the most recent school.
-  assert.equal(
-    got.find((p) => p.name === 'Mariyah Noel').lastSchool,
-    'Bonner Springs HS / Ole Miss / Xavier'
-  );
+  // A name with a suffix keeps it rather than being cut at the second word.
+  assert.ok(got.some((p) => p.name === 'Leroy Blyden Jr.'));
   // Jersey numbers are unique, which is what the app keys its badges on.
-  assert.equal(new Set(got.map((p) => p.jerseyNumber)).size, 13);
+  assert.equal(new Set(got.map((p) => p.jerseyNumber)).size, 17);
 });

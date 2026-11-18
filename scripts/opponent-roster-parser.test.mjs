@@ -122,7 +122,7 @@ test('a page listing the roster twice yields each player once', () => {
 });
 
 test('a page with no roster on it parses to nothing, not to junk', () => {
-  const page = ['Womens Basketball', 'Schedule', 'News', 'Tickets', '2025-26 Season'].join('\n');
+  const page = ['Mens Basketball', 'Schedule', 'News', 'Tickets', '2026-27 Season'].join('\n');
   assert.deepEqual(parseRoster(page), []);
   assert.deepEqual(parseRoster(''), []);
   assert.deepEqual(parseRoster(null), []);

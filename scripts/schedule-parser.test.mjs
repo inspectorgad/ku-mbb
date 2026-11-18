@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import { splitRank, parseSchedule, siteOf, to24h, postalCity } from './schedule-parser.mjs';
 
 const page = fs.readFileSync(
-  new URL('./fixtures/schedule-page-2026-09-27.txt', import.meta.url), 'utf8'
+  new URL('./fixtures/schedule-page-2026-11-18.txt', import.meta.url), 'utf8'
 );
 
 test('tip times read in 24-hour form, and nothing else counts as one', () => {
@@ -40,7 +40,7 @@ test('a row carries its venue, city, tip time and channel', () => {
   const row = ['MarketBeat Invitational', 'vs', 'Nebraska', '', 'Sanford Pentagon',
     'Sioux Falls, S.D.', '', 'TV: BTN+', '', 'Nov 14', '(Sat)', '', '3:30 p.m. CT',
     '', 'History'].join('\n');
-  const [f] = parseSchedule(`2026-27 Women's Basketball Schedule\n${row}`);
+  const [f] = parseSchedule(`2026-27 Men's Basketball Schedule\n${row}`);
   assert.equal(f.date, '2026-11-14');
   assert.equal(f.time, '15:30');
   assert.equal(f.venue, 'Sanford Pentagon');
@@ -64,7 +64,7 @@ test('a ranked opponent keeps its name and carries the rank beside it', () => {
 
   const row = ['vs', '#25 Nebraska', '', 'Sanford Pentagon', 'Sioux Falls, S.D.', '',
     'Nov 14', '(Sat)', '', '3:30 p.m. CT', '', 'History'].join('\n');
-  const [f] = parseSchedule(`2026-27 Women's Basketball Schedule\n${row}`);
+  const [f] = parseSchedule(`2026-27 Men's Basketball Schedule\n${row}`);
   assert.equal(f.opponent, 'Nebraska');
   assert.equal(f.opponentRank, 25);
 });
@@ -77,8 +77,8 @@ test('the rotator and the table are one game even when they disagree on the name
   // the seed, the dashboard and every phone - and a phone kept its copy after
   // the page filled the name in, because a sync only adds and updates.
   const page = [
-    "2026-27 Women's Basketball Schedule",
-    "Upcoming Event: Women's Basketball versus TBD on November 26, 2026",
+    "2026-27 Men's Basketball Schedule",
+    "Upcoming Event: Men's Basketball versus TBD on November 26, 2026",
     'Cancun Challenge', 'vs', 'Washington State', '', 'Hard Rock Hotel Rivera Maya',
     'Cancun, Mexico', '', 'TV: FloSports', '', 'Nov 26', '(Thu)', '', '3 p.m. CT', '', 'History',
   ].join('\n');
@@ -94,8 +94,8 @@ test('the rotator and the table are one game even when they disagree on the name
 test('a rotator game the table has not listed yet is still kept', () => {
   // The merge must not quietly drop a game that only one listing knows about.
   const page = [
-    "2026-27 Women's Basketball Schedule",
-    "Upcoming Event: Women's Basketball at Iowa State on January 9, 2027 at 2 p.m. CT",
+    "2026-27 Men's Basketball Schedule",
+    "Upcoming Event: Men's Basketball at Iowa State on January 9, 2027 at 2 p.m. CT",
   ].join('\n');
 
   const got = parseSchedule(page);
@@ -115,7 +115,7 @@ test('two table rows on one date stay two games', () => {
     'vs', 'Beta', '', 'Allen Fieldhouse', 'Lawrence, Kan.', '', 'Dec 20', '(Sun)', '', 'History',
   ].join('\n');
 
-  const got = parseSchedule(`2026-27 Women's Basketball Schedule\n${rows}`);
+  const got = parseSchedule(`2026-27 Men's Basketball Schedule\n${rows}`);
 
   assert.deepEqual(got.map((f) => f.opponent).sort(), ['Alpha', 'Beta']);
 });
@@ -127,7 +127,7 @@ test('a link label above a row is not mistaken for a tournament', () => {
   // "Omaha Game Info" on the dashboard and in the app.
   const row = ['Game Info', 'vs', 'Omaha', '', 'Allen Fieldhouse',
     'Lawrence, Kan.', '', 'Nov 3', '(Tue)', '', '6:30 p.m. CT', '', 'History'].join('\n');
-  const [f] = parseSchedule(`2026-27 Women's Basketball Schedule\n${row}`);
+  const [f] = parseSchedule(`2026-27 Men's Basketball Schedule\n${row}`);
   assert.equal(f.opponent, 'Omaha');
   assert.equal(f.event, null);
 });
@@ -137,7 +137,7 @@ test('a row with no tip time yet gets none, not the next row\'s', () => {
     'at', 'West Virginia', '', 'WVU Coliseum', 'Morgantown, W. Va.', '', 'Dec 30', '(Wed)', '', 'History',
     'at', 'Cincinnati', '', 'Fifth Third Arena', 'Cincinnati, Ohio', '', 'Jan 2', '(Sat)', '', '1 p.m. CT',
   ].join('\n');
-  const got = parseSchedule(`2026-27 Women's Basketball Schedule\n${rows}`);
+  const got = parseSchedule(`2026-27 Men's Basketball Schedule\n${rows}`);
   assert.equal(got.find((f) => f.opponent === 'West Virginia').time, null);
   assert.equal(got.find((f) => f.opponent === 'Cincinnati').time, '13:00');
 });
@@ -147,7 +147,7 @@ test('a season spanning two years dates January from the later one', () => {
     'vs', 'Texas Tech', '', 'Allen Fieldhouse', 'Lawrence, Kan.', '', 'Nov 28', '(Sat)', '', 'History',
     'at', 'Utah', '', 'Jon M. Huntsman Center', 'Salt Lake City, Utah', '', 'Jan 16', '(Sat)', '', 'History',
   ].join('\n');
-  const got = parseSchedule(`2026-27 Women's Basketball Schedule\n${rows}`);
+  const got = parseSchedule(`2026-27 Men's Basketball Schedule\n${rows}`);
   assert.equal(got.find((f) => f.opponent === 'Texas Tech').date, '2026-11-28');
   assert.equal(got.find((f) => f.opponent === 'Utah').date, '2027-01-16');
 });
@@ -164,33 +164,78 @@ test('site is home, away or neutral — "vs" alone does not mean home', () => {
 
 test('the saved schedule page yields the whole season', () => {
   const got = parseSchedule(page);
-  // As of the 27 Sep capture: the full 2026-27 season, every row with a venue
-  // and city, 14 with a tip time set. If the page's layout moves, these drop.
-  assert.equal(got.length, 34);
-  assert.equal(got.filter((f) => f.venue).length, 34);
-  assert.equal(got.filter((f) => f.city).length, 34);
-  assert.equal(got.filter((f) => f.time).length, 14);
+  // As of the 18 Nov capture of the 2026-27 men's season: 30 fixtures, 28 of
+  // them listed in the schedule table with a venue and a city, 24 with a tip
+  // time. The other two are rotator-only rows for tournament games the table
+  // has not drawn yet - see the test below.
+  assert.equal(got.length, 30);
+  assert.equal(got.filter((f) => f.venue).length, 28);
+  assert.equal(got.filter((f) => f.city).length, 28);
+  assert.equal(got.filter((f) => f.time).length, 24);
 
-  const opener = got.find((f) => f.opponent === 'Omaha');
+  const opener = got.find((f) => f.opponent === 'UNLV');
   assert.deepEqual(
     [opener.date, opener.time, opener.venue, siteOf(opener)],
-    ['2026-11-03', '18:30', 'Allen Fieldhouse', 'home']
+    ['2026-11-17', '20:30', 'Michelob Ultra Arena', 'neutral']
   );
 
-  // The four fixtures the old rotator-only scrape stored as home games.
+  // A neutral floor is neither team's, and "vs" alone does not settle it.
   for (const [opponent, venue] of [
-    ['Nebraska', 'Sanford Pentagon'],
-    ['South Dakota State', 'T-Mobile Center'],
-    ['Washington State', 'Hard Rock Hotel Rivera Maya'],
-    ['Miami (OH)', 'Hard Rock Hotel Rivera Maya'],
+    ['Missouri', 'T-Mobile Center'],
+    ['Ohio State', 'Madison Square Garden'],
+    ['Big 12 Tournament', 'T-Mobile Center'],
   ]) {
     const f = got.find((x) => x.opponent === opponent);
     assert.equal(siteOf(f), 'neutral', `${opponent} should be neutral`);
     assert.equal(f.venue, venue);
   }
 
-  // Conference road games are away, and Allen games are home.
-  assert.equal(siteOf(got.find((f) => f.opponent === 'Minnesota')), 'away');
-  assert.equal(siteOf(got.find((f) => f.date === '2027-02-20')), 'away');
-  assert.equal(siteOf(got.find((f) => f.opponent === 'Iowa State')), 'home');
+  // Allen Fieldhouse is home; a conference road game is away.
+  assert.equal(siteOf(got.find((f) => f.opponent === 'Denver')), 'home');
+  assert.equal(siteOf(got.find((f) => f.opponent === 'Houston')), 'away');
+  assert.equal(siteOf(got.find((f) => f.opponent === 'Iowa State' && f.date === '2027-02-13')), 'away');
+
+  // Kansas State twice, home and away, on different dates.
+  const ksu = got.filter((f) => f.opponent === 'Kansas State');
+  assert.equal(ksu.length, 2);
+  assert.deepEqual(ksu.map((f) => siteOf(f)).sort(), ['away', 'home']);
 });
+
+test('a radio link above a row is not mistaken for a tournament', () => {
+  // kuathletics puts "Listen" and "Game Center" where a tournament name
+  // goes. Unfiltered, the Denver game came through as the "Listen" event -
+  // the same shape as the "Game Info" leak this page threw before.
+  const page = [
+    "2026-27 Men's Basketball Schedule",
+    'Game Center', 'Listen', 'vs', 'Denver', '', 'Allen Fieldhouse',
+    'Lawrence, Kan.', '', 'Nov 23', '(Mon)', '', '7 p.m. CT', '', 'History',
+  ].join('\n');
+
+  const [f] = parseSchedule(page);
+
+  assert.equal(f.opponent, 'Denver');
+  assert.equal(f.event, null);
+});
+
+test('the real page carries only genuine tournament names', () => {
+  const events = [...new Set(parseSchedule(page).map((f) => f.event).filter(Boolean))];
+  assert.deepEqual(events.sort(), [
+    'CBS Sports Classic',
+    'Dillons Sunflower Showdown',
+    'Phillips 66 Big 12 Tournament',
+    'Players Era',
+    'StorageMart Border Showdown',
+  ]);
+});
+
+test('a tournament game the table has not drawn yet is kept from the rotator', () => {
+  // The men's page shows these right now: the Players Era bracket is undrawn,
+  // so the rotator carries "Auburn/West Virginia" and a bare "TBD" with no
+  // venue. Both are real future games and must survive the merge; the TBD row
+  // is cleared later, by the sync, once the table names the team.
+  const got = parseSchedule(page);
+  const rotatorOnly = got.filter((f) => !f.venue);
+  assert.equal(rotatorOnly.length, 2);
+  assert.deepEqual(rotatorOnly.map((f) => f.date).sort(), ['2026-11-18', '2026-11-19']);
+});
+

@@ -13,7 +13,7 @@ android {
     // Play-compatible id (com.example.* is rejected by Google Play); also
     // distinct from the KU Volleyball and KC Diamonds apps so all three
     // install side by side.
-    applicationId = "io.github.inspectorgad.kuwbb"
+    applicationId = "io.github.inspectorgad.kumbb"
     minSdk = 24
     targetSdk = 36
     // Play requires a strictly increasing versionCode; CI passes the

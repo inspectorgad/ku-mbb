@@ -25,7 +25,7 @@ import urllib.request
 
 import jwt
 
-BUNDLE_ID = "io.github.inspectorgad.kuwbb"
+BUNDLE_ID = "io.github.inspectorgad.kumbb"
 ASC = "https://api.appstoreconnect.apple.com/v1"
 
 

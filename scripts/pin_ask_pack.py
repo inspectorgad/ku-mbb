@@ -23,7 +23,7 @@ import sys
 FILE = pathlib.Path("shared/src/commonMain/kotlin/com/example/data/AskEngine.kt")
 # The line the new one goes above: the published pack, which stays as the
 # fallback. Matched whole so a half-applied edit cannot pass unnoticed.
-PUBLISHED = '"https://inspectorgad.github.io/ku-wbb/ask-data.json",'
+PUBLISHED = '"https://inspectorgad.github.io/ku-mbb/ask-data.json",'
 
 
 def pin(text, url):

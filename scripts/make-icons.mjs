@@ -1,4 +1,4 @@
-// Regenerates the KU WBB launcher icon. Run from a directory with
+// Regenerates the KU MBB launcher icon. Run from a directory with
 // playwright installed:  node scripts/make-icons.mjs app/src/main/res
 // Generates the launcher icon: adaptive-icon vector drawables plus legacy
 // raster webp for API 24-25 (minSdk is 24, below adaptive icons).
@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { svgIcon, SEAMS, circlePath, KU_BLUE, BALL, SEAM, R, SW } from './icon-art.mjs';
 
-const RES = process.argv[2] || '/home/user/ku-wbb/app/src/main/res';
+const RES = process.argv[2] || '/home/user/ku-mbb/app/src/main/res';
 
 // --- Vector drawables -------------------------------------------------------
 const seamPaths = (color) => SEAMS.map((d) =>

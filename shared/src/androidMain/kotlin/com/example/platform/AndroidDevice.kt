@@ -84,7 +84,7 @@ class AndroidDevice(context: Context) : Device {
 
     private companion object {
         const val SECRETS = "ask_key"
-        const val ALIAS = "ku_wbb_ask_api_key"
+        const val ALIAS = "ku_mbb_ask_api_key"
         const val TRANSFORM = "AES/GCM/NoPadding"
     }
 }

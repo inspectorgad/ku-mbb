@@ -102,7 +102,7 @@ thing that would have made today a ten-minute job.
 
 ## Part 1 — Register the App ID
 
-This tells Apple that `io.github.inspectorgad.kuwbb` exists and is yours. That
+This tells Apple that `io.github.inspectorgad.kumbb` exists and is yours. That
 string already matches the Android app's `applicationId`, deliberately.
 
 **This step is genuinely required.** App Store Connect's Bundle ID field in
@@ -123,11 +123,11 @@ not create one for you, and there is no free-text option.
 6. Fill in:
 
    - **Description** — a label for you, inside the portal. Users never see it.
-     Put `KU WBB`. Apple rejects punctuation here, so no apostrophes.
+     Put `KU MBB`. Apple rejects punctuation here, so no apostrophes.
    - **Bundle ID** — select **Explicit** (not "Wildcard") and type exactly:
 
      ```
-     io.github.inspectorgad.kuwbb
+     io.github.inspectorgad.kumbb
      ```
 
      Explicit is mandatory: Apple requires it for anything that goes through
@@ -155,7 +155,7 @@ not create one for you, and there is no free-text option.
 > identifier forever and registering a different one. Read it twice before
 > clicking Register.
 
-✅ **Done when** `io.github.inspectorgad.kuwbb` is in the Identifiers list.
+✅ **Done when** `io.github.inspectorgad.kumbb` is in the Identifiers list.
 
 ---
 
@@ -175,10 +175,10 @@ holds identifiers and keys; `appstoreconnect.apple.com` holds apps and builds.
 
    - **Platforms** — tick **iOS** only.
    - **Name** — public, and unique across the entire App Store. Try
-     **`KU WBB`**. If it's taken, `KU Women's Basketball` or `Jayhawks WBB`
+     **`KU MBB`**. If it's taken, `KU Men's Basketball` or `Jayhawks MBB`
      will do; it's cosmetic while you're only on TestFlight.
    - **Primary Language** — **English (U.S.)**.
-   - **Bundle ID** — a dropdown. Choose **`io.github.inspectorgad.kuwbb`**.
+   - **Bundle ID** — a dropdown. Choose **`io.github.inspectorgad.kumbb`**.
 
      > Not there? Either part 1 didn't finish, you registered a *wildcard*
      > rather than an explicit ID, or you're in a different team than you were
@@ -186,7 +186,7 @@ holds identifiers and keys; `appstoreconnect.apple.com` holds apps and builds.
      > reload before assuming the worst.
 
    - **SKU** — an internal reference, never shown to anyone, unique within
-     your account, and unchangeable. Put `kuwbb`.
+     your account, and unchangeable. Put `kumbb`.
    - **User Access** — **Full Access**.
 
 4. Click **Create**.
@@ -342,7 +342,7 @@ it next time.
 
 ## Part 4 — Put them into GitHub
 
-1. Go to **https://github.com/inspectorgad/ku-wbb/settings/secrets/actions**
+1. Go to **https://github.com/inspectorgad/ku-mbb/settings/secrets/actions**
    (the long way: repository → **Settings** → **Secrets and variables** →
    **Actions**).
 
@@ -391,7 +391,7 @@ PASS  APPLE_TEAM_ID looks right
 PASS  ASC_KEY_P8 is a whole .p8 file
 PASS  the two IDs are different values
 PASS  App Store Connect accepts the key
-PASS  the app exists in App Store Connect - "KU WBB"
+PASS  the app exists in App Store Connect - "KU MBB"
 PASS  the App ID is registered
 ```
 

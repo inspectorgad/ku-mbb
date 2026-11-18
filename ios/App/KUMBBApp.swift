@@ -10,7 +10,7 @@ import Shared
 // alert code, and this app sends no alerts.
 
 @main
-struct KUWBBApp: App {
+struct KUMBBApp: App {
     var body: some Scene {
         WindowGroup {
             // The shared screens lay themselves out around the notch, the

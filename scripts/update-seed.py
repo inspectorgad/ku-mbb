@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Regenerates app/src/main/assets/seed.json from scraped/ KU WBB data.
+"""Regenerates app/src/main/assets/seed.json from scraped/ KU MBB data.
 
-Inputs (all optional, produced by scrape-ku-wbb.mjs):
+Inputs (all optional, produced by scrape-ku-mbb.mjs):
   scraped/ncaa-game-*.json  one per finished game: {gameId, date, info, box}
   scraped/roster.json       current roster from kuathletics.com
   scraped/upcoming.json     upcoming games from kuathletics.com
@@ -795,7 +795,7 @@ else:
 seed = {
     "formatVersion": 1,
     "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-    "team": "Kansas Jayhawks Women's Basketball",
+    "team": "Kansas Jayhawks Men's Basketball",
     "players": sorted(players.values(), key=lambda p: p["name"]),
     "games": [games[k] for k in sorted(games)],
 }

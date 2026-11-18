@@ -31,7 +31,7 @@ Two simplifications, both said on screen:
   start with head-to-head, which needs results this simulation does not keep.
 """
 
-# Big 12 women's basketball: 16 teams, each playing 18 conference games. That
+# Big 12 men's basketball: 16 teams, each playing 18 conference games. That
 # is not a round robin - 16 teams would need 30 - so two teams on the same
 # record have not played the same schedule.
 CONF_TOTAL = 18

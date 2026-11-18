@@ -1,4 +1,4 @@
-// Scrapes KU Women's Basketball data from three sources:
+// Scrapes KU Men's Basketball data from three sources:
 //  1. NCAA API (ncaa-api.henrygd.me, JSON wrapper around ncaa.com) — game
 //     discovery via the daily scoreboard, then per-game box scores. The same
 //     sweep also yields every Big 12 game (each team carries a conference
@@ -6,7 +6,7 @@
 //  2. NCAA API rankings — AP top 25 and NCAA NET. Both are current-snapshot
 //     endpoints (no per-season history), so each nightly run captures the
 //     latest and update-seed.py keys it by season.
-//     Note: /standings/basketball-women/d1 is unreliable (volleyball's
+//     Note: /standings/basketball-men/d1 is unreliable (volleyball's
 //     equivalent returns HTTP 500), so conference records are computed
 //     rather than fetched.
 //  3. kuathletics.com (Sidearm) via headless Chromium — current roster and
@@ -73,7 +73,7 @@ async function getJson(url) {
 }
 
 function* seasonDates(startYear) {
-  // D1 women's basketball: early-November openers through the April final.
+  // D1 men's basketball: early-November openers through the April final.
   const start = new Date(Date.UTC(startYear, 10, 1));
   const end = new Date(Date.UTC(startYear + 1, 3, 15));
   for (let d = start; d <= end; d = new Date(d.getTime() + 86_400_000)) {
@@ -101,7 +101,7 @@ for (const season of SEASONS) {
     const [y, m, d] = date.split('-');
     let data;
     try {
-      data = await getJson(`${API}/scoreboard/basketball-women/d1/${y}/${m}/${d}`);
+      data = await getJson(`${API}/scoreboard/basketball-men/d1/${y}/${m}/${d}`);
     } catch (e) {
       // Days with no D1 games return 404; that still counts as scanned.
       if (String(e.message).startsWith('404')) {
@@ -211,8 +211,8 @@ function snapshotSeason(updated) {
 }
 
 for (const [name, path] of [
-  ['ap', 'rankings/basketball-women/d1/associated-press'],
-  ['net', 'rankings/basketball-women/d1/ncaa-womens-basketball-net-rankings'],
+  ['ap', 'rankings/basketball-men/d1/associated-press'],
+  ['net', 'rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings'],
 ]) {
   try {
     const data = await getJson(`${API}/${path}`);
@@ -276,7 +276,7 @@ try {
   // against a frozen page; the NCAA feed cannot supply height, class, hometown
   // or previous school (its year/elig fields are empty on every row), so this
   // page is the only source for them.
-  const rosterText = await pageText('https://kuathletics.com/sports/womens-basketball/roster');
+  const rosterText = await pageText('https://kuathletics.com/sports/mens-basketball/roster');
   fs.writeFileSync('scraped/roster-page.txt', rosterText);
   const roster = parseRoster(rosterText);
   fs.writeFileSync('scraped/roster.json', JSON.stringify(roster, null, 1));
@@ -290,7 +290,7 @@ try {
   // Parsing lives in schedule-parser.mjs so it can be tested against a frozen
   // page; reading only the rotator (as this did) found a quarter of the season
   // and could not tell a neutral floor from a home game.
-  const schedText = await pageText('https://kuathletics.com/sports/womens-basketball/schedule');
+  const schedText = await pageText('https://kuathletics.com/sports/mens-basketball/schedule');
   fs.writeFileSync('scraped/schedule-page.txt', schedText);
   const fixtures = parseSchedule(schedText).map((f) => ({
     date: f.date,
@@ -375,7 +375,7 @@ try {
           const fromJson = playersFromJson(payloads);
           if (fromJson.length > players.length) players = fromJson;
         }
-        // A women's basketball roster runs 12-18. Below this we have matched
+        // A men's basketball roster runs 12-18. Below this we have matched
         // page furniture rather than the roster, and the page is kept so the
         // shape can be read off it rather than guessed at.
         const MIN_ROSTER = 8;

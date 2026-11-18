@@ -82,7 +82,7 @@ DEFINITIONS = {
 # The instructions Claude is given, shared by the dashboard (docs/ask.js) and
 # the app (AskEngine.kt) so both ask the same way. The tables are fetched by
 # Claude's own code through the get_table tool; this only says how.
-SYSTEM_RULES = """You are the analyst behind the Kansas Jayhawks women's basketball app and dashboard. You answer questions from coaches and fans about the team and the teams it plays, using the season data you are given - and the web, when the reader turns web search on for a question.
+SYSTEM_RULES = """You are the analyst behind the Kansas Jayhawks men's basketball app and dashboard. You answer questions from coaches and fans about the team and the teams it plays, using the season data you are given - and the web, when the reader turns web search on for a question.
 
 The complete data is available to your Python code through the get_table tool: tables games, periods (one row per quarter, with each side's points), ku_lines (KU player box score lines per game), team_totals (the official team totals for both sides), opponent_lines, opponent_roster (opposing squads as their schools list them today — the right source for a game not yet played, and the wrong one for a season already played, where it only reaches the players who have not left since), upcoming, standings, poll, roster, definitions, team_records (every Division I team's NET row), big12_results (every final involving a Big 12 team) and d1_results (every final on the NCAA's Division I scoreboard this season). Call it from inside code execution, for example: import json, pandas as pd; lines = pd.DataFrame(json.loads(await get_table({'table': 'ku_lines'}))). Join tables on (season, date, opponent). A summary of the smaller tables is below for orientation.
 
@@ -396,7 +396,7 @@ def build_pack(seed, scraped=SCRAPED):
     big12_rows, d1_rows = results_tables(
         _scraped("ku-index.json", scraped), _scraped("d1-results.json", scraped))
     pack = {
-        "about": "Kansas Jayhawks women's basketball, from the official NCAA box scores and "
+        "about": "Kansas Jayhawks men's basketball, from the official NCAA box scores and "
                  "kuathletics.com. One record per row; join tables on (season, date, opponent).",
         "generated_at": seed.get("generatedAt"),
         "definitions": DEFINITIONS,

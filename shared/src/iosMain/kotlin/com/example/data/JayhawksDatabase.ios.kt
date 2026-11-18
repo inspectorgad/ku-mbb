@@ -38,7 +38,7 @@ private val MIGRATION_9_10 = object : Migration(9, 10) {
  */
 fun createDatabase(): JayhawksDatabase {
     val documents = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).first() as String
-    return Room.databaseBuilder<JayhawksDatabase>(name = "$documents/ku_wbb.db")
+    return Room.databaseBuilder<JayhawksDatabase>(name = "$documents/ku_mbb.db")
         .addMigrations(MIGRATION_9_10)
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)

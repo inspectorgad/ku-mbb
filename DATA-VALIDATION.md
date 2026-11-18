@@ -1,4 +1,4 @@
-# Data validation — KU Women's Basketball 2025-26
+# Data validation — KU Men's Basketball 2025-26
 
 Result: **PASS**. The full 2025-26 season is retrievable from the same
 two-source pipeline the ku-volleyball app uses, and the data is internally
@@ -7,7 +7,7 @@ consistent. Raw evidence lives in `probe/` (captured by the
 
 ## Source 1: NCAA API (`ncaa-api.henrygd.me`)
 
-- Scanned the daily scoreboard `basketball-women/d1` from 2025-11-01 to
+- Scanned the daily scoreboard `basketball-men/d1` from 2025-11-01 to
   2026-04-10: **36 Kansas games found, 0 scan errors** — 30 regular-season
   games, 2 Big 12 tournament games, and a 4-game WBIT run (final record
   22-14, ending in the WBIT title game loss at BYU on 2026-03-30).

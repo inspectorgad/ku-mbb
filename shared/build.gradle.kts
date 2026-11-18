@@ -38,7 +38,7 @@ room {
 kotlin {
   android {
     // Must differ from the app's com.example; the Kotlin packages don't change.
-    namespace = "io.github.inspectorgad.kuwbb.shared"
+    namespace = "io.github.inspectorgad.kumbb.shared"
     compileSdk = 37
     minSdk = 24
     // commonTest runs on the JVM too (testAndroidHostTest), so the answers the

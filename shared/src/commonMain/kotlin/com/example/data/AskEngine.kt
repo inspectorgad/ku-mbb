@@ -400,8 +400,8 @@ class AskEngine(
          * for the season data.
          */
         val PACK_URLS = listOf(
-            "https://inspectorgad.github.io/ku-wbb/ask-data.json",
-            "https://github.com/inspectorgad/ku-wbb/releases/latest/download/ask-data.json",
+            "https://inspectorgad.github.io/ku-mbb/ask-data.json",
+            "https://github.com/inspectorgad/ku-mbb/releases/latest/download/ask-data.json",
         )
 
         // One round trip can include several runs of Claude's code, hence the
@@ -623,7 +623,7 @@ class AskEngine(
                     .put("name", "get_table")
                     .put(
                         "description",
-                        "Returns one table of the Kansas women's basketball season data (or, for " +
+                        "Returns one table of the Kansas men's basketball season data (or, for " +
                             "opponent_roster, team_records and big12_results, data on other teams) " +
                             "as a JSON string: " +
                             "a list of records (one per row) for every table except 'definitions' (a dict of " +

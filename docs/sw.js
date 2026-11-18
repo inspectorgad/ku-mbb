@@ -1,4 +1,4 @@
-// Service worker for the KU Women's Basketball dashboard.
+// Service worker for the KU Men's Basketball dashboard.
 //
 // What it is for: a phone added this to the home screen, so it should open and
 // show the last-known season even in a gym with no signal. What it must not do
@@ -11,7 +11,7 @@
 // Bumping this drops every previously cached response on activate, which is
 // how a stale feed already sitting in a phone's cache gets thrown away.
 const VERSION = "v1";
-const CACHE = `ku-wbb-${VERSION}`;
+const CACHE = `ku-mbb-${VERSION}`;
 
 // Enough to open cold with no network. ask-data.json is deliberately not
 // precached: it is cached on first successful fetch instead, so a fresh

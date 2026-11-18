@@ -70,8 +70,8 @@ export function parseSchedule(schedText) {
   const fixtures = [];
 
   // Source 1 — the rotator's accessibility labels:
-  // "Upcoming Event: Women's Basketball versus Omaha on November 3, 2026 at 6:30 p.m. CT"
-  const re = /Upcoming Event: Women's Basketball (versus|at) (.+?) on ([A-Z][a-z]+) (\d{1,2}), (\d{4})(?: at ([^\n]+?))?\s*$/gm;
+  // "Upcoming Event: Men's Basketball versus Omaha on November 3, 2026 at 6:30 p.m. CT"
+  const re = /Upcoming Event: Men's Basketball (versus|at) (.+?) on ([A-Z][a-z]+) (\d{1,2}), (\d{4})(?: at ([^\n]+?))?\s*$/gm;
   for (const m of schedText.matchAll(re)) {
     const month = MONTHS.indexOf(m[3]) + 1;
     if (month === 0) continue;
@@ -94,7 +94,7 @@ export function parseSchedule(schedText) {
   //     Sioux Falls, S.D. / TV: BTN+ / Nov 14 / (Sat) / 3:30 p.m. CT / History
   //
   // A basketball season spans two calendar years, so the page title gives the
-  // first ("2026-27 Women's Basketball Schedule") and Jan-Jul belongs to the
+  // first ("2026-27 Men's Basketball Schedule") and Jan-Jul belongs to the
   // year after it.
   const seasonYear = Number(/\b(20\d{2})\b/.exec(schedText)?.[1]) || new Date().getUTCFullYear();
   const SHORT = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2})$/;
@@ -141,7 +141,7 @@ export function parseSchedule(schedText) {
     // A tournament name sits on the line above "vs"/"at" when there is one
     // ("Cancun Challenge"). Anything that is obviously page furniture is not.
     const above = lines[i - 1] || '';
-    const event = above && !/^(History|Skip Ad|MENU|Explore |Sponsored|Add To|Text Only|Live Stats|Game Info)/.test(above) &&
+    const event = above && !/^(History|Skip Ad|MENU|Explore |Sponsored|Add To|Text Only|Live Stats|Game Info|Game Center|Listen)/.test(above) &&
       !SHORT.test(above) && !CITY.test(above) && above.length < 60 && /[A-Za-z]/.test(above)
       ? above : null;
 

@@ -14,6 +14,26 @@ has to be found again in the other, and that is accepted.
 
 ---
 
+## Where this repo has got to
+
+This document was written as a plan for a fresh port. `inspectorgad/ku-mbb` is that
+port, part-done. What is finished here:
+
+| Step | State |
+|---|---|
+| §1 Verify the data sources | **Done.** `scripts/probe-ku-mbb.mjs` ran against the live NCAA API on 18 Nov and passed; §1 below records what it found, including the NET slug and the two-period linescore. |
+| §2 Rename | **Done.** Identity, paths, URLs, bundle IDs, the database filename and the Keystore alias all say men's/MBB. The parser fixtures are genuine men's pages captured by the probe. |
+| §3 Quarters → halves | **Not started.** ~93 references across 21 files still count four quarters. |
+| §4 Rebuild the seed | **Not started.** `app/src/main/assets/seed.json` ships its shape with no season in it, so four `ShippedSeedTest` cases skip. |
+| §5 Infrastructure | **Not started.** `.github/workflows` is parked at `.github/workflows-disabled` so nothing fires before it is meant to; Pages, the Apple secrets and a fresh upload keystore are still to do. |
+| §6-§9 | Unchanged guidance; read them. |
+
+One thing §1 could not settle: no overtime game fell inside the 32 the probe read,
+so the **shape of a men's overtime linescore is still unverified**. Find out before
+§3 treats period 3 as overtime.
+
+---
+
 ## 0. What you are forking
 
 An Android + iPhone + web app for one basketball team, built as:
@@ -53,7 +73,7 @@ The women's app reads:
 | `https://kuathletics.com/sports/womens-basketball/roster` | KU's roster and player bios |
 | Opposing schools' own roster pages | Opponent rosters |
 
-The exact NCAA paths in use (read `scripts/scrape-ku-wbb.mjs`):
+The exact NCAA paths in use (read `scripts/scrape-ku-mbb.mjs`):
 
 ```
 /scoreboard/basketball-women/d1/{YYYY}/{MM}/{DD}
@@ -97,7 +117,7 @@ Points summed per player matched the final score in 64/64 team-games.
 **One operational finding.** The public NCAA API instance returns intermittent `502`s —
 7 of ~160 scoreboard days in this run. That is why the probe found 32 games rather than
 the full season; it has no retry and no index. **The scraper already handles this
-correctly** — `scripts/scrape-ku-wbb.mjs` marks a date scanned only on a 404, and
+correctly** — `scripts/scrape-ku-mbb.mjs` marks a date scanned only on a 404, and
 leaves it unscanned on any other failure so a transient error retries the next night.
 Do not "simplify" that. Read the comment at the `catch`.
 
@@ -132,13 +152,14 @@ Measured on the current tree, excluding `.git`, `node_modules`, `scraped/`, `pro
 | `KUWBB` | 4 | 11 |
 | `ku_wbb` | 4 | 6 |
 
-Four files carry the sport in their **name** and must be renamed:
+Four files carry the sport in their **name** and must be renamed (done in this
+repo; the ku-wbb names are given so the mapping is readable):
 
 ```
-scripts/scrape-ku-wbb.mjs
-scripts/probe-ku-wbb.mjs
-ios/App/KUWBBApp.swift
-docs/ku-wbb.ics
+scripts/scrape-ku-wbb.mjs  ->  scripts/scrape-ku-mbb.mjs
+scripts/probe-ku-wbb.mjs   ->  scripts/probe-ku-mbb.mjs
+ios/App/KUWBBApp.swift     ->  ios/App/KUMBBApp.swift
+docs/ku-wbb.ics            ->  docs/ku-mbb.ics
 ```
 
 Identity values to change, with where they live:
@@ -158,6 +179,13 @@ Identity values to change, with where they live:
 The Kotlin package stays `com.example` (the namespace is `com.example`; only the
 `applicationId` is the real identity). Renaming the package is optional churn — it
 touches every file for no functional gain. Leave it.
+
+**What the rename does not cover: the icon.** `scripts/icon-art.mjs` draws a
+basketball on KU blue with no lettering, so it ports across unchanged and correctly -
+and that means a phone with both apps installed shows the same icon twice, told apart
+only by the label underneath. Nothing breaks; it is a decision to take, not a bug.
+Changing it is a few lines in `icon-art.mjs` and a re-run of `make-icons.mjs` and
+`make-web-icons.mjs`.
 
 **The one rename that is not cosmetic:** the Keystore alias and the database filename.
 Because this is a new app with a new `applicationId`, it installs alongside the
@@ -428,14 +456,14 @@ Read these in the fork, in this order:
 | File | Why |
 |---|---|
 | `README.md` | What the app does, screen by screen. Rewrite it for the men's team early — it is the spec you will argue with. |
-| `scripts/scrape-ku-wbb.mjs` | The header comment explains every data source and why each one is used. |
+| `scripts/scrape-ku-mbb.mjs` | The header comment explains every data source and why each one is used. |
 | `scripts/schedule-parser.mjs` | The two-listing merge and the rank split, with the reasoning. |
 | `shared/.../data/Seeder.kt` | The sync rules, the repairs, the feed-owned/user-owned split. |
 | `shared/.../data/AskEngine.kt` | The Anthropic API loop. Long, heavily commented, worth the read before changing anything. |
 | `scripts/ask_pack.py` | `SYSTEM_RULES` — the prompt that decides how good Ask Claude's answers are. |
 | `DATA-VALIDATION.md` | The cross-checks the seed build runs. |
 | `APPLE-SETUP.md`, `PLAY-SETUP.md` | Store setup, accurate as written. |
-| `PORT-PLAN.md` | The plan used when this app moved to shared Kotlin. Useful as a model of how a port of this codebase is actually sequenced. |
+| `PORT-PLAN.md` (in ku-wbb, not here) | The plan used when that app moved to shared Kotlin. Useful as a model of how a port of this codebase is actually sequenced. It is about work already finished, so it was not copied across. |
 
 The comments in this codebase explain *why*, not *what*. Where one looks
 over-explained, it is usually load-bearing — it is there because the obvious thing was

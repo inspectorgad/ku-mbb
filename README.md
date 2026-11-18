@@ -1,15 +1,22 @@
-# KU Women's Basketball
+# KU Men's Basketball
 
-An Android app and a web dashboard for following the Kansas Jayhawks women's
-basketball team: every game with quarter scores and both teams' box scores,
-season splits and shooting efficiency, the Big 12 standings and the AP poll,
-and a question box that answers from the season data. Updated automatically
-through the season, and again within minutes of a game going final.
+An Android app, an iPhone app and a web dashboard for following the Kansas
+Jayhawks men's basketball team: every game with half-by-half scores and both
+teams' box scores, season splits and shooting efficiency, the Big 12 standings
+and the AP and NET rankings, and a question box that answers from the season
+data. Updated automatically through the season, and again within minutes of a
+game going final.
 
-Modeled on the
-[ku-volleyball](https://github.com/inspectorgad/ku-volleyball) app, and seeded
-with the complete 2025-26 season — 36 games, WBIT finalists — plus the 34-game
-2026-27 schedule.
+Built from the [ku-wbb](https://github.com/inspectorgad/ku-wbb) app, which was
+itself modeled on
+[ku-volleyball](https://github.com/inspectorgad/ku-volleyball). The 2026-27
+schedule is 30 games.
+
+**This port is not finished**, so the rest of this README describes the app it
+is being ported into rather than what runs today. The seed ships empty — its
+shape, with no season in it — until the first scrape fills it, and the code
+still counts a game in four quarters rather than two halves. KU-MBB-PORT.md is
+the plan and says what is left.
 
 ## The app
 
@@ -79,7 +86,7 @@ excluded from cloud backup and device transfer, and sent only to
 
 ## Season dashboard
 
-**https://inspectorgad.github.io/ku-wbb/**
+**https://inspectorgad.github.io/ku-mbb/**
 
 The same data as a web page: season picker, game-by-game margins, team
 leaders, the full schedule with a box score behind every played game, season
@@ -92,12 +99,12 @@ stat page that quietly shows yesterday's numbers is worse than one that admits
 it is offline.
 
 The schedule is also a calendar feed you can subscribe to —
-[`docs/ku-wbb.ics`](https://inspectorgad.github.io/ku-wbb/ku-wbb.ics) — which
+[`docs/ku-mbb.ics`](https://inspectorgad.github.io/ku-mbb/ku-mbb.ics) — which
 refreshes itself as tip times and broadcasts are set.
 
 ## Data pipeline
 
-1. **`scripts/scrape-ku-wbb.mjs`** finds KU games through the
+1. **`scripts/scrape-ku-mbb.mjs`** finds KU games through the
    [NCAA API](https://github.com/henrygd/ncaa-api) scoreboard, captures each
    finished game's official box score for both teams, and pulls the roster and
    schedule from kuathletics.com. It runs six times a day, on the :37 — the
@@ -139,7 +146,7 @@ for the next scheduled run.
 Both are flagged in the app and stated in the instructions Ask is given.
 
 Install the latest build directly on a phone:
-`https://github.com/inspectorgad/ku-wbb/releases/latest/download/app-debug.apk`
+`https://github.com/inspectorgad/ku-mbb/releases/latest/download/app-debug.apk`
 
 ### If Advanced Protection blocks the install
 
@@ -195,7 +202,7 @@ The pipeline scripts run on their own:
 ```sh
 python3 scripts/update-seed.py      # rebuild the seed from scraped/
 python3 scripts/build-dashboard.py  # rebuild docs/dashboard.html
-python3 scripts/ics_feed.py         # rebuild docs/ku-wbb.ics
+python3 scripts/ics_feed.py         # rebuild docs/ku-mbb.ics
 python3 scripts/ask_pack.py         # rebuild docs/ask-data.json
 python3 -m unittest discover -s scripts -p 'test_*.py'
 node --test scripts/*.test.mjs

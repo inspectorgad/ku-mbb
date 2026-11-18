@@ -1,4 +1,4 @@
-# Publishing KU WBB to Play Store internal testing
+# Publishing KU MBB to Play Store internal testing
 
 Internal testing distributes the app through the Play Store itself to up to
 100 named testers — no sideloading, so Advanced Protection and Play Protect
@@ -7,7 +7,7 @@ never interfere, and updates install automatically.
 CI already produces the signed Play bundle. Every build attaches
 `app-release.aab` to the rolling release:
 
-    https://github.com/inspectorgad/ku-wbb/releases/latest/download/app-release.aab
+    https://github.com/inspectorgad/ku-mbb/releases/latest/download/app-release.aab
 
 ## One-time setup (about 30 minutes, $25)
 
@@ -18,7 +18,7 @@ CI already produces the signed Play bundle. Every build attaches
    take a day or two to clear.
 
 2. **Create the app**: Play Console → All apps → **Create app**.
-   - App name: `KU WBB` (internal testing isn't publicly listed)
+   - App name: `KU MBB` (internal testing isn't publicly listed)
    - Default language: English (US) · App or game: App · Free
    - Declarations: accept.
 
