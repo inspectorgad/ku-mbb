@@ -29,11 +29,17 @@ android {
       // Play App Signing upload key. Google re-signs with the app signing
       // key it holds, and a leaked upload key can be reset from the Play
       // Console, which is what makes the committed-keystore setup tolerable.
+      //
+      // This app's own key, generated for it. The fork arrived carrying the
+      // volleyball app's — password and all, two apps removed by then — and a
+      // second app must not be signed by the first one's upload key: the first
+      // AAB uploaded to the Play Console is what establishes it, and resetting
+      // it afterwards is a support request rather than a setting.
       val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/upload.keystore"
       storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD") ?: "kuvb-upload-2026"
+      storePassword = System.getenv("STORE_PASSWORD") ?: "kumbb-upload-2026"
       keyAlias = "upload"
-      keyPassword = System.getenv("KEY_PASSWORD") ?: "kuvb-upload-2026"
+      keyPassword = System.getenv("KEY_PASSWORD") ?: "kumbb-upload-2026"
     }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")

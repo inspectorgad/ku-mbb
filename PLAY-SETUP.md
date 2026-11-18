@@ -60,7 +60,7 @@ from the release link and upload it as a new internal-testing release
 ## Notes
 
 - The upload keystore (`upload.keystore.base64`, password
-  `kuvb-upload-2026`) is committed to this public repo for CI
+  `kumbb-upload-2026`) is committed to this public repo for CI
   self-containment, mirroring the debug keystore. This is tolerable only
   because Play App Signing holds the real key and upload keys are
   resettable — but moving both to GitHub Actions secrets is better

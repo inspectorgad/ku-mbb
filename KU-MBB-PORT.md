@@ -351,9 +351,14 @@ and you will need an App ID and an app record created at developer.apple.com.
 password is in `app/build.gradle.kts` in plain text. That is deliberate — Play App
 Signing holds the real key, so the upload key is a replaceable credential. **Generate
 your own upload keystore anyway.** Do not ship a second app signed by the first app's
-upload key. (The current default password, `kuvb-upload-2026`, is a leftover from the
-volleyball app this one was forked from — a small illustration of how fork artefacts
-survive.)
+upload key.
+
+**Done in this repo.** The fork arrived carrying `kuvb-upload-2026`, the volleyball
+app's password, two apps removed by then — a small illustration of how fork artefacts
+survive. `upload.keystore.base64` is now this app's own key and the password is
+`kumbb-upload-2026`. It matters more than it looks: the first AAB uploaded to the Play
+Console is what *establishes* the upload key for that app, and changing it afterwards
+is a support request rather than a setting.
 
 ### Pages
 
