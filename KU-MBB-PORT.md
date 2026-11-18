@@ -112,10 +112,16 @@ The player stat fields are identical to the women's feed — `points`,
 `fieldGoalsMade/Attempted`, `threePointsMade/Attempted`, `freeThrowsMade/Attempted`,
 `offensiveRebounds`, `totalRebounds`, `assists`, `steals`, `blockedShots`, `turnovers`,
 `personalFouls`, `minutesPlayed`, `starter`. The whole stats layer ports untouched.
-Points summed per player matched the final score in 64/64 team-games.
+Points summed per player matched the final score in 64 of 64 team-games on the
+first run, and 63 of 64 on a second run from GitHub's own network: that one re-ran
+over a slightly different set of games and found Princeton's 2025-11-15 box score
+summing to 61 against a final of 57. So **the feed is not perfectly self-consistent
+and the importer must not assume it is** - which is what the women's app already
+does: it stores the final score from the game record and the player rows as given,
+and never derives one from the other. Keep that.
 
 **One operational finding.** The public NCAA API instance returns intermittent `502`s —
-7 of ~160 scoreboard days in this run. That is why the probe found 32 games rather than
+7 of ~160 scoreboard days in the first run and 9 in the second. That is why the probe found 32 games rather than
 the full season; it has no retry and no index. **The scraper already handles this
 correctly** — `scripts/scrape-ku-mbb.mjs` marks a date scanned only on a 404, and
 leaves it unscanned on any other failure so a transient error retries the next night.
