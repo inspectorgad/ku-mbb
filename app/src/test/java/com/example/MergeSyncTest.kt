@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.data.Game
 import com.example.data.JayhawksDatabase
+import com.example.data.OpponentRosterPlayer
 import com.example.data.Player
 import com.example.data.Seeder
 import com.example.data.StatLine
@@ -478,7 +479,7 @@ class MergeSyncTest {
     @Test
     fun `opponent rosters are stored with their bios`() = runTest {
         val json = withRoster(
-            """{"team": "arizona", "fetchedAt": "2026-10-21", "players": [
+            """{"team": "ariz", "fetchedAt": "2026-10-21", "players": [
                  {"name": "Arynn Finley", "jerseyNumber": "2", "position": "G",
                   "height": "5-10", "academicYear": "Fr.",
                   "hometown": "Rancho Cucamonga, Calif.",
@@ -486,7 +487,8 @@ class MergeSyncTest {
         )
         Seeder.merge(json, db.dao())
         val row = db.dao().opponentRosterOnce().single()
-        assertEquals("arizona", row.team)
+        // The seed's key for Arizona: the state-name rule collapses it.
+        assertEquals("ariz", row.team)
         assertEquals("Arynn Finley", row.name)
         assertEquals("5-10", row.height)
         assertEquals("Rancho Cucamonga, Calif.", row.hometown)
@@ -830,5 +832,102 @@ class MergeSyncTest {
         Seeder.merge(emptyJson(), db.dao())
 
         assertEquals(names.sorted(), db.dao().gamesOnce().map { it.opponent }.sorted())
+    }
+
+    // --- names the full team-name rule now reads as one school --------------
+    //
+    // normTeam lacked the state-name rule the seed is keyed with, so "Middle
+    // Tenn." and "Middle Tennessee" were two teams on the phone. Three releases
+    // on 18 Nov 2026 carried both for the 6 Nov game, the result with its box
+    // score and a fixture with nothing, and a phone that synced one still holds
+    // both. Each repair runs at the start of a sync, so each is merged twice.
+
+    private fun middleTenn(): JSONObject = JSONObject(
+        """{"players": [{"name": "Ada Alpha"}], "games": [
+             {"date": "2026-11-06", "opponent": "Middle Tenn.", "season": "2026-27",
+              "site": "home", "teamScore": 89, "opponentScore": 45,
+              "periodScores": "36-14, 53-31",
+              "lines": [{"player": "Ada Alpha", "min": 20, "pts": 12}]}]}"""
+    )
+
+    @Test
+    fun `the ghost fixture beside a played game is dropped and the game kept`() = runTest {
+        val dao = db.dao()
+        // What a phone that synced on 18 Nov is holding: the played game...
+        Seeder.merge(middleTenn(), dao)
+        val played = dao.gamesOnce().single()
+        // ...and the page's fixture for the same night, under its own spelling.
+        dao.insertGame(
+            Game(date = "2026-11-06", opponent = "Middle Tennessee", season = "2026-27",
+                site = "home", venue = "Allen Fieldhouse")
+        )
+        assertEquals(2, dao.gamesOnce().size)
+
+        Seeder.merge(middleTenn(), dao)
+        Seeder.merge(middleTenn(), dao)
+
+        val game = dao.gamesOnce().single()
+        assertEquals(played.id, game.id)
+        assertEquals("Middle Tenn.", game.opponent)
+        assertEquals(89, game.teamScore)
+        assertEquals(12, dao.statLinesOnce().single().points)
+    }
+
+    @Test
+    fun `two spellings that both carry a result are both kept`() = runTest {
+        val dao = db.dao()
+        dao.insertGame(Game(date = "2026-11-06", opponent = "Middle Tenn.", season = "2026-27",
+            teamScore = 89, opponentScore = 45))
+        dao.insertGame(Game(date = "2026-11-06", opponent = "Middle Tennessee", season = "2026-27",
+            teamScore = 89, opponentScore = 45))
+
+        Seeder.merge(emptyJson(), dao)
+        Seeder.merge(emptyJson(), dao)
+
+        // A duplicate on screen is better than deleting a result to tidy it up.
+        assertEquals(2, dao.gamesOnce().size)
+    }
+
+    @Test
+    fun `two rows spelled the same are not this repair's business`() = runTest {
+        val dao = db.dao()
+        // One of them may be a game somebody typed in.
+        dao.insertGame(Game(date = "2026-12-01", opponent = "Denver", season = "2026-27"))
+        dao.insertGame(Game(date = "2026-12-01", opponent = "Denver", season = "2026-27"))
+
+        Seeder.merge(emptyJson(), dao)
+        Seeder.merge(emptyJson(), dao)
+
+        assertEquals(2, dao.gamesOnce().size)
+    }
+
+    @Test
+    fun `different schools on one night are never folded together`() = runTest {
+        val dao = db.dao()
+        // A tournament weekend: two opponents, neither played yet.
+        dao.insertGame(Game(date = "2026-11-19", opponent = "Houston", season = "2026-27"))
+        dao.insertGame(Game(date = "2026-11-19", opponent = "Florida", season = "2026-27"))
+
+        Seeder.merge(emptyJson(), dao)
+
+        assertEquals(listOf("Florida", "Houston"), dao.gamesOnce().map { it.opponent }.sorted())
+    }
+
+    @Test
+    fun `a roster stored under an old key is replaced, not kept beside the new one`() = runTest {
+        val dao = db.dao()
+        // A phone that synced before the seed's roster keys were corrected.
+        dao.insertOpponentRoster(
+            listOf(OpponentRosterPlayer(team = "arizona", name = "Old Copy", fetchedAt = "2026-10-14"))
+        )
+        val corrected = withRoster(
+            """{"team": "ariz", "fetchedAt": "2026-10-21", "players": [{"name": "New Copy"}]}""",
+            """{"team": "utah", "fetchedAt": "2026-10-21", "players": [{"name": "Untouched"}]}"""
+        )
+        Seeder.merge(corrected, dao)
+        Seeder.merge(corrected, dao)
+
+        val rows = dao.opponentRosterOnce().map { it.team to it.name }.sortedBy { it.first }
+        assertEquals(listOf("ariz" to "New Copy", "utah" to "Untouched"), rows)
     }
 }

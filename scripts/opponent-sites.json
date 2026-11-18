@@ -1,8 +1,9 @@
 {
  "_comment": [
-  "Roster page per school, keyed by the same normalized team name",
-  "update-seed.py's norm_team() produces: lower-cased, dots removed,",
-  "'state' shortened to 'st'. There is no pattern to athletics domains",
+  "Roster page per school, keyed by a normalized team name: lower-cased,",
+  "dots removed, 'state' shortened to 'st'. update-seed.py runs each key",
+  "through norm_team() before use, so a key in this older form ('arizona')",
+  "still lands on the seed's key ('ariz'). There is no pattern to athletics domains",
   "(kuathletics.com, goshockers.com, hailstate.com), so this map is written",
   "by hand and confirmed by the scrape log rather than guessed at runtime.",
   "",

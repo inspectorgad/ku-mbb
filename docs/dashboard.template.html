@@ -1467,12 +1467,34 @@ function big12() {
 // ---------- render ----------
 // ---------- opponents ----------
 // The same rule the seeder keys games with and the app groups meetings with
-// (scripts/update-seed.py, data/TeamNames.kt). "(exh.)" is deliberately left
-// alone: an exhibition counts for nothing and must not join a record.
-const normTeam = n => (n || "")
-  .replace(/\s*\(\d+\)\s*$/, "").toLowerCase().replace(/\./g, "")
-  .replace(/\bstate\b/g, "st").replace(/\buniversity\b/g, "")
-  .replace(/\s+/g, " ").trim();
+// (norm_team in scripts/seed_text.py, data/TeamNames.kt), and it must stay
+// exactly that: opponent rosters are stored under the seed's key. This copy
+// once lacked the state-name rule and the seed's did not. "(exh.)" is
+// deliberately left alone: an exhibition counts for nothing and must not join
+// a record. docs/team-names.test.mjs checks it against
+// scripts/fixtures/team-keys.json, the seed's own keys.
+// BEGIN normTeam
+const TEAM_STATES = {
+  alabama: "ala", arizona: "ariz", arkansas: "ark", california: "calif",
+  carolina: "caro", colorado: "colo", connecticut: "conn", florida: "fla",
+  georgia: "ga", illinois: "ill", indiana: "ind", kentucky: "ky",
+  louisiana: "la", maryland: "md", massachusetts: "mass", michigan: "mich",
+  minnesota: "minn", mississippi: "miss", missouri: "mo", nebraska: "neb",
+  oklahoma: "okla", oregon: "ore", pennsylvania: "pa", tennessee: "tenn",
+  virginia: "va", washington: "wash", wisconsin: "wis",
+};
+const TEAM_STATE_RE = new RegExp("\\b(" + Object.keys(TEAM_STATES).join("|") + ")\\b", "g");
+// Whole names no rule reconciles: the page's on the left, the NCAA's on the right.
+const TEAM_ALIASES = { "northern iowa": "uni", "lsu new orleans": "new orleans" };
+const normTeam = n => {
+  const k = (n || "")
+    .replace(/\s*\(\d+\)\s*$/, "").toLowerCase().replace(/\./g, "")
+    .replace(/\bstate\b/g, "st").replace(/\buniversity\b/g, "")
+    .replace(TEAM_STATE_RE, m => TEAM_STATES[m])
+    .replace(/\s+/g, " ").trim();
+  return TEAM_ALIASES[k] ?? k;
+};
+// END normTeam
 
 const eFG = t => pct(t.fgm + 0.5 * t.tpm, t.fga);
 const TS = t => t.fga + 0.44 * t.fta ? t.pts / (2 * (t.fga + 0.44 * t.fta)) : 0;

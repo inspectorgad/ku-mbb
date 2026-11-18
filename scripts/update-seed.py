@@ -246,6 +246,19 @@ for path in sorted(glob.glob("scraped/ncaa-game-*.json")):
 # score from an earlier season carries the number she wore then, so matching on
 # it silently files last year's lines under whoever inherited the shirt.
 opponent_rosters = load_json("scraped/opponent-rosters.json", {})
+# The scrape keys a roster by its entry in opponent-sites.json, written by hand
+# in an older form of the rule ("arizona", "west virginia"). Everything that
+# looks a roster up - the heights just below, the app, the dashboard - asks
+# with norm_team(), which now says "ariz" and "west va". So the keys are put
+# into that form here, once, rather than renaming the site map and the scrape's
+# cache with it. Until this, five of the sixteen rosters matched nothing.
+_rekeyed = {}
+for _key, _stored in opponent_rosters.items():
+    _norm = norm_team(_key)
+    if _norm in _rekeyed:
+        raise SystemExit(f"opponent-sites.json: {_key!r} and another entry are one school ({_norm!r})")
+    _rekeyed[_norm] = _stored
+opponent_rosters = _rekeyed
 
 # Names are repaired on both sides. The box-score side was already being
 # repaired when the lines were read; doing it here too closes the asymmetry —

@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T17:00:43Z",
+ "generatedAt": "2026-11-18T17:49:04Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -7668,7 +7668,8 @@
      "blk": 0,
      "pf": 1,
      "pts": 2,
-     "gs": 0
+     "gs": 0,
+     "height": "6-2"
     },
     {
      "player": "Brenen Lorient",
@@ -7689,7 +7690,8 @@
      "blk": 1,
      "pf": 4,
      "pts": 18,
-     "gs": 1
+     "gs": 1,
+     "height": "6-9"
     },
     {
      "player": "Chance Moore",
@@ -8958,7 +8960,8 @@
      "blk": 0,
      "pf": 3,
      "pts": 17,
-     "gs": 1
+     "gs": 1,
+     "height": "6-1"
     },
     {
      "player": "Jalin Holland",
@@ -8979,7 +8982,8 @@
      "blk": 0,
      "pf": 2,
      "pts": 2,
-     "gs": 0
+     "gs": 0,
+     "height": "6-5"
     },
     {
      "player": "Isaiah Johnson",
@@ -9105,7 +9109,8 @@
      "blk": 0,
      "pf": 0,
      "pts": 0,
-     "gs": 0
+     "gs": 0,
+     "height": "6-5"
     }
    ],
    "teamStats": {
@@ -11016,7 +11021,8 @@
      "blk": 0,
      "pf": 2,
      "pts": 13,
-     "gs": 1
+     "gs": 1,
+     "height": "6-7"
     },
     {
      "player": "Motiejus Krivas",
@@ -11037,7 +11043,8 @@
      "blk": 6,
      "pf": 4,
      "pts": 14,
-     "gs": 1
+     "gs": 1,
+     "height": "7-2"
     },
     {
      "player": "Koa Peat",
@@ -11850,7 +11857,8 @@
      "blk": 0,
      "pf": 4,
      "pts": 2,
-     "gs": 0
+     "gs": 0,
+     "height": "6-10"
     },
     {
      "player": "Kanye Clary",
@@ -11871,7 +11879,8 @@
      "blk": 0,
      "pf": 2,
      "pts": 5,
-     "gs": 1
+     "gs": 1,
+     "height": "6-0"
     },
     {
      "player": "Kirk Cole",
@@ -11955,7 +11964,8 @@
      "blk": 0,
      "pf": 0,
      "pts": 3,
-     "gs": 0
+     "gs": 0,
+     "height": "6-6"
     },
     {
      "player": "Jaylen Curry",
@@ -11997,7 +12007,8 @@
      "blk": 0,
      "pf": 2,
      "pts": 21,
-     "gs": 1
+     "gs": 1,
+     "height": "6-10"
     },
     {
      "player": "Daniel Guetta",
@@ -12060,7 +12071,8 @@
      "blk": 0,
      "pf": 0,
      "pts": 0,
-     "gs": 0
+     "gs": 0,
+     "height": "6-11"
     },
     {
      "player": "Anthony Roy",
@@ -13207,7 +13219,8 @@
      "blk": 0,
      "pf": 0,
      "pts": 0,
-     "gs": 0
+     "gs": 0,
+     "height": "6-3"
     },
     {
      "player": "Tobe Awaka",
@@ -13354,7 +13367,8 @@
      "blk": 1,
      "pf": 2,
      "pts": 11,
-     "gs": 1
+     "gs": 1,
+     "height": "6-7"
     },
     {
      "player": "Motiejus Krivas",
@@ -13375,7 +13389,8 @@
      "blk": 2,
      "pf": 3,
      "pts": 13,
-     "gs": 1
+     "gs": 1,
+     "height": "7-2"
     },
     {
      "player": "Evan Nelson",
@@ -13661,7 +13676,8 @@
      "blk": 0,
      "pf": 5,
      "pts": 5,
-     "gs": 0
+     "gs": 0,
+     "height": "6-4"
     },
     {
      "player": "Andrija Grbovic",
@@ -20382,7 +20398,7 @@
  ],
  "opponentRosters": [
   {
-   "team": "arizona",
+   "team": "ariz",
    "fetchedAt": "2026-11-18",
    "players": [
     {
@@ -20532,7 +20548,7 @@
    ]
   },
   {
-   "team": "arizona st",
+   "team": "ariz st",
    "fetchedAt": "2026-11-18",
    "players": [
     {
@@ -20955,7 +20971,7 @@
    ]
   },
   {
-   "team": "colorado",
+   "team": "colo",
    "fetchedAt": "2026-11-18",
    "players": [
     {
@@ -21510,7 +21526,7 @@
    ]
   },
   {
-   "team": "oklahoma st",
+   "team": "okla st",
    "fetchedAt": "2026-11-18",
    "players": [
     {
@@ -22374,7 +22390,7 @@
    ]
   },
   {
-   "team": "west virginia",
+   "team": "west va",
    "fetchedAt": "2026-11-18",
    "players": [
     {

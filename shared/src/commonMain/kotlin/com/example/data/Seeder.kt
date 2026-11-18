@@ -130,9 +130,46 @@ object Seeder {
         }
     }
 
+    /**
+     * Folds together rows on one date whose names [normTeam] now reads as one
+     * school, when it once read them as two.
+     *
+     * [normTeam] was missing the state-name rule the seed is keyed with, so
+     * the feed's "Middle Tenn." and the page's "Middle Tennessee" were two
+     * teams here. Three releases on 18 Nov 2026 carried both for the 6 Nov
+     * game: the result with its box score, and a fixture with nothing. A phone
+     * that synced one holds both still, and with the rule corrected they share
+     * a key, so the merge below would update one of them and never see the
+     * other.
+     *
+     * Only rows that differ in spelling are touched. Two rows spelled the same
+     * already shared a key, so they are not this repair's business, and one of
+     * them may be a game somebody typed in. Of a pair, a row with nothing of
+     * its own (no result, no stat lines) goes. A row with a result or lines is
+     * never deleted, since a sync cannot put either back and every table that
+     * points at a game deletes with it.
+     */
+    internal suspend fun healSharedKeys(dao: JayhawksDao) {
+        val groups = dao.gamesOnce()
+            .groupBy { gameKey(it.date, it.opponent) }
+            .values
+            .filter { rows -> rows.map { it.opponent }.distinct().size > 1 }
+        if (groups.isEmpty()) return
+        val withLines = dao.statLinesOnce().map { it.gameId }.toSet()
+        val keeps = { g: Game -> g.teamScore != null || g.opponentScore != null || g.id in withLines }
+        for (rows in groups) {
+            val kept = rows.filter(keeps)
+            // Nothing in the group has anything of its own: keep the oldest row,
+            // which is the one the phone has had longest.
+            val drop = if (kept.isEmpty()) rows.sortedBy { it.id }.drop(1) else rows.filterNot(keeps)
+            for (row in drop) dao.deleteGame(row)
+        }
+    }
+
     /** Also used by [SeasonSync] for network-fetched season data. */
     suspend fun merge(root: JSONObject, dao: JayhawksDao) {
         healRankedNames(dao)
+        healSharedKeys(dao)
         val existingByName = dao.playersOnce().associateBy { it.name }
         val playerIdsByName = existingByName.mapValues { it.value.id }.toMutableMap()
 
@@ -459,6 +496,14 @@ object Seeder {
             if (rows.isEmpty()) continue
             dao.deleteOpponentRosterFor(team)
             dao.insertOpponentRoster(rows)
+        }
+        // A roster stored under a key that is not in normalized form can never
+        // be found: every lookup asks with normTeam(). The seed keyed five
+        // rosters that way ("arizona" where the rule says "ariz") until its
+        // keys were corrected, so a phone that synced before then holds the
+        // old copies beside the new ones. They go.
+        for (stale in dao.opponentRosterOnce().map { it.team }.distinct()) {
+            if (normTeam(stale) != stale) dao.deleteOpponentRosterFor(stale)
         }
     }
 

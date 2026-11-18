@@ -532,10 +532,18 @@ Each step has a checkpoint. Do not proceed past a red one.
   as non-conference, and refuses to write a seed with more than 18 in a season.
 - **A school can have two names no rule reconciles.** The NCAA's `UNI` is the
   page's Northern Iowa. Those go in `_ALIASES` in `scripts/seed_text.py`; the
-  build raises a workflow warning for a named opponent with no NET row. The
-  Kotlin `normTeam()` and the dashboard's have neither the aliases nor the
-  state-name rule, so the three no longer agree. That is harmless while no
-  opponent roster is keyed under an affected name, but it has not been fixed.
+  build raises a workflow warning for a named opponent with no NET row.
+- **The team-name rule exists three times and they must agree exactly:**
+  `norm_team()` in `seed_text.py`, `normTeam()` in `TeamNames.kt` and the
+  dashboard's. They drifted once. The state-name rule reached only the seed's
+  copy, which split Middle Tennessee in two on phones, and the hand-written
+  keys in `opponent-sites.json` stopped matching five rosters (Arizona,
+  Arizona State, Colorado, Oklahoma State, West Virginia) for the seed's own
+  height lookup. Now `update-seed.py` runs every roster key through
+  `norm_team()`. `scripts/fixtures/team-keys.json` holds the seed's key for
+  the whole field, and `TeamNamesTest`, `docs/team-names.test.mjs` and
+  `test_seed_text.py` all check against it. After changing `norm_team()`, run
+  `python3 scripts/team_keys.py` and port the change to the other two.
 - **An "upcoming" game can be in the past** — the date passed but the box score has not
   landed. Branch on whether there is a result, never on the date. The dashboard shows
   "awaiting result" for exactly this.

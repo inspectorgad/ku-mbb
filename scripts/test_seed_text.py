@@ -129,5 +129,24 @@ class NormTeamKeepsTeamsApart(unittest.TestCase):
         self.assertEqual(collisions, {}, f"these teams share a key: {collisions}")
 
 
+class TeamKeysFixture(unittest.TestCase):
+    """scripts/fixtures/team-keys.json is what the Kotlin and the dashboard
+    copies of this rule are tested against, so it has to be this rule's own
+    answer. A change to norm_team() without regenerating it would let the
+    other two pass against a stale key, which is the drift it exists to stop.
+    """
+
+    def test_the_fixture_is_this_rules_answer(self):
+        import json
+        import os
+
+        path = os.path.join(os.path.dirname(__file__), "fixtures", "team-keys.json")
+        with open(path) as f:
+            keys = json.load(f)
+        self.assertGreater(len(keys), 365, "the fixture should hold the whole field")
+        stale = {n: (k, norm_team(n)) for n, k in keys.items() if norm_team(n) != k}
+        self.assertEqual(stale, {}, "norm_team changed: run python3 scripts/team_keys.py")
+
+
 if __name__ == "__main__":
     unittest.main()
