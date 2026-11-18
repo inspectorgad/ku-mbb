@@ -2,6 +2,7 @@
 Skip to main content
 Pause All Rotators
 University of Kansas Athletics
+Skip Ad
 Skip Scoreboard
 Scoreboard
 Coming Up
@@ -55,9 +56,9 @@ Boxscore
 Upcoming Event: Men's Basketball versus UNLV on November 17, 2026 at 8:30 p.m. CT
 Live
 Men's Basketball
-15
+19
 vs UNLV
-37
+40
 Audio
 Upcoming Event: Men's Basketball versus Auburn/West Virginia on November 18, 2026 at 6:30 or 9 p.m. CT
 Wed. 11/18/26
@@ -118,9 +119,9 @@ Las Vegas, Nev.
 Days
 2
 Hours
-42
+38
 Minutes
-17
+51
 Seconds
 Add To Calendar
 Text Only
