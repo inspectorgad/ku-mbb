@@ -307,6 +307,12 @@ try {
     time: f.time,
     tv: f.tv,
     event: f.event,
+    // The result, where the page has already played the game. Null for a
+    // fixture, and the seed builder must keep that null: an exhibition gets no
+    // box score ever, so this is its only score, while a game yet to be played
+    // has none at all.
+    teamScore: f.teamScore ?? null,
+    opponentScore: f.opponentScore ?? null,
   }));
   fs.writeFileSync('scraped/upcoming.json', JSON.stringify(fixtures, null, 1));
   const withTime = fixtures.filter((f) => f.time).length;

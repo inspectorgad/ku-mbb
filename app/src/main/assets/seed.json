@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T14:10:21Z",
+ "generatedAt": "2026-11-18T14:13:52Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -16920,8 +16920,8 @@
    "city": "Lawrence, KS",
    "tv": "ESPN+",
    "event": "Late Night in the Phog",
-   "teamScore": 0,
-   "opponentScore": 0,
+   "teamScore": 80,
+   "opponentScore": 62,
    "time": "19:00",
    "site": "home",
    "home": true,
@@ -16935,8 +16935,8 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPNU",
-   "teamScore": 0,
-   "opponentScore": 0,
+   "teamScore": 83,
+   "opponentScore": 89,
    "time": "18:00",
    "site": "home",
    "home": true,
@@ -16950,8 +16950,8 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN",
-   "teamScore": 0,
-   "opponentScore": 0,
+   "teamScore": 84,
+   "opponentScore": 90,
    "time": "12:00",
    "site": "home",
    "home": true,
@@ -19359,12 +19359,12 @@
    "venue": "Michelob Ultra Arena",
    "city": "Las Vegas, NV",
    "tv": "ESPN2",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "18:30",
    "site": "neutral",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.834,
+   "ratingSource": "net"
   },
   {
    "date": "2026-11-19",
@@ -19374,8 +19374,6 @@
    "venue": "Michelob Ultra Arena",
    "city": "Las Vegas, NV",
    "tv": "ESPN Family",
-   "teamScore": 0,
-   "opponentScore": 0,
    "site": "neutral",
    "home": false,
    "conference": false
@@ -19388,12 +19386,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN+",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "19:00",
    "site": "home",
    "home": true,
-   "conference": false
+   "conference": false,
+   "winProbability": 0.9889,
+   "ratingSource": "net"
   },
   {
    "date": "2026-11-27",
@@ -19403,12 +19401,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN2",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "16:00",
    "site": "home",
    "home": true,
-   "conference": false
+   "conference": false,
+   "winProbability": 0.8251,
+   "ratingSource": "net"
   },
   {
    "date": "2026-12-01",
@@ -19418,8 +19416,6 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN+",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "19:00",
    "site": "home",
    "home": true,
@@ -19434,12 +19430,12 @@
    "city": "Kansas City, MO",
    "tv": "ESPN",
    "event": "StorageMart Border Showdown",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "16:00",
    "site": "neutral",
    "home": false,
-   "conference": false
+   "conference": false,
+   "winProbability": 0.8469,
+   "ratingSource": "net"
   },
   {
    "date": "2026-12-12",
@@ -19449,12 +19445,12 @@
    "venue": "M&T Bank Center at Harry A. Gampel Pavilion",
    "city": "Storrs, CT",
    "tv": "FOX",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "19:00",
    "site": "away",
    "home": false,
-   "conference": false
+   "conference": false,
+   "winProbability": 0.6894,
+   "ratingSource": "poll"
   },
   {
    "date": "2026-12-19",
@@ -19465,12 +19461,12 @@
    "city": "New York, NY",
    "tv": "CBS",
    "event": "CBS Sports Classic",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "11:00",
    "site": "neutral",
    "home": false,
-   "conference": false
+   "conference": false,
+   "winProbability": 0.7383,
+   "ratingSource": "net"
   },
   {
    "date": "2026-12-22",
@@ -19480,11 +19476,11 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN2",
-   "teamScore": 0,
-   "opponentScore": 0,
    "site": "home",
    "home": true,
-   "conference": false
+   "conference": false,
+   "winProbability": 0.9844,
+   "ratingSource": "net"
   },
   {
    "date": "2026-12-29",
@@ -19494,8 +19490,6 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN2",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "19:00",
    "site": "home",
    "home": true,
@@ -19509,12 +19503,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "CBS",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "12:30",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.8821,
+   "ratingSource": "net"
   },
   {
    "date": "2027-01-06",
@@ -19524,12 +19518,12 @@
    "venue": "Jon M. Huntsman Center",
    "city": "Salt Lake City, UT",
    "tv": "ESPN2",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "22:00",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.9151,
+   "ratingSource": "net"
   },
   {
    "date": "2027-01-09",
@@ -19539,12 +19533,12 @@
    "venue": "Marriott Center",
    "city": "Provo, UT",
    "tv": "ESPN",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "12:00",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.5969,
+   "ratingSource": "poll"
   },
   {
    "date": "2027-01-13",
@@ -19554,12 +19548,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN2 or ESPNU",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "20:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.9169,
+   "ratingSource": "net"
   },
   {
    "date": "2027-01-16",
@@ -19569,12 +19563,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "FOX or FS1",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "13:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.8779,
+   "ratingSource": "net"
   },
   {
    "date": "2027-01-19",
@@ -19584,12 +19578,12 @@
    "venue": "Fifth Third Arena",
    "city": "Cincinnati, OH",
    "tv": "FS1",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "19:30",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.7528,
+   "ratingSource": "net"
   },
   {
    "date": "2027-01-23",
@@ -19600,11 +19594,11 @@
    "city": "Manhattan, KS",
    "tv": "FOX",
    "event": "Dillons Sunflower Showdown",
-   "teamScore": 0,
-   "opponentScore": 0,
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.8746,
+   "ratingSource": "net"
   },
   {
    "date": "2027-01-30",
@@ -19614,12 +19608,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "FOX",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "11:30",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.9226,
+   "ratingSource": "net"
   },
   {
    "date": "2027-02-01",
@@ -19629,12 +19623,12 @@
    "venue": "Fertitta Center",
    "city": "Houston, TX",
    "tv": "ESPN",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "20:00",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.6894,
+   "ratingSource": "poll"
   },
   {
    "date": "2027-02-06",
@@ -19644,12 +19638,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ABC",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "11:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.5778,
+   "ratingSource": "poll"
   },
   {
    "date": "2027-02-09",
@@ -19659,12 +19653,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "Peacock",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "20:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.9131,
+   "ratingSource": "net"
   },
   {
    "date": "2027-02-13",
@@ -19674,12 +19668,12 @@
    "venue": "Hilton Coliseum",
    "city": "Ames, IA",
    "tv": "ESPN or ESPN2",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "13:00",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.3735,
+   "ratingSource": "net"
   },
   {
    "date": "2027-02-17",
@@ -19689,12 +19683,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "Peacock",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "20:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.8734,
+   "ratingSource": "net"
   },
   {
    "date": "2027-02-20",
@@ -19704,11 +19698,11 @@
    "venue": "McKale Center",
    "city": "Tucson, AZ",
    "tv": "ESPN",
-   "teamScore": 0,
-   "opponentScore": 0,
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.44,
+   "ratingSource": "poll"
   },
   {
    "date": "2027-02-24",
@@ -19718,12 +19712,12 @@
    "venue": "Schollmaier Arena",
    "city": "Fort Worth, TX",
    "tv": "ESPN or ESPN2 or ESPNU",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "20:00",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.7078,
+   "ratingSource": "net"
   },
   {
    "date": "2027-02-27",
@@ -19734,12 +19728,12 @@
    "city": "Lawrence, KS",
    "tv": "ESPN or ESPN2",
    "event": "Dillons Sunflower Showdown",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "13:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.9393,
+   "ratingSource": "net"
   },
   {
    "date": "2027-03-01",
@@ -19749,12 +19743,12 @@
    "venue": "Allen Fieldhouse",
    "city": "Lawrence, KS",
    "tv": "ESPN",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "20:00",
    "site": "home",
    "home": true,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.5695,
+   "ratingSource": "net"
   },
   {
    "date": "2027-03-06",
@@ -19764,12 +19758,12 @@
    "venue": "Foster Pavilion",
    "city": "Waco, TX",
    "tv": "CBS",
-   "teamScore": 0,
-   "opponentScore": 0,
    "time": "12:30",
    "site": "away",
    "home": false,
-   "conference": true
+   "conference": true,
+   "winProbability": 0.7567,
+   "ratingSource": "net"
   },
   {
    "date": "2027-03-09",
@@ -19779,8 +19773,6 @@
    "venue": "T-Mobile Center",
    "city": "Kansas City, MO",
    "event": "Phillips 66 Big 12 Tournament",
-   "teamScore": 0,
-   "opponentScore": 0,
    "site": "neutral",
    "home": false,
    "conference": false
@@ -22517,5 +22509,363 @@
     }
    ]
   }
- ]
+ ],
+ "simulation": {
+  "season": "2026-27",
+  "confTotal": 18,
+  "confTeams": 16,
+  "scale": 1.04,
+  "kansas": {
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 0,
+   "rating": 1.5167
+  },
+  "remaining": [
+   {
+    "date": "2026-11-18",
+    "opponent": "West Virginia",
+    "site": "neutral",
+    "conference": true,
+    "key": "west va",
+    "p": 0.834
+   },
+   {
+    "date": "2026-11-23",
+    "opponent": "Denver",
+    "site": "home",
+    "conference": false,
+    "key": "denver",
+    "p": 0.9889
+   },
+   {
+    "date": "2026-11-27",
+    "opponent": "Villanova",
+    "site": "home",
+    "conference": false,
+    "key": "villanova",
+    "p": 0.8251
+   },
+   {
+    "date": "2026-12-06",
+    "opponent": "Missouri",
+    "site": "neutral",
+    "conference": false,
+    "key": "mo",
+    "p": 0.8469
+   },
+   {
+    "date": "2026-12-12",
+    "opponent": "UConn",
+    "site": "away",
+    "conference": false,
+    "key": "uconn",
+    "p": 0.6894
+   },
+   {
+    "date": "2026-12-19",
+    "opponent": "Ohio State",
+    "site": "neutral",
+    "conference": false,
+    "key": "ohio st",
+    "p": 0.7383
+   },
+   {
+    "date": "2026-12-22",
+    "opponent": "Indiana State",
+    "site": "home",
+    "conference": false,
+    "key": "ind st",
+    "p": 0.9844
+   },
+   {
+    "date": "2027-01-02",
+    "opponent": "West Virginia",
+    "site": "home",
+    "conference": true,
+    "key": "west va",
+    "p": 0.8821
+   },
+   {
+    "date": "2027-01-06",
+    "opponent": "Utah",
+    "site": "away",
+    "conference": true,
+    "key": "utah",
+    "p": 0.9151
+   },
+   {
+    "date": "2027-01-09",
+    "opponent": "BYU",
+    "site": "away",
+    "conference": true,
+    "key": "byu",
+    "p": 0.5969
+   },
+   {
+    "date": "2027-01-13",
+    "opponent": "Colorado",
+    "site": "home",
+    "conference": true,
+    "key": "colo",
+    "p": 0.9169
+   },
+   {
+    "date": "2027-01-16",
+    "opponent": "UCF",
+    "site": "home",
+    "conference": true,
+    "key": "ucf",
+    "p": 0.8779
+   },
+   {
+    "date": "2027-01-19",
+    "opponent": "Cincinnati",
+    "site": "away",
+    "conference": true,
+    "key": "cincinnati",
+    "p": 0.7528
+   },
+   {
+    "date": "2027-01-23",
+    "opponent": "Kansas State",
+    "site": "away",
+    "conference": true,
+    "key": "kansas st",
+    "p": 0.8746
+   },
+   {
+    "date": "2027-01-30",
+    "opponent": "Oklahoma State",
+    "site": "home",
+    "conference": true,
+    "key": "okla st",
+    "p": 0.9226
+   },
+   {
+    "date": "2027-02-01",
+    "opponent": "Houston",
+    "site": "away",
+    "conference": true,
+    "key": "houston",
+    "p": 0.6894
+   },
+   {
+    "date": "2027-02-06",
+    "opponent": "Texas Tech",
+    "site": "home",
+    "conference": true,
+    "key": "texas tech",
+    "p": 0.5778
+   },
+   {
+    "date": "2027-02-09",
+    "opponent": "Arizona State",
+    "site": "home",
+    "conference": true,
+    "key": "ariz st",
+    "p": 0.9131
+   },
+   {
+    "date": "2027-02-13",
+    "opponent": "Iowa State",
+    "site": "away",
+    "conference": true,
+    "key": "iowa st",
+    "p": 0.3735
+   },
+   {
+    "date": "2027-02-17",
+    "opponent": "Baylor",
+    "site": "home",
+    "conference": true,
+    "key": "baylor",
+    "p": 0.8734
+   },
+   {
+    "date": "2027-02-20",
+    "opponent": "Arizona",
+    "site": "away",
+    "conference": true,
+    "key": "ariz",
+    "p": 0.44
+   },
+   {
+    "date": "2027-02-24",
+    "opponent": "TCU",
+    "site": "away",
+    "conference": true,
+    "key": "tcu",
+    "p": 0.7078
+   },
+   {
+    "date": "2027-02-27",
+    "opponent": "Kansas State",
+    "site": "home",
+    "conference": true,
+    "key": "kansas st",
+    "p": 0.9393
+   },
+   {
+    "date": "2027-03-01",
+    "opponent": "Iowa State",
+    "site": "home",
+    "conference": true,
+    "key": "iowa st",
+    "p": 0.5695
+   },
+   {
+    "date": "2027-03-06",
+    "opponent": "Baylor",
+    "site": "away",
+    "conference": true,
+    "key": "baylor",
+    "p": 0.7567
+   }
+  ],
+  "others": [
+   {
+    "team": "Arizona St.",
+    "key": "ariz st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.3395,
+    "rating": 0.6343
+   },
+   {
+    "team": "BYU",
+    "key": "byu",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.6217,
+    "rating": 1.1593
+   },
+   {
+    "team": "Houston",
+    "key": "houston",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.523,
+    "rating": 0.9765
+   },
+   {
+    "team": "TCU",
+    "key": "tcu",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.5012,
+    "rating": 0.9371
+   },
+   {
+    "team": "Texas Tech",
+    "key": "texas tech",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.7978,
+    "rating": 1.5549
+   },
+   {
+    "team": "West Virginia",
+    "key": "west va",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.4192,
+    "rating": 0.7876
+   },
+   {
+    "team": "UCF",
+    "key": "ucf",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.429,
+    "rating": 0.8057
+   },
+   {
+    "team": "Arizona",
+    "key": "ariz",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.756,
+    "rating": 1.4456
+   },
+   {
+    "team": "Baylor",
+    "key": "baylor",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.4391,
+    "rating": 0.8243
+   },
+   {
+    "team": "Cincinnati",
+    "key": "cincinnati",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.4443,
+    "rating": 0.8338
+   },
+   {
+    "team": "Iowa St.",
+    "key": "iowa st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.8033,
+    "rating": 1.5704
+   },
+   {
+    "team": "Kansas St.",
+    "key": "kansas st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.2588,
+    "rating": 0.4596
+   },
+   {
+    "team": "Oklahoma St.",
+    "key": "okla st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.3118,
+    "rating": 0.5773
+   },
+   {
+    "team": "Utah",
+    "key": "utah",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.1842,
+    "rating": 0.2626
+   },
+   {
+    "team": "Colorado",
+    "key": "colo",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.3288,
+    "rating": 0.6125
+   }
+  ],
+  "unrated": [
+   "Big 12 Tournament",
+   "Houston/Florida",
+   "LSU New Orleans",
+   "Northern Iowa"
+  ]
+ }
 }

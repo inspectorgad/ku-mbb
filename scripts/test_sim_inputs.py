@@ -190,5 +190,36 @@ class ShippedSeedTest(unittest.TestCase):
             self.assertGreaterEqual(o["remaining"], 0)
 
 
+class ShippedSeedScoresTest(unittest.TestCase):
+    """What a score in the seed may and may not look like.
+
+    Both of these held until the schedule parser learned to read a played
+    game's result. Carrying it through update-seed.py with to_int(), which
+    answers 0 for a missing value rather than None, gave every fixture not yet
+    played a 0-0 - not an absent result but a nil-all draw, which basketball
+    does not have - and the season record read 4-32.
+    """
+
+    def setUp(self):
+        with open(os.path.join(REPO, "app/src/main/assets/seed.json")) as f:
+            self.games = json.load(f).get("games") or []
+        if not self.games:
+            self.skipTest("seed.json carries no season yet; run update-seed.py")
+
+    def test_no_game_is_scored_nil_all(self):
+        nil = [g for g in self.games
+               if g.get("teamScore") == 0 and g.get("opponentScore") == 0]
+        self.assertEqual(
+            [(g["date"], g["opponent"]) for g in nil], [],
+            "a basketball game cannot end 0-0; this is a missing result read as a number")
+
+    def test_a_game_has_both_scores_or_neither(self):
+        half = [g for g in self.games
+                if (g.get("teamScore") is None) != (g.get("opponentScore") is None)]
+        self.assertEqual(
+            [(g["date"], g["opponent"]) for g in half], [],
+            "half a score is worse than none")
+
+
 if __name__ == "__main__":
     unittest.main()

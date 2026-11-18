@@ -417,9 +417,14 @@ for entry in load_json("scraped/upcoming.json", []):
             fixture[key_name] = value
     # The result, where the page has played the game and the NCAA has no box
     # score for it. Both sides or neither: half a score is worse than none.
-    team_score = to_int(entry.get("teamScore"))
-    opponent_score = to_int(entry.get("opponentScore"))
-    if team_score is not None and opponent_score is not None:
+    #
+    # NOT to_int, which answers 0 for a missing value rather than None. Read
+    # through it, every one of the thirty-odd fixtures that has not been played
+    # scored 0-0, which is not an absent result but a nil-all draw - and the
+    # season record read 4-32.
+    team_score = entry.get("teamScore")
+    opponent_score = entry.get("opponentScore")
+    if isinstance(team_score, int) and isinstance(opponent_score, int):
         fixture["teamScore"] = team_score
         fixture["opponentScore"] = opponent_score
     # Tip-off, local to the venue, as "18:30". Absent until the conference sets

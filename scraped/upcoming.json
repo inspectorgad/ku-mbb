@@ -9,7 +9,9 @@
   "city": "Las Vegas, NV",
   "time": "18:30",
   "tv": "ESPN2",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-11-19",
@@ -21,7 +23,9 @@
   "city": "Las Vegas, NV",
   "time": null,
   "tv": "ESPN Family",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-10-16",
@@ -33,7 +37,9 @@
   "city": "Lawrence, KS",
   "time": "19:00",
   "tv": "ESPN+",
-  "event": "Late Night in the Phog"
+  "event": "Late Night in the Phog",
+  "teamScore": 80,
+  "opponentScore": 62
  },
  {
   "date": "2026-10-21",
@@ -45,7 +51,9 @@
   "city": "Lawrence, KS",
   "time": "18:00",
   "tv": "ESPNU",
-  "event": null
+  "event": null,
+  "teamScore": 83,
+  "opponentScore": 89
  },
  {
   "date": "2026-10-25",
@@ -57,7 +65,9 @@
   "city": "Lawrence, KS",
   "time": "12:00",
   "tv": "ESPN",
-  "event": null
+  "event": null,
+  "teamScore": 84,
+  "opponentScore": 90
  },
  {
   "date": "2026-11-02",
@@ -69,7 +79,9 @@
   "city": "Lawrence, KS",
   "time": "19:00",
   "tv": "ESPN+",
-  "event": null
+  "event": null,
+  "teamScore": 95,
+  "opponentScore": 65
  },
  {
   "date": "2026-11-06",
@@ -81,7 +93,9 @@
   "city": "Lawrence, KS",
   "time": "20:00",
   "tv": "ESPNU",
-  "event": null
+  "event": null,
+  "teamScore": 89,
+  "opponentScore": 45
  },
  {
   "date": "2026-11-17",
@@ -93,7 +107,9 @@
   "city": "Las Vegas, NV",
   "time": "20:30",
   "tv": "ESPN",
-  "event": "Players Era"
+  "event": "Players Era",
+  "teamScore": 102,
+  "opponentScore": 77
  },
  {
   "date": "2026-11-23",
@@ -105,7 +121,9 @@
   "city": "Lawrence, KS",
   "time": "19:00",
   "tv": "ESPN+",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-11-27",
@@ -117,7 +135,9 @@
   "city": "Lawrence, KS",
   "time": "16:00",
   "tv": "ESPN2",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-12-01",
@@ -129,7 +149,9 @@
   "city": "Lawrence, KS",
   "time": "19:00",
   "tv": "ESPN+",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-12-06",
@@ -141,7 +163,9 @@
   "city": "Kansas City, MO",
   "time": "16:00",
   "tv": "ESPN",
-  "event": "StorageMart Border Showdown"
+  "event": "StorageMart Border Showdown",
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-12-12",
@@ -153,7 +177,9 @@
   "city": "Storrs, CT",
   "time": "19:00",
   "tv": "FOX",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-12-19",
@@ -165,7 +191,9 @@
   "city": "New York, NY",
   "time": "11:00",
   "tv": "CBS",
-  "event": "CBS Sports Classic"
+  "event": "CBS Sports Classic",
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-12-22",
@@ -177,7 +205,9 @@
   "city": "Lawrence, KS",
   "time": null,
   "tv": "ESPN2",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-12-29",
@@ -189,7 +219,9 @@
   "city": "Lawrence, KS",
   "time": "19:00",
   "tv": "ESPN2",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-02",
@@ -201,7 +233,9 @@
   "city": "Lawrence, KS",
   "time": "12:30",
   "tv": "CBS",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-06",
@@ -213,7 +247,9 @@
   "city": "Salt Lake City, UT",
   "time": "22:00",
   "tv": "ESPN2",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-09",
@@ -225,7 +261,9 @@
   "city": "Provo, UT",
   "time": "12:00",
   "tv": "ESPN",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-13",
@@ -237,7 +275,9 @@
   "city": "Lawrence, KS",
   "time": "20:00",
   "tv": "ESPN2 or ESPNU",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-16",
@@ -249,7 +289,9 @@
   "city": "Lawrence, KS",
   "time": "13:00",
   "tv": "FOX or FS1",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-19",
@@ -261,7 +303,9 @@
   "city": "Cincinnati, OH",
   "time": "19:30",
   "tv": "FS1",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-23",
@@ -273,7 +317,9 @@
   "city": "Manhattan, KS",
   "time": null,
   "tv": "FOX",
-  "event": "Dillons Sunflower Showdown"
+  "event": "Dillons Sunflower Showdown",
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-01-30",
@@ -285,7 +331,9 @@
   "city": "Lawrence, KS",
   "time": "11:30",
   "tv": "FOX",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-01",
@@ -297,7 +345,9 @@
   "city": "Houston, TX",
   "time": "20:00",
   "tv": "ESPN",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-06",
@@ -309,7 +359,9 @@
   "city": "Lawrence, KS",
   "time": "11:00",
   "tv": "ABC",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-09",
@@ -321,7 +373,9 @@
   "city": "Lawrence, KS",
   "time": "20:00",
   "tv": "Peacock",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-13",
@@ -333,7 +387,9 @@
   "city": "Ames, IA",
   "time": "13:00",
   "tv": "ESPN or ESPN2",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-17",
@@ -345,7 +401,9 @@
   "city": "Lawrence, KS",
   "time": "20:00",
   "tv": "Peacock",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-20",
@@ -357,7 +415,9 @@
   "city": "Tucson, AZ",
   "time": null,
   "tv": "ESPN",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-24",
@@ -369,7 +429,9 @@
   "city": "Fort Worth, TX",
   "time": "20:00",
   "tv": "ESPN or ESPN2 or ESPNU",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-02-27",
@@ -381,7 +443,9 @@
   "city": "Lawrence, KS",
   "time": "13:00",
   "tv": "ESPN or ESPN2",
-  "event": "Dillons Sunflower Showdown"
+  "event": "Dillons Sunflower Showdown",
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-03-01",
@@ -393,7 +457,9 @@
   "city": "Lawrence, KS",
   "time": "20:00",
   "tv": "ESPN",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-03-06",
@@ -405,7 +471,9 @@
   "city": "Waco, TX",
   "time": "12:30",
   "tv": "CBS",
-  "event": null
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2027-03-09",
@@ -417,7 +485,9 @@
   "city": "Kansas City, MO",
   "time": null,
   "tv": null,
-  "event": "Phillips 66 Big 12 Tournament"
+  "event": "Phillips 66 Big 12 Tournament",
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-11-10",
@@ -429,6 +499,8 @@
   "city": "Chicago, IL",
   "time": null,
   "tv": "ESPN",
-  "event": "State Farm Champions Classic"
+  "event": "State Farm Champions Classic",
+  "teamScore": 89,
+  "opponentScore": 69
  }
 ]
