@@ -1,0 +1,407 @@
+package com.example
+
+import android.content.Context
+import androidx.room.Room
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.sqlite.db.SupportSQLiteOpenHelper
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
+import androidx.test.core.app.ApplicationProvider
+import com.example.data.GameTeamStats
+import com.example.data.JayhawksDatabase
+import com.example.data.migrations
+import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+
+/**
+ * Room's schema is not exported (`exportSchema = false`), so there is no golden
+ * schema to diff against — this is the only guard that an upgrade on a phone
+ * that already holds data survives. A typo in the migration SQL, or a column
+ * added to the entity but not to the migration, throws on first open after the
+ * upgrade rather than at build time.
+ *
+ * The migration is driven directly against a hand-built v3 database instead of
+ * through MigrationTestHelper, which expects an instrumented environment.
+ */
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [36])
+class MigrationTest {
+
+    private var helper: SupportSQLiteOpenHelper? = null
+
+    @After
+    fun tearDown() {
+        helper?.close()
+    }
+
+    /** A v4 `games` table exactly as the first released APK created it. */
+    private fun openV4(): SupportSQLiteDatabase {
+        val db = openV3()
+        JayhawksDatabase.migrations().single { it.startVersion == 3 }.migrate(db)
+        return db
+    }
+
+    @Test
+    fun `a v4 database from the shipped APK upgrades to v5`() {
+        // v4 shipped in a release build before tipTime/tv/event existed. Adding
+        // them to v4 rather than to a new version would leave every phone that
+        // installed that build unable to open its own database.
+        val db = openV4()
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season, home, site, venue)
+               VALUES (1, '2026-11-14', 'Nebraska', '2026-27', 0, 'neutral', 'Sanford Pentagon')"""
+        )
+        JayhawksDatabase.migrations().single { it.startVersion == 4 }.migrate(db)
+
+        db.query("SELECT site, venue, tipTime, tv, event FROM games").use { c ->
+            c.moveToFirst()
+            // The v4 data survives, and the v5 columns arrive empty.
+            assertEquals("neutral", c.getString(0))
+            assertEquals("Sanford Pentagon", c.getString(1))
+            assertTrue(c.isNull(2))
+            assertTrue(c.isNull(3))
+            assertTrue(c.isNull(4))
+            assertTrue(c.isNull(5))
+        }
+        db.execSQL("UPDATE games SET tipTime = '15:30', tv = 'BTN+' WHERE id = 1")
+        db.query("SELECT tipTime FROM games").use { c ->
+            c.moveToFirst()
+            assertEquals("15:30", c.getString(0))
+        }
+    }
+
+    /** The v3 `games` table exactly as shipped, before site/venue/city existed. */
+    private fun openV3(): SupportSQLiteDatabase {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        context.getDatabasePath("migration-test.db").delete()
+        val h = FrameworkSQLiteOpenHelperFactory().create(
+            SupportSQLiteOpenHelper.Configuration.builder(context)
+                .name("migration-test.db")
+                .callback(object : SupportSQLiteOpenHelper.Callback(3) {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        db.execSQL(
+                            """CREATE TABLE games (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                date TEXT NOT NULL, opponent TEXT NOT NULL,
+                                season TEXT NOT NULL, home INTEGER,
+                                teamScore INTEGER, opponentScore INTEGER,
+                                periodScores TEXT)"""
+                        )
+                        // Later migrations alter this too, so the v3 fixture
+                        // has to carry it or they fail on a missing table.
+                        db.execSQL(
+                            """CREATE TABLE players (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                name TEXT NOT NULL, jerseyNumber TEXT NOT NULL,
+                                position TEXT NOT NULL, active INTEGER NOT NULL)"""
+                        )
+                    }
+
+                    override fun onUpgrade(db: SupportSQLiteDatabase, old: Int, new: Int) = Unit
+                })
+                .build()
+        )
+        helper = h
+        return h.writableDatabase
+    }
+
+    @Test
+    fun `v3 to v4 keeps rows and back-fills site from the old boolean`() {
+        val db = openV3()
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season, home, teamScore,
+                 opponentScore, periodScores)
+               VALUES (1, '2025-11-05', 'Kansas City', '2025-26', 1, 74, 64, '8-11'),
+                      (2, '2025-11-15', 'Missouri', '2025-26', 0, 82, 77, NULL),
+                      (3, '2026-11-03', 'Omaha', '2026-27', NULL, NULL, NULL, NULL)"""
+        )
+
+        JayhawksDatabase.migrations().single { it.startVersion == 3 }.migrate(db)
+
+        db.query("SELECT id, site, venue, city FROM games ORDER BY id").use { c ->
+            assertEquals(3, c.count)
+            c.moveToFirst()
+            // A phone that upgrades before its next sync still shows a site.
+            assertEquals("home", c.getString(1))
+            assertTrue("venue starts empty", c.isNull(2))
+            c.moveToNext()
+            assertEquals("away", c.getString(1))
+            c.moveToNext()
+            // Unknown stays unknown rather than being guessed as "away".
+            assertTrue(c.isNull(1))
+        }
+
+        // The new table exists, and "to" really is quoted (it is a SQL keyword).
+        db.execSQL(
+            """INSERT INTO game_team_stats
+                 (gameId, opponent, fgm, fga, tpm, tpa, ftm, fta, oreb, reb,
+                  ast, "to", stl, blk, pf, pts)
+               VALUES (1, 0, 28, 49, 9, 21, 9, 21, 6, 36, 20, 18, 6, 3, 19, 74)"""
+        )
+        db.query("SELECT reb, \"to\" FROM game_team_stats").use { c ->
+            c.moveToFirst()
+            assertEquals(36, c.getInt(0))
+            assertEquals(18, c.getInt(1))
+        }
+    }
+
+    @Test
+    fun `a v3 database walks the whole chain to the current version`() {
+        val db = openV3()
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season, home)
+               VALUES (1, '2025-11-05', 'Kansas City', '2025-26', 1)"""
+        )
+        // Every migration from 3 up, in order — the path a phone that has not
+        // synced since the first release actually takes.
+        for (m in JayhawksDatabase.migrations().filter { it.startVersion >= 3 }
+            .sortedBy { it.startVersion }) {
+            m.migrate(db)
+        }
+        db.query(
+            "SELECT site, tipTime, conference, nonD1, overtime, opponentRank FROM games"
+        ).use { c ->
+            c.moveToFirst()
+            assertEquals("home", c.getString(0))
+            assertTrue(c.isNull(1))
+            // The NOT NULL DEFAULT 0 flags must land as 0, not null, or Room
+            // refuses to open the database it just migrated.
+            assertEquals(0, c.getInt(2))
+            assertEquals(0, c.getInt(3))
+            assertTrue(c.isNull(4))
+            assertTrue(c.isNull(5))
+        }
+        // The tables added along the way accept rows.
+        db.execSQL(
+            """INSERT INTO opponent_stat_lines
+                 (gameId, playerName, jerseyNumber, position, minutes,
+                  fieldGoalsMade, fieldGoalsAttempted, threePointsMade,
+                  threePointsAttempted, freeThrowsMade, freeThrowsAttempted,
+                  offensiveRebounds, rebounds, assists, turnovers, steals,
+                  blocks, fouls, points, started)
+               VALUES (1, 'Tierra Trotter', '5', 'G', 30, 7, 14, 2, 5, 2, 2,
+                       1, 6, 2, 3, 1, 0, 2, 18, 1)"""
+        )
+        db.query("SELECT points, height FROM opponent_stat_lines").use { c ->
+            c.moveToFirst()
+            assertEquals(18, c.getInt(0))
+            // v8's column arrives empty, not null: every row that already
+            // existed has no height, and it is read as "" throughout.
+            assertEquals("", c.getString(1))
+        }
+        db.query("SELECT height FROM players").use { c -> assertEquals(0, c.count) }
+
+        // v9's table arrives empty and takes a roster row. No foreign key: a
+        // roster belongs to a school, not to a fixture, and is stored whether
+        // or not that school has been played.
+        db.execSQL(
+            """INSERT INTO opponent_roster
+                 (team, name, jerseyNumber, position, height, academicYear,
+                  hometown, lastSchool, fetchedAt)
+               VALUES ('arizona', 'Arynn Finley', '2', 'G', '5-10', 'Fr.',
+                       'Rancho Cucamonga, Calif.', 'Etiwanda High School',
+                       '2026-10-21')"""
+        )
+        db.query("SELECT name, hometown, fetchedAt FROM opponent_roster").use { c ->
+            c.moveToFirst()
+            assertEquals("Arynn Finley", c.getString(0))
+            assertEquals("Rancho Cucamonga, Calif.", c.getString(1))
+            assertEquals("2026-10-21", c.getString(2))
+        }
+    }
+
+    @Test
+    fun `a v9 database gains the forecast columns at v10, keeping its games`() {
+        // The upgrade a phone holding a season actually takes. The two new
+        // columns are nullable on purpose: a row written before the model
+        // existed has no forecast, and that is different from a forecast of
+        // zero. Everything already on the row has to survive untouched.
+        val db = openV3()
+        for (m in JayhawksDatabase.migrations()
+            .filter { it.startVersion in 3..8 }.sortedBy { it.startVersion }) {
+            m.migrate(db)
+        }
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season, teamScore, opponentScore, site)
+               VALUES (1, '2026-01-11', 'Baylor', '2025-26', 74, 64, 'home')"""
+        )
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season, site)
+               VALUES (2, '2027-01-09', 'Baylor', '2026-27', 'home')"""
+        )
+
+        JayhawksDatabase.migrations().single { it.startVersion == 9 }.migrate(db)
+
+        db.query("SELECT date, teamScore, site, winProbability, ratingSource FROM games ORDER BY id").use { c ->
+            c.moveToFirst()
+            assertEquals("2026-01-11", c.getString(0))
+            assertEquals(74, c.getInt(1))
+            assertEquals("home", c.getString(2))
+            // Nothing has synced yet, so there is no forecast to show.
+            assertTrue("a played game should carry no forecast", c.isNull(3))
+            assertTrue("and no rating source", c.isNull(4))
+            c.moveToNext()
+            assertEquals("2027-01-09", c.getString(0))
+            assertTrue("an unplayed game starts with no forecast either", c.isNull(3))
+        }
+
+        // The columns take a forecast once a sync writes one.
+        db.execSQL("UPDATE games SET winProbability = 0.48, ratingSource = 'net' WHERE id = 2")
+        db.query("SELECT winProbability, ratingSource FROM games WHERE id = 2").use { c ->
+            c.moveToFirst()
+            assertEquals(0.48, c.getDouble(0), 1e-9)
+            assertEquals("net", c.getString(1))
+        }
+    }
+
+    @Test
+    fun `a v8 database gains the opponent roster table at v9`() {
+        // The chain test above proves the table exists at the end of the walk.
+        // This is the upgrade a phone holding a season of data actually takes:
+        // everything it already has must survive, and the new table must not
+        // collide with the opponent box scores it sits beside.
+        val db = openV3()
+        for (m in JayhawksDatabase.migrations()
+            .filter { it.startVersion in 3..7 }.sortedBy { it.startVersion }) {
+            m.migrate(db)
+        }
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season) VALUES (1, '2026-01-11', 'Baylor', '2025-26')"""
+        )
+        db.execSQL(
+            """INSERT INTO opponent_stat_lines
+                 (gameId, playerName, jerseyNumber, position, height, minutes,
+                  fieldGoalsMade, fieldGoalsAttempted, threePointsMade,
+                  threePointsAttempted, freeThrowsMade, freeThrowsAttempted,
+                  offensiveRebounds, rebounds, assists, turnovers, steals,
+                  blocks, fouls, points, started)
+               VALUES (1, 'Bella Fontleroy', '22', 'F', '6-2', 28, 6, 11, 0, 1,
+                       3, 4, 2, 9, 1, 2, 0, 1, 3, 15, 1)"""
+        )
+
+        JayhawksDatabase.migrations().single { it.startVersion == 8 }.migrate(db)
+
+        // The box score is untouched by the new table.
+        db.query("SELECT playerName, height FROM opponent_stat_lines").use { c ->
+            c.moveToFirst()
+            assertEquals("Bella Fontleroy", c.getString(0))
+            assertEquals("6-2", c.getString(1))
+        }
+        db.query("SELECT * FROM opponent_roster").use { c -> assertEquals(0, c.count) }
+
+        // The same player can be on both: one row is what she did against KU,
+        // the other is that she is on the team. They are keyed differently and
+        // must not be confused for duplicates.
+        db.execSQL(
+            """INSERT INTO opponent_roster (team, name, fetchedAt)
+               VALUES ('baylor', 'Bella Fontleroy', '2026-10-21')"""
+        )
+        // The columns omitted above default to empty, never null — Room
+        // refuses to open a NOT NULL column holding null.
+        db.query("SELECT position, hometown FROM opponent_roster").use { c ->
+            c.moveToFirst()
+            assertEquals("", c.getString(0))
+            assertEquals("", c.getString(1))
+        }
+        // Keyed on (team, name): the same player at two schools is two rows.
+        db.execSQL(
+            """INSERT INTO opponent_roster (team, name, fetchedAt)
+               VALUES ('tcu', 'Bella Fontleroy', '2026-10-21')"""
+        )
+        db.query("SELECT COUNT(*) FROM opponent_roster").use { c ->
+            c.moveToFirst()
+            assertEquals(2, c.getInt(0))
+        }
+    }
+
+    @Test
+    fun `a v7 database with opponent lines already in it upgrades to v8`() {
+        // The chain test above inserts its opponent row after migrating, so it
+        // proves the column's default on a fresh insert and nothing about the
+        // rows a phone is already holding. This is that case: a season's worth
+        // of opposing box scores, then the upgrade.
+        val db = openV3()
+        for (m in JayhawksDatabase.migrations()
+            .filter { it.startVersion in 3..6 }.sortedBy { it.startVersion }) {
+            m.migrate(db)
+        }
+        db.execSQL(
+            """INSERT INTO games (id, date, opponent, season) VALUES (1, '2026-01-11', 'Baylor', '2025-26')"""
+        )
+        db.execSQL(
+            """INSERT INTO opponent_stat_lines
+                 (gameId, playerName, jerseyNumber, position, minutes,
+                  fieldGoalsMade, fieldGoalsAttempted, threePointsMade,
+                  threePointsAttempted, freeThrowsMade, freeThrowsAttempted,
+                  offensiveRebounds, rebounds, assists, turnovers, steals,
+                  blocks, fouls, points, started)
+               VALUES (1, 'Bella Fontleroy', '22', 'F', 28, 6, 11, 0, 1, 3, 4,
+                       2, 9, 1, 2, 0, 1, 3, 15, 1)"""
+        )
+
+        JayhawksDatabase.migrations().single { it.startVersion == 7 }.migrate(db)
+
+        db.query("SELECT playerName, points, height FROM opponent_stat_lines").use { c ->
+            c.moveToFirst()
+            // The line survives intact and gains an empty height, not a null
+            // one — Room refuses to open a NOT NULL column holding null.
+            assertEquals("Bella Fontleroy", c.getString(0))
+            assertEquals(15, c.getInt(1))
+            assertEquals("", c.getString(2))
+        }
+        // And the column takes a height once a roster scrape supplies one.
+        db.execSQL("UPDATE opponent_stat_lines SET height = '6-2' WHERE playerName = 'Bella Fontleroy'")
+        db.query("SELECT height FROM opponent_stat_lines").use { c ->
+            c.moveToFirst()
+            assertEquals("6-2", c.getString(0))
+        }
+    }
+
+    @Test
+    fun `the current entities round-trip through a real Room database`() = runTest {
+        // Catches an entity/migration mismatch from the other direction: Room
+        // builds the v4 schema itself here, so a column the migration adds but
+        // the entity lacks (or vice versa) shows up as a failure to read back.
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, JayhawksDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+        val dao = db.dao()
+        val gameId = dao.insertGame(
+            com.example.data.Game(
+                date = "2026-03-04", opponent = "UCF", season = "2025-26",
+                home = false, site = "neutral", venue = "T-Mobile Center",
+                city = "Kansas City, MO", tipTime = "15:30", tv = "ESPN+",
+                event = "Big 12 Tournament", teamScore = 70, opponentScore = 66
+            )
+        )
+        dao.insertTeamStats(
+            listOf(
+                GameTeamStats(gameId = gameId, opponent = false, reb = 36, pts = 74, to = 18),
+                GameTeamStats(gameId = gameId, opponent = true, reb = 29, pts = 64, to = 21)
+            )
+        )
+        val game = dao.gamesOnce().single()
+        assertEquals("neutral", game.site)
+        assertEquals("neutral", game.siteOrLegacy)
+        assertEquals("T-Mobile Center", game.venue)
+        assertEquals("15:30", game.tipTime)
+        assertEquals("ESPN+", game.tv)
+        val rows = dao.teamStatsOnce()
+        assertEquals(2, rows.size)
+        assertEquals(36, rows.single { !it.opponent }.reb)
+        assertEquals(21, rows.single { it.opponent }.to)
+
+        // Deleting the game takes its team totals with it (CASCADE).
+        dao.deleteGame(game)
+        assertTrue(dao.teamStatsOnce().isEmpty())
+        assertNull(dao.gamesOnce().firstOrNull())
+        db.close()
+    }
+}

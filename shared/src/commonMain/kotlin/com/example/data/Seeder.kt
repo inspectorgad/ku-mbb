@@ -1,0 +1,541 @@
+package com.example.data
+
+import com.example.json.JSONObject
+import com.example.platform.Device
+
+/**
+ * Syncs the bundled assets/seed.json into the database on every launch,
+ * gap-filling only — it never overwrites user-entered data:
+ * - players are added if their name isn't already present
+ * - games are added if no game exists for that date + opponent
+ * - an existing game gets seed results only if it has none
+ * - an existing game gets seed stat lines only if it has none
+ *
+ * This lets an updated APK (with fresh season data baked in) install over the
+ * old one and pick up the new games while keeping local edits intact.
+ *
+ * Seed game shape:
+ * {
+ *   "date": "2025-11-05", "opponent": "Kansas City", "season": "2025-26",
+ *   "teamScore": 74, "opponentScore": 64,
+ *   "periodScores": "8-11, 26-17, 17-16, 23-20",
+ *   "lines": [{"player": "<player name>", "min": 29, "fgm": 7, "fga": 15,
+ *              "tpm": 1, "tpa": 4, "ftm": 6, "fta": 6, "oreb": 1, "reb": 4,
+ *              "ast": 6, "to": 2, "stl": 1, "blk": 0, "pf": 2, "pts": 21,
+ *              "gs": 1}]
+ * }
+ */
+object Seeder {
+
+    suspend fun sync(device: Device, dao: JayhawksDao) {
+        val json = device.readAsset("seed.json") ?: return
+        runCatching {
+            val root = JSONObject(json)
+            merge(root, dao)
+            // Kept beside merge rather than inside it: merge is called from
+            // here and from SeasonSync, and has no device to write with.
+            SimulationStore.save(device, root)
+        }
+    }
+
+    /**
+     * Games are identified by date plus a normalized opponent name.
+     *
+     * The schedule page and the box score disagree on spelling — kuathletics
+     * writes "South Dakota State" where the NCAA writes "South Dakota St." —
+     * so keying on the raw name makes the fixture and its own result look like
+     * two different games, permanently.
+     */
+    internal fun gameKey(date: String, opponent: String) = "$date|${normalizeTeam(opponent)}"
+
+    /**
+     * The rule now lives in [normTeam], so the screens that group meetings with
+     * one opponent match names exactly the way the seeder keyed them. Kept as
+     * an alias rather than replaced at every call site, since a change to what
+     * this means would silently re-key every game in the database.
+     */
+    internal fun normalizeTeam(name: String): String = normTeam(name)
+
+    /** How a ranked opponent used to be stored: "#25 Nebraska". */
+    private val RANKED_NAME = Regex("""^#(\d{1,2})\s+""")
+
+    /**
+     * A stand-in for an opponent, never a team. kuathletics' rotator showed
+     * "TBD" for the Cancun Challenge games while the bracket was undrawn, and
+     * the parser kept that beside the table's real name as a second game.
+     */
+    private fun isPlaceholder(opponent: String) = opponent.trim().equals("TBD", ignoreCase = true)
+
+    /**
+     * Takes the poll rank back out of an opponent's name, in databases that
+     * already hold one.
+     *
+     * The schedule page writes a ranked opponent as "#25 Nebraska", and that
+     * used to reach the seed as the name. [normTeam] keeps the prefix, so when
+     * the name was corrected at the source the next sync keyed the fixture
+     * differently from the row already stored, found nothing to update, and
+     * inserted a second one. Nothing else takes it away: a sync only adds and
+     * updates, because a game entered by hand has to survive one. So every
+     * phone that synced before the correction shows the game twice until this
+     * runs.
+     *
+     * Renamed in place when nothing holds the corrected name yet, dropped when
+     * something does - and of the two it is the stale row that goes, unless it
+     * is the one carrying a result or stat lines, which a sync cannot put back.
+     */
+    internal suspend fun healRankedNames(dao: JayhawksDao) {
+        val all = dao.gamesOnce()
+        val stale = all.filter { RANKED_NAME.containsMatchIn(it.opponent) }
+        val placeholders = all.filter { isPlaceholder(it.opponent) }
+        if (stale.isEmpty() && placeholders.isEmpty()) return
+        val withLines = dao.statLinesOnce().map { it.gameId }.toSet()
+        val byKey = all.associateBy { gameKey(it.date, it.opponent) }
+        // What a sync cannot put back if the row goes. Every table that points
+        // at a game deletes with it (ON DELETE CASCADE), so dropping the wrong
+        // one of the pair takes a night's stat lines with it and says nothing.
+        val keeps = { g: Game -> g.teamScore != null || g.id in withLines }
+        for (old in stale) {
+            val match = RANKED_NAME.find(old.opponent) ?: continue
+            val clean = old.opponent.removeRange(match.range).trim()
+            if (clean.isEmpty()) continue
+            val fixed = old.copy(
+                opponent = clean,
+                // Only when the row has none: a rank the box score recorded at
+                // the time beats one read back out of the name.
+                opponentRank = old.opponentRank ?: match.groupValues[1].toInt()
+            )
+            val twin = byKey[gameKey(old.date, clean)]
+            when {
+                twin == null -> dao.updateGame(fixed)
+                !keeps(old) -> dao.deleteGame(old)
+                !keeps(twin) -> {
+                    dao.deleteGame(twin)
+                    dao.updateGame(fixed)
+                }
+                // Both carry something of their own. Rename and leave them;
+                // a duplicate on screen is better than deleting a night's
+                // stat lines to tidy it up.
+                else -> dao.updateGame(fixed)
+            }
+        }
+
+        // A row standing in for a game whose opponent was not known yet. The
+        // name can never become right - nothing is ever called TBD - and the
+        // real fixture arrived beside it under its own name, so there is
+        // nothing to rename it to and nothing to merge it with. It goes,
+        // unless somebody put a result or a line against it, in which case it
+        // is theirs and not the scrape's to tidy away.
+        for (row in placeholders) {
+            if (!keeps(row)) dao.deleteGame(row)
+        }
+    }
+
+    /** Also used by [SeasonSync] for network-fetched season data. */
+    suspend fun merge(root: JSONObject, dao: JayhawksDao) {
+        healRankedNames(dao)
+        val existingByName = dao.playersOnce().associateBy { it.name }
+        val playerIdsByName = existingByName.mapValues { it.value.id }.toMutableMap()
+
+        val players = root.optJSONArray("players")
+        if (players != null) {
+            for (i in 0 until players.length()) {
+                val p = players.getJSONObject(i)
+                val name = p.getString("name")
+                val jersey = p.optString("jerseyNumber", "")
+                val position = p.optString("position", "")
+                val active = p.optBoolean("active", true)
+                val height = p.optString("height").takeIf { it.isNotBlank() }
+                val academicYear = p.optString("academicYear").takeIf { it.isNotBlank() }
+                val hometown = p.optString("hometown").takeIf { it.isNotBlank() }
+                val lastSchool = p.optString("lastSchool").takeIf { it.isNotBlank() }
+                val existing = existingByName[name]
+                if (existing == null) {
+                    playerIdsByName[name] = dao.insertPlayer(
+                        Player(
+                            name = name,
+                            jerseyNumber = jersey,
+                            position = position,
+                            height = height,
+                            academicYear = academicYear,
+                            hometown = hometown,
+                            lastSchool = lastSchool,
+                            active = active
+                        )
+                    )
+                } else {
+                    // Roster facts (number, position, current-roster status) are
+                    // scraper-owned and refreshed on every sync; blank seed values
+                    // never erase what's already there.
+                    val updated = existing.copy(
+                        jerseyNumber = jersey.ifBlank { existing.jerseyNumber },
+                        position = position.ifBlank { existing.position },
+                        // Bio fields only ever arrive for a current player, so
+                        // a departed one keeps what was last known of her.
+                        height = height ?: existing.height,
+                        academicYear = academicYear ?: existing.academicYear,
+                        hometown = hometown ?: existing.hometown,
+                        lastSchool = lastSchool ?: existing.lastSchool,
+                        active = active
+                    )
+                    if (updated != existing) dao.updatePlayer(updated)
+                }
+            }
+        }
+
+        // Tournament weekends can put two games on nearby dates, so games
+        // are keyed by date + opponent rather than date alone.
+        val storedGames = dao.gamesOnce()
+        val gamesByKey = storedGames.associateBy { gameKey(it.date, it.opponent) }
+        val gamesWithLines = dao.statLinesOnce().map { it.gameId }.toSet()
+        val storedByDate = storedGames.groupBy { it.date }
+
+        val games = root.optJSONArray("games") ?: return
+
+        // Which stored rows this payload already answers to by name. A rename
+        // may never take one of these: it belongs to a game of its own.
+        val claimed = mutableSetOf<Long>()
+        for (i in 0 until games.length()) {
+            val g = games.getJSONObject(i)
+            gamesByKey[gameKey(g.getString("date"), g.getString("opponent"))]?.let { claimed += it.id }
+        }
+        for (i in 0 until games.length()) {
+            val g = games.getJSONObject(i)
+            val date = g.getString("date")
+            val opponent = g.getString("opponent")
+            val seedTeamScore = if (g.has("teamScore")) g.getInt("teamScore") else null
+            val seedOppScore = if (g.has("opponentScore")) g.getInt("opponentScore") else null
+            val seedPeriodScores = g.optString("periodScores").takeIf { it.isNotBlank() }
+            // Feed-owned, like the site: the model recomputes them every run,
+            // and a game that has been played drops its forecast, which is a
+            // correction rather than a loss. Gap-filling would leave a stale
+            // number on a game whose result has since arrived.
+            val seedWinProbability =
+                if (g.has("winProbability") && !g.isNull("winProbability")) g.optDouble("winProbability") else null
+            val seedRatingSource = g.optString("ratingSource").takeIf { it.isNotBlank() }
+            val seedHome = if (g.has("home")) g.getBoolean("home") else null
+            val seedSite = g.optString("site").takeIf { it.isNotBlank() }
+            val seedVenue = g.optString("venue").takeIf { it.isNotBlank() }
+            val seedCity = g.optString("city").takeIf { it.isNotBlank() }
+            val seedTip = g.optString("time").takeIf { it.isNotBlank() }
+            val seedTv = g.optString("tv").takeIf { it.isNotBlank() }
+            val seedEvent = g.optString("event").takeIf { it.isNotBlank() }
+            val seedConference = g.optBoolean("conference", false)
+            val seedOvertime = g.optInt("overtime").takeIf { it > 0 }
+            val seedNonD1 = g.optBoolean("nonD1", false)
+            val seedOppRank = g.optInt("opponentRank").takeIf { it > 0 }
+            val seedOppSeed = g.optInt("opponentSeed").takeIf { it > 0 }
+            val seedOppRecord = g.optString("opponentRecord").takeIf { it.isNotBlank() }
+
+            // The source can rename a fixture: a bracket is drawn and "TBD"
+            // becomes a team, a poll rank is added or dropped, a spelling is
+            // corrected. Keyed on the name alone the sync sees a game it has
+            // never met, inserts it, and leaves the old row sitting there for
+            // good - which is how both "#25 Nebraska" and "vs TBD" came to sit
+            // beside the real game on a phone.
+            //
+            // So a fixture that has been renamed is adopted rather than
+            // duplicated. Only a row that can still BE this game is taken: the
+            // same date, no result and no stat lines, not already claimed by
+            // another game in this payload, and sharing the venue or the tip
+            // time - which a scraped fixture keeps across a rename and a game
+            // somebody typed in themselves will not have. More than one
+            // candidate means it is not obvious, and nothing is touched.
+            //
+            // Renaming rather than deleting, because the worst this can do is
+            // relabel a row; it can never take one away.
+            // Never into a name the repair at the top of this function would
+            // reject. The parser still keeps a rotator-only game the schedule
+            // table has not listed, and the rotator writes "TBD" until a
+            // bracket is drawn - with a tip time and no venue, which is
+            // exactly what the tip-time arm below matches on. Adopting a real
+            // fixture into that name would hand the placeholder sweep a live
+            // row to delete on the very next sync, taking the team totals and
+            // the opponent's box score with it through ON DELETE CASCADE.
+            // That would make this the one thing the change promises it can
+            // never do.
+            val adoptable = !isPlaceholder(opponent) && !RANKED_NAME.containsMatchIn(opponent)
+            val exact = gamesByKey[gameKey(date, opponent)]
+            val existing = exact ?: if (!adoptable) null else storedByDate[date].orEmpty().singleOrNull { row ->
+                row.id !in claimed &&
+                    row.teamScore == null && row.opponentScore == null &&
+                    row.id !in gamesWithLines &&
+                    ((seedVenue != null && row.venue == seedVenue) ||
+                        (seedTip != null && row.tipTime == seedTip))
+            }
+            if (existing != null) claimed += existing.id
+            val gameId: Long
+            if (existing == null) {
+                gameId = dao.insertGame(
+                    Game(
+                        date = date,
+                        opponent = opponent,
+                        season = g.getString("season"),
+                        home = seedHome,
+                        site = seedSite,
+                        venue = seedVenue,
+                        city = seedCity,
+                        tipTime = seedTip,
+                        tv = seedTv,
+                        event = seedEvent,
+                        conference = seedConference,
+                        overtime = seedOvertime,
+                        nonD1 = seedNonD1,
+                        opponentRank = seedOppRank,
+                        opponentSeed = seedOppSeed,
+                        opponentRecord = seedOppRecord,
+                        teamScore = seedTeamScore,
+                        opponentScore = seedOppScore,
+                        periodScores = seedPeriodScores,
+                        winProbability = seedWinProbability,
+                        ratingSource = seedRatingSource
+                    )
+                )
+            } else {
+                gameId = existing.id
+                val filledResult = existing.teamScore == null && existing.opponentScore == null &&
+                    (seedTeamScore != null || seedOppScore != null)
+                // The site is feed-owned, not gap-filled: a fixture is stored
+                // from the schedule page, which cannot express a neutral site,
+                // and only the box score's venue settles it. Gap-filling would
+                // mean a correction never reached an already-synced phone.
+                val updated = existing.copy(
+                    // Only when this row was adopted under another name. An
+                    // exact match keeps the spelling it was stored with: the
+                    // two already mean the same team to normTeam, and re-keying
+                    // every game in the database to tidy that up is a bigger
+                    // change than it looks.
+                    opponent = if (exact == null) opponent else existing.opponent,
+                    home = seedHome ?: existing.home,
+                    site = seedSite ?: existing.site,
+                    venue = seedVenue ?: existing.venue,
+                    city = seedCity ?: existing.city,
+                    // Tip time is feed-owned and can move; a game that has been
+                    // played drops it, and that is correct rather than a loss.
+                    tipTime = if (seedTeamScore != null) null else seedTip ?: existing.tipTime,
+                    tv = seedTv ?: existing.tv,
+                    // Feed-owned while the game is still a fixture, so a
+                    // correction on the schedule page reaches a phone that
+                    // already synced the wrong name. Not once it has been
+                    // played: the fixture is gone from that page by then, so
+                    // the seed carries no event for it and gap-filling is the
+                    // only thing keeping a real tournament name on the game.
+                    event = if (seedTeamScore != null) existing.event else seedEvent,
+                    // Classification is feed-owned: it is derived, never typed
+                    // in, and a recomputation must be able to correct it.
+                    conference = seedConference,
+                    overtime = seedOvertime ?: existing.overtime,
+                    nonD1 = seedNonD1,
+                    // These describe who the opponent WAS coming in. On a row
+                    // taken over from another name they belong to the other
+                    // team, so they go with the name rather than lingering on
+                    // a game they were never about.
+                    opponentRank = seedOppRank ?: if (exact == null) null else existing.opponentRank,
+                    opponentSeed = seedOppSeed ?: if (exact == null) null else existing.opponentSeed,
+                    opponentRecord =
+                        seedOppRecord ?: if (exact == null) null else existing.opponentRecord,
+                    teamScore = if (filledResult) seedTeamScore else existing.teamScore,
+                    opponentScore = if (filledResult) seedOppScore else existing.opponentScore,
+                    periodScores = existing.periodScores
+                        ?: (if (filledResult) seedPeriodScores else null),
+                    winProbability = seedWinProbability,
+                    ratingSource = seedRatingSource
+                )
+                if (updated != existing) dao.updateGame(updated)
+            }
+
+            // Team totals are replaced wholesale per game, and must be merged
+            // BEFORE the stat-line early return below — otherwise they would
+            // land only on a fresh install and never on a phone that already
+            // has this game's player lines.
+            val teamRows = mutableListOf<GameTeamStats>()
+            g.optJSONObject("teamStats")?.let { teamRows += teamStats(gameId, false, it) }
+            g.optJSONObject("opponentStats")?.let { teamRows += teamStats(gameId, true, it) }
+            if (teamRows.isNotEmpty()) dao.insertTeamStats(teamRows)
+
+            // Same reasoning for the opponent's box score: replaced per game,
+            // and merged before the stat-line early return below.
+            g.optJSONArray("opponentLines")?.let { arr ->
+                val rows = (0 until arr.length()).mapNotNull { j ->
+                    val l = arr.getJSONObject(j)
+                    val name = l.optString("player").takeIf { it.isNotBlank() }
+                        ?: return@mapNotNull null
+                    OpponentStatLine(
+                        gameId = gameId,
+                        playerName = name,
+                        jerseyNumber = l.optString("number"),
+                        position = l.optString("position"),
+                        height = l.optString("height"),
+                        minutes = l.optInt("min"),
+                        fieldGoalsMade = l.optInt("fgm"),
+                        fieldGoalsAttempted = l.optInt("fga"),
+                        threePointsMade = l.optInt("tpm"),
+                        threePointsAttempted = l.optInt("tpa"),
+                        freeThrowsMade = l.optInt("ftm"),
+                        freeThrowsAttempted = l.optInt("fta"),
+                        offensiveRebounds = l.optInt("oreb"),
+                        rebounds = l.optInt("reb"),
+                        assists = l.optInt("ast"),
+                        turnovers = l.optInt("to"),
+                        steals = l.optInt("stl"),
+                        blocks = l.optInt("blk"),
+                        fouls = l.optInt("pf"),
+                        points = l.optInt("pts"),
+                        started = l.optInt("gs") == 1
+                    )
+                }
+                dao.deleteOpponentLinesFor(gameId)
+                if (rows.isNotEmpty()) dao.insertOpponentLines(rows)
+            }
+
+            if (existing != null && gameId in gamesWithLines) continue
+            val lines = g.optJSONArray("lines") ?: continue
+            for (j in 0 until lines.length()) {
+                val l = lines.getJSONObject(j)
+                val playerId = playerIdsByName[l.getString("player")] ?: continue
+                dao.upsertStatLine(
+                    StatLine(
+                        playerId = playerId,
+                        gameId = gameId,
+                        minutes = l.optInt("min"),
+                        fieldGoalsMade = l.optInt("fgm"),
+                        fieldGoalsAttempted = l.optInt("fga"),
+                        threePointsMade = l.optInt("tpm"),
+                        threePointsAttempted = l.optInt("tpa"),
+                        freeThrowsMade = l.optInt("ftm"),
+                        freeThrowsAttempted = l.optInt("fta"),
+                        offensiveRebounds = l.optInt("oreb"),
+                        totalRebounds = l.optInt("reb"),
+                        assists = l.optInt("ast"),
+                        turnovers = l.optInt("to"),
+                        steals = l.optInt("stl"),
+                        blocks = l.optInt("blk"),
+                        personalFouls = l.optInt("pf"),
+                        points = l.optInt("pts"),
+                        started = l.optInt("gs") == 1
+                    )
+                )
+            }
+        }
+
+        mergeStandings(root, dao)
+        mergeOpponentRosters(root, dao)
+    }
+
+    /**
+     * Opposing schools' current rosters, replaced per team.
+     *
+     * Same reasoning as [mergeStandings]: scraper-derived, no user-entered
+     * field, and a player who has left the team must not linger. Replaced per
+     * team rather than wholesale so a week where one school's page would not
+     * parse leaves the other fifteen alone.
+     *
+     * A team whose roster came back empty is skipped rather than cleared. An
+     * empty list means the page could not be read this week, not that the
+     * school has no players, and a stale roster beats none.
+     */
+    private suspend fun mergeOpponentRosters(root: JSONObject, dao: JayhawksDao) {
+        val teams = root.optJSONArray("opponentRosters") ?: return
+        for (i in 0 until teams.length()) {
+            val t = teams.getJSONObject(i)
+            val team = t.optString("team").takeIf { it.isNotBlank() } ?: continue
+            val fetchedAt = t.optString("fetchedAt")
+            val players = t.optJSONArray("players") ?: continue
+            val rows = (0 until players.length()).mapNotNull { j ->
+                val p = players.getJSONObject(j)
+                val name = p.optString("name").takeIf { it.isNotBlank() }
+                    ?: return@mapNotNull null
+                OpponentRosterPlayer(
+                    team = team,
+                    name = name,
+                    jerseyNumber = p.optString("jerseyNumber"),
+                    position = p.optString("position"),
+                    height = p.optString("height"),
+                    academicYear = p.optString("academicYear"),
+                    hometown = p.optString("hometown"),
+                    lastSchool = p.optString("lastSchool"),
+                    fetchedAt = fetchedAt
+                )
+            }
+            if (rows.isEmpty()) continue
+            dao.deleteOpponentRosterFor(team)
+            dao.insertOpponentRoster(rows)
+        }
+    }
+
+    private fun teamStats(gameId: Long, isOpponent: Boolean, o: JSONObject) = GameTeamStats(
+        gameId = gameId,
+        opponent = isOpponent,
+        fgm = o.optInt("fgm"), fga = o.optInt("fga"),
+        tpm = o.optInt("tpm"), tpa = o.optInt("tpa"),
+        ftm = o.optInt("ftm"), fta = o.optInt("fta"),
+        oreb = o.optInt("oreb"), reb = o.optInt("reb"),
+        ast = o.optInt("ast"), to = o.optInt("to"),
+        stl = o.optInt("stl"), blk = o.optInt("blk"),
+        pf = o.optInt("pf"), pts = o.optInt("pts")
+    )
+
+    /**
+     * Big 12 standings and poll snapshots are scraper-derived and change after
+     * every result, so they are replaced per season rather than gap-filled —
+     * the one deliberate exception to this file's never-overwrite rule, safe
+     * because no field here is ever user-entered. Seeds that omit these keys
+     * (older payloads) leave whatever is already stored untouched.
+     */
+    private suspend fun mergeStandings(root: JSONObject, dao: JayhawksDao) {
+        root.optJSONArray("standings")?.let { arr ->
+            val bySeason = mutableMapOf<String, MutableList<ConferenceStanding>>()
+            for (i in 0 until arr.length()) {
+                val s = arr.getJSONObject(i)
+                val season = s.optString("season").takeIf { it.isNotBlank() } ?: continue
+                val seo = s.optString("seo").takeIf { it.isNotBlank() }
+                    ?: s.optString("team").lowercase().replace(' ', '-')
+                bySeason.getOrPut(season) { mutableListOf() }.add(
+                    ConferenceStanding(
+                        season = season,
+                        seo = seo,
+                        team = s.optString("team"),
+                        confW = s.optInt("confW"),
+                        confL = s.optInt("confL"),
+                        overallW = s.optInt("overallW"),
+                        overallL = s.optInt("overallL"),
+                        nationalRank = s.optInt("nationalRank").takeIf { it > 0 },
+                        netRank = s.optInt("netRank").takeIf { it > 0 }
+                    )
+                )
+            }
+            for ((season, rows) in bySeason) {
+                dao.deleteStandingsForSeason(season)
+                dao.insertStandings(rows)
+            }
+        }
+
+        root.optJSONArray("polls")?.let { arr ->
+            for (i in 0 until arr.length()) {
+                val poll = arr.getJSONObject(i)
+                val season = poll.optString("season").takeIf { it.isNotBlank() } ?: continue
+                val name = poll.optString("name")
+                val updated = poll.optString("updated")
+                val rows = poll.optJSONArray("rows") ?: continue
+                val entries = (0 until rows.length()).mapNotNull { j ->
+                    val r = rows.getJSONObject(j)
+                    val team = r.optString("team").takeIf { it.isNotBlank() } ?: return@mapNotNull null
+                    PollEntry(
+                        season = season,
+                        team = team,
+                        rank = r.optInt("rank"),
+                        rankLabel = r.optString("rankLabel").ifBlank { r.optInt("rank").toString() },
+                        record = r.optString("record"),
+                        points = r.optString("points"),
+                        previous = r.optString("previous"),
+                        firstPlaceVotes = r.optInt("firstPlaceVotes"),
+                        big12 = r.optBoolean("big12"),
+                        pollName = name,
+                        updated = updated
+                    )
+                }
+                dao.deletePollForSeason(season)
+                dao.insertPollEntries(entries)
+            }
+        }
+    }
+}

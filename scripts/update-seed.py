@@ -1,0 +1,843 @@
+#!/usr/bin/env python3
+"""Regenerates app/src/main/assets/seed.json from scraped/ KU WBB data.
+
+Inputs (all optional, produced by scrape-ku-wbb.mjs):
+  scraped/ncaa-game-*.json  one per finished game: {gameId, date, info, box}
+  scraped/roster.json       current roster from kuathletics.com
+  scraped/upcoming.json     upcoming games from kuathletics.com
+
+The seed is regenerated in full on every run — all data is scraper-owned, and
+the app's Seeder merge is what protects user edits on-device.
+"""
+import glob
+import json
+import os
+import re
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+
+from seed_text import MONTHS, fix_mojibake, norm_name, norm_team, season_label, snapshot_season
+import sim_inputs
+from win_model import Model
+
+TEAM_SEO = "kansas"
+SEED_PATH = "app/src/main/assets/seed.json"
+# KU's home floor. A game played anywhere else is not a home game, whatever the
+# feed's isHome flag says — it marks a nominal home side even at neutral sites.
+HOME_VENUE = "Allen Fieldhouse"
+NEUTRAL_SITES_PATH = "scripts/neutral-sites.json"
+
+
+def load_json(path, default):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return default
+
+
+def to_int(value):
+    try:
+        return int(str(value).strip() or 0)
+    except ValueError:
+        return 0
+
+
+def to_minutes(value):
+    """NCAA reports decimal minutes ("21.1"); round to whole minutes."""
+    try:
+        return round(float(str(value).strip() or 0))
+    except ValueError:
+        return 0
+
+
+def game_key(date, opponent):
+    """Games are identified by date + normalized opponent, never raw casing."""
+    return (date, norm_team(opponent))
+
+
+players = {}  # name.lower() -> {name, jerseyNumber, position}
+games = {}  # (date, opponent.lower()) -> game dict
+
+
+# Sources capitalize names inconsistently (e.g. "McCarthy" vs "Mccarthy"),
+# so players are keyed case-insensitively; the roster's spelling wins.
+def add_player(name, jersey, position, prefer=False, bio=None):
+    if not name:
+        return
+    existing = players.get(name.lower())
+    if existing is None:
+        players[name.lower()] = {"name": name, "jerseyNumber": jersey, "position": position}
+        existing = players[name.lower()]
+    elif prefer:
+        existing["name"] = name
+        if jersey:
+            existing["jerseyNumber"] = jersey
+        if position:
+            existing["position"] = position
+    # Height, class, hometown and previous school come only from kuathletics;
+    # a former player keeps whatever was last known rather than losing it.
+    for key, value in (bio or {}).items():
+        if value:
+            existing[key] = value
+
+
+def canonical_name(name):
+    return players[name.lower()]["name"]
+
+
+# --- Finished games from NCAA box scores ------------------------------------
+for path in sorted(glob.glob("scraped/ncaa-game-*.json")):
+    data = load_json(path, None)
+    if not data:
+        continue
+    contests = (data.get("info") or {}).get("contests") or []
+    if not contests:
+        continue
+    contest = contests[0]
+    teams = contest.get("teams") or []
+    ku = next((t for t in teams if t.get("seoname") == TEAM_SEO), None)
+    opp = next((t for t in teams if t.get("seoname") != TEAM_SEO), None)
+    if ku is None or opp is None:
+        continue
+    if contest.get("gameState") != "F":
+        continue
+
+    # isHome marks the nominal home side, which at a neutral site is whoever the
+    # bracket seeded higher — so it decides scoring order but never the venue.
+    ku_nominal_home = bool(ku.get("isHome"))
+    period_scores = []
+    for ls in contest.get("linescores") or []:
+        home, visit = to_int(ls.get("home")), to_int(ls.get("visit"))
+        ours, theirs = (home, visit) if ku_nominal_home else (visit, home)
+        period_scores.append(f"{ours}-{theirs}")
+
+    # seasonYear is the season's start year (2025 for 2025-26). Games after
+    # New Year fall in start_year+1, so the date alone can't be used.
+    start_year = to_int(contest.get("seasonYear")) or int(data["date"][:4])
+    location = contest.get("location") or {}
+    game = {
+        "date": data["date"],
+        "opponent": opp.get("nameShort") or opp.get("nameFull") or "Unknown",
+        "season": season_label(start_year),
+        "venue": (location.get("venue") or "").strip(),
+        "city": ", ".join(p for p in [
+            (location.get("city") or "").strip(),
+            (location.get("stateUsps") or "").strip(),
+        ] if p),
+        "nominalHome": ku_nominal_home,
+        "teamScore": to_int(ku.get("score")),
+        "opponentScore": to_int(opp.get("score")),
+        "periodScores": ", ".join(period_scores),
+        "lines": [],
+    }
+    # What the opponent brought into the game: their national rank if they had
+    # one, their tournament seed, and their record to that point. All three are
+    # context the box score carries and the seed has been dropping.
+    opp_rank = to_int(opp.get("teamRank") or opp.get("gameRank"))
+    if opp_rank:
+        game["opponentRank"] = opp_rank
+    opp_seed = to_int(opp.get("seed"))
+    if opp_seed:
+        game["opponentSeed"] = opp_seed
+    # Written "(19-2)" by the feed; the parentheses are presentation.
+    opp_record = (opp.get("record") or "").strip().strip("()")
+    if opp_record and opp_record != "0-0":
+        game["opponentRecord"] = opp_record
+
+    # Overtime, from the linescore period labels ("OT", "2OT") or the final
+    # message. Four quarters is regulation; anything beyond it is not.
+    ot_periods = [
+        str(ls.get("period") or "") for ls in (contest.get("linescores") or [])
+        if "OT" in str(ls.get("period") or "").upper()
+    ]
+    if ot_periods or "OT" in str(contest.get("currentPeriod") or "").upper():
+        game["overtime"] = len(ot_periods) or 1
+
+    ku_team_id = to_int(ku.get("teamId"))
+    for tb in (data.get("box") or {}).get("teamBoxscore") or []:
+        # teamBoxscore teamIds are numbers while teams[] carries strings.
+        is_ku = to_int(tb.get("teamId")) == ku_team_id
+        # Official team totals for BOTH sides. These are not the sum of the
+        # player lines: team rebounds (deadballs) and team turnovers belong to
+        # no player, so summing box lines understates them — KU's 2025-26
+        # rebounding is 35.0/game officially against 30.8 summed.
+        stats = tb.get("teamStats") or {}
+        if stats:
+            game["teamStats" if is_ku else "opponentStats"] = {
+                "fgm": to_int(stats.get("fieldGoalsMade")),
+                "fga": to_int(stats.get("fieldGoalsAttempted")),
+                "tpm": to_int(stats.get("threePointsMade")),
+                "tpa": to_int(stats.get("threePointsAttempted")),
+                "ftm": to_int(stats.get("freeThrowsMade")),
+                "fta": to_int(stats.get("freeThrowsAttempted")),
+                "oreb": to_int(stats.get("offensiveRebounds")),
+                "reb": to_int(stats.get("totalRebounds")),
+                "ast": to_int(stats.get("assists")),
+                "to": to_int(stats.get("turnovers")),
+                "stl": to_int(stats.get("steals")),
+                "blk": to_int(stats.get("blockedShots")),
+                "pf": to_int(stats.get("personalFouls")),
+                "pts": to_int(stats.get("points")),
+            }
+        if not is_ku:
+            # The other side's box score, already downloaded and until now
+            # discarded. Stored flat rather than through the player table:
+            # these are not KU players and must never join the roster.
+            game["opponentLines"] = [{
+                "player": f"{fix_mojibake((p.get('firstName') or '').strip())} "
+                          f"{fix_mojibake((p.get('lastName') or '').strip())}".strip(),
+                "number": str(p.get("number") or ""),
+                "position": (p.get("position") or "").strip(),
+                "min": to_minutes(p.get("minutesPlayed")),
+                "fgm": to_int(p.get("fieldGoalsMade")),
+                "fga": to_int(p.get("fieldGoalsAttempted")),
+                "tpm": to_int(p.get("threePointsMade")),
+                "tpa": to_int(p.get("threePointsAttempted")),
+                "ftm": to_int(p.get("freeThrowsMade")),
+                "fta": to_int(p.get("freeThrowsAttempted")),
+                "oreb": to_int(p.get("offensiveRebounds")),
+                "reb": to_int(p.get("totalRebounds")),
+                "ast": to_int(p.get("assists")),
+                "to": to_int(p.get("turnovers")),
+                "stl": to_int(p.get("steals")),
+                "blk": to_int(p.get("blockedShots")),
+                "pf": to_int(p.get("personalFouls")),
+                "pts": to_int(p.get("points")),
+                "gs": 1 if p.get("starter") else 0,
+            } for p in (tb.get("playerStats") or [])
+                if (p.get("firstName") or p.get("lastName"))]
+            continue
+        for p in tb.get("playerStats") or []:
+            first = fix_mojibake((p.get("firstName") or "").strip())
+            last = fix_mojibake((p.get("lastName") or "").strip())
+            name = f"{first} {last}".strip()
+            add_player(name, str(p.get("number") or ""), p.get("position") or "")
+            game["lines"].append({
+                "player": name,
+                "min": to_minutes(p.get("minutesPlayed")),
+                "fgm": to_int(p.get("fieldGoalsMade")),
+                "fga": to_int(p.get("fieldGoalsAttempted")),
+                "tpm": to_int(p.get("threePointsMade")),
+                "tpa": to_int(p.get("threePointsAttempted")),
+                "ftm": to_int(p.get("freeThrowsMade")),
+                "fta": to_int(p.get("freeThrowsAttempted")),
+                "oreb": to_int(p.get("offensiveRebounds")),
+                "reb": to_int(p.get("totalRebounds")),
+                "ast": to_int(p.get("assists")),
+                "to": to_int(p.get("turnovers")),
+                "stl": to_int(p.get("steals")),
+                "blk": to_int(p.get("blockedShots")),
+                "pf": to_int(p.get("personalFouls")),
+                "pts": to_int(p.get("points")),
+                "gs": 1 if p.get("starter") else 0,
+            })
+
+    games[game_key(game["date"], game["opponent"])] = game
+
+# --- Opposing players' heights ----------------------------------------------
+# The NCAA box score gives an opponent a name, a number and a position and
+# nothing else, so height comes from each school's own roster page
+# (scripts/opponent-sites.json -> scraped/opponent-rosters.json).
+#
+# Matched on the normalized name, and on nothing else. The jersey number looks
+# like a better key and is not: a roster number is this season's, while a box
+# score from an earlier season carries the number she wore then, so matching on
+# it silently files last year's lines under whoever inherited the shirt.
+opponent_rosters = load_json("scraped/opponent-rosters.json", {})
+
+# Names are repaired on both sides. The box-score side was already being
+# repaired when the lines were read; doing it here too closes the asymmetry —
+# a roster name that arrived mangled would otherwise fail to match a clean box
+# score, which looks exactly like a player who left the team.
+opponent_roster_players = {
+    team_key: [
+        dict(entry, name=fix_mojibake((entry.get("name") or "").strip()))
+        for entry in stored.get("players", [])
+        if (entry.get("name") or "").strip()
+    ]
+    for team_key, stored in opponent_rosters.items()
+}
+
+heights = {}
+for team_key, entries in opponent_roster_players.items():
+    for entry in entries:
+        if entry.get("height"):
+            heights[(team_key, norm_name(entry["name"]))] = entry["height"]
+
+matched = unmatched = 0
+for game in games.values():
+    team_key = norm_team(game["opponent"])
+    for line in game.get("opponentLines", []):
+        height = heights.get((team_key, norm_name(line["player"])))
+        if height:
+            line["height"] = height
+            matched += 1
+        else:
+            unmatched += 1
+
+if heights:
+    print(f"opponent heights: {matched} box-score lines matched, {unmatched} without "
+          f"(from {len(opponent_rosters)} rosters, {len(heights)} players)")
+
+# --- Opposing schools' rosters ----------------------------------------------
+# The same scraped pages, carried into the seed whole rather than mined for a
+# single field.
+#
+# The heights above are capped at about three players in ten, and the reason is
+# the calendar: a roster is whoever is on the team *now*, matched against box
+# scores from a season already played, so it only ever reaches the players who
+# stayed. Pointed at a season not yet played the same data is exactly right. It
+# is the only thing this app can say about an opponent before the first tip,
+# and until now it never left the scraped/ directory.
+opponent_roster_seed = []
+for team_key in sorted(opponent_roster_players):
+    entries = opponent_roster_players[team_key]
+    if not entries:
+        continue
+    opponent_roster_seed.append({
+        "team": team_key,
+        # The date alone. The scrape stamps a full timestamp, and carrying the
+        # seconds would rewrite the seed — and so rebuild the APK — every time
+        # a page was re-read, whether or not the roster on it had changed.
+        "fetchedAt": (opponent_rosters[team_key].get("fetchedAt") or "")[:10],
+        "players": [
+            {
+                "name": e["name"],
+                "jerseyNumber": (e.get("jerseyNumber") or "").strip(),
+                "position": (e.get("position") or "").strip(),
+                "height": (e.get("height") or "").strip(),
+                "academicYear": (e.get("academicYear") or "").strip(),
+                "hometown": (e.get("hometown") or "").strip(),
+                "lastSchool": (e.get("lastSchool") or "").strip(),
+            }
+            for e in entries
+        ],
+    })
+
+if opponent_roster_seed:
+    total = sum(len(t["players"]) for t in opponent_roster_seed)
+    print(f"opponent rosters: {len(opponent_roster_seed)} teams, {total} players")
+
+# --- Current roster (preferred source for number/position) ------------------
+roster_names = set()
+for entry in load_json("scraped/roster.json", []):
+    name = entry.get("name", "").strip()
+    roster_names.add(name)
+    add_player(
+        name,
+        str(entry.get("jerseyNumber") or ""),
+        (entry.get("position") or "").strip(),
+        prefer=True,
+        bio={
+            "height": (entry.get("height") or "").strip(),
+            "academicYear": (entry.get("academicYear") or "").strip(),
+            "hometown": (entry.get("hometown") or "").strip(),
+            "lastSchool": (entry.get("lastSchool") or "").strip(),
+        },
+    )
+
+# active = on the current scraped roster. A failed/empty roster scrape must
+# not mass-retire the team, so with an implausibly small roster the previous
+# seed's flags are carried forward instead.
+previous_seed = load_json(SEED_PATH, {})
+previous_active = {
+    (p.get("name") or "").lower(): p.get("active", True)
+    for p in previous_seed.get("players", [])
+}
+roster_keys = {n.lower() for n in roster_names}
+roster_valid = len(roster_keys) >= 8
+for key, player in players.items():
+    if roster_valid:
+        player["active"] = key in roster_keys
+    else:
+        player["active"] = previous_active.get(key, True)
+
+# Stat lines were recorded with whatever casing the box score used; align
+# them with the canonical player names so the app can match them up.
+for game in games.values():
+    for line in game.get("lines", []):
+        line["player"] = canonical_name(line["player"])
+
+# --- Games the schedule page lists, with or without a result yet -------------
+# A game whose date has passed is kept. It used to be dropped, which meant a
+# game vanished from the app between tip-off and the morning sweep that finds
+# its box score: not upcoming, not played, just gone, taking its venue and tip
+# time with it. Showing it with no result is the honest state, and the screens
+# can say "awaiting result" from the date alone.
+#
+# Nothing old can come back this way: upcoming.json is this season's schedule
+# and carries no scores. A game leaves only when its box score arrives to
+# replace it (the `key in games` check below) or the schedule page stops
+# listing it.
+# Central, not UTC. This date decides which games still count as upcoming, and
+# so which ones carry a forecast; both displays decide the same question from
+# the reader's own date. In Kansas the UTC date turns over at 6pm, so a UTC
+# "today" would retire a game's forecast while it was still hours from tip-off
+# - and because the forecast is feed-owned, a seed that has dropped it erases
+# it from the phone as well as the page. Kansas keeps Central year round, so
+# the zone handles its own daylight saving.
+today = datetime.now(ZoneInfo("America/Chicago")).strftime("%Y-%m-%d")
+for entry in load_json("scraped/upcoming.json", []):
+    date = entry.get("date", "")
+    opponent = (entry.get("opponent") or "").strip()
+    if not date or not opponent:
+        continue
+    key = game_key(date, opponent)
+    if key in games:
+        continue
+    # A game in Jan-Apr belongs to the season that started the year before.
+    year, month = int(date[:4]), int(date[5:7])
+    start_year = year if month >= 8 else year - 1
+    fixture = {
+        "date": date,
+        "opponent": opponent,
+        "season": season_label(start_year),
+        # The schedule page names the venue, so a fixture already knows whether
+        # it is home, away or on a neutral floor — no need to wait for the box
+        # score. `scheduleSite` is trusted directly by the site derivation.
+        "scheduleSite": (entry.get("site") or "").strip() or None,
+        # The schedule page's rank for the opponent, which no other source
+        # carries for a game not yet played.
+        "opponentRank": entry.get("opponentRank"),
+        "nominalHome": bool(entry.get("home")),
+    }
+    for key_name in ("venue", "city", "tv", "event"):
+        value = (entry.get(key_name) or "").strip()
+        if value:
+            fixture[key_name] = value
+    # Tip-off, local to the venue, as "18:30". Absent until the conference sets
+    # the TV windows, so it stays out of the seed rather than being guessed.
+    tip = (entry.get("time") or "").strip()
+    if tip:
+        fixture["time"] = tip
+    games[key] = fixture
+
+# --- Home / away / neutral ---------------------------------------------------
+# Derived from the venue, never from the feed's isHome: at a neutral site that
+# flag marks the higher seed, so it called the Big 12 Tournament game against
+# UCF a home game and five genuinely neutral games road games.
+neutral_cfg = load_json(NEUTRAL_SITES_PATH, {})
+neutral_games = set(neutral_cfg.get("games", {}))
+neutral_venues = set(neutral_cfg.get("venues", {}))
+
+# A non-Allen venue hosting KU against two or more different opponents in one
+# season is a tournament floor — detected rather than configured, so holiday
+# and conference tournaments need no upkeep.
+venue_opponents = {}
+for game in games.values():
+    venue = game.get("venue")
+    if venue and venue != HOME_VENUE:
+        venue_opponents.setdefault((game["season"], venue), set()).add(
+            norm_team(game["opponent"])
+        )
+
+site_counts = {"home": 0, "away": 0, "neutral": 0}
+for key, game in games.items():
+    venue = game.get("venue")
+    marker = f"{game['date']}|{norm_team(game['opponent'])}"
+    played = game.get("teamScore") is not None
+    if marker in neutral_games:
+        site = "neutral"
+    elif not played and game.get("scheduleSite"):
+        # An unplayed fixture: the schedule page states the side AND the venue,
+        # which together settle it — "vs" at anyone else's building is neutral.
+        site = game["scheduleSite"]
+    elif venue == HOME_VENUE:
+        site = "home"
+    elif venue and (
+        venue in neutral_venues
+        or len(venue_opponents.get((game["season"], venue), ())) > 1
+    ):
+        site = "neutral"
+    elif venue:
+        site = "away"
+    else:
+        # Nothing to go on but the schedule page's vs/at, which alone cannot
+        # express neutral. Corrected once the game is played.
+        site = "home" if game.get("nominalHome") else "away"
+    game["site"] = site
+    # Kept so an older installed APK, which knows only this field, still
+    # renders something sane for a neutral game rather than nothing.
+    game["home"] = site == "home"
+    game.pop("nominalHome", None)
+    game.pop("scheduleSite", None)
+    site_counts[site] += 1
+
+print(
+    "sites: "
+    + ", ".join(f"{n} {s}" for s, n in site_counts.items())
+    + f" (home venue {HOME_VENUE})"
+)
+for game in sorted(games.values(), key=lambda g: g["date"]):
+    if game["site"] == "neutral":
+        print(f"  neutral: {game['date']} vs {game['opponent']} at {game.get('venue') or '?'}")
+
+# --- Big 12 standings, computed from the scoreboard sweep -------------------
+# Conference records are derived from the Big 12 games the sweep collects
+# (every scoreboard team carries a conference tag). This also means any season
+# can be rebuilt retroactively, which a live standings endpoint could not do.
+index = load_json("scraped/ku-index.json", {})
+big12_games = list(index.get("big12Games", {}).values())
+
+# Conference records are regular-season only. The conference tournament is
+# identifiable by scoreboard bracket fields; its first game dates the end of
+# each season's regular season, which also fences off later postseason
+# rematches between conference members (WBIT/NIT carry no bracket fields).
+tournament_start = {}  # season label -> date of first conference-tournament game
+for game in big12_games:
+    if game.get("bracket") and game.get("conferenceGame"):
+        start = to_int(game.get("season")) or to_int(game.get("date", "")[:4])
+        season = season_label(start)
+        date = game.get("date", "")
+        if season not in tournament_start or date < tournament_start[season]:
+            tournament_start[season] = date
+
+records = {}  # (season label, key) -> record dict
+for game in big12_games:
+    # The sweep stores the season start year; standings use the app's
+    # "2025-26" label so they line up with games.
+    start = to_int(game.get("season")) or to_int(game.get("date", "")[:4])
+    season = season_label(start)
+    cutoff = tournament_start.get(season)
+    conf_game = (
+        bool(game.get("conferenceGame"))
+        and not game.get("bracket")
+        and (cutoff is None or game.get("date", "") < cutoff)
+    )
+    for side in ("home", "away"):
+        s = game.get(side) or {}
+        if not s.get("inConference") or not s.get("name"):
+            continue  # non-conference opponents get no standings row
+        rec = records.setdefault(
+            (season, norm_team(s["name"])),
+            {
+                "season": season,
+                "team": s["name"],
+                "seo": s.get("seo", ""),
+                "confW": 0, "confL": 0, "overallW": 0, "overallL": 0,
+                "_rankDate": "", "nationalRank": None,
+            },
+        )
+        won = bool(s.get("winner"))
+        rec["overallW" if won else "overallL"] += 1
+        if conf_game:
+            rec["confW" if won else "confL"] += 1
+        # Keep the most recent rank the scoreboard reported that season.
+        if s.get("rank") and game.get("date", "") >= rec["_rankDate"]:
+            rec["_rankDate"] = game["date"]
+            rec["nationalRank"] = s["rank"]
+
+# --- Conference games ---------------------------------------------------------
+# A KU game counts toward the Big 12 record when the opponent is a member that
+# season, the game is regular season, and it falls before the conference
+# tournament. Membership is read from the sweep's own conference tags, never a
+# hardcoded list. Getting any of the three wrong inflates the record: a naive
+# membership lookup alone gives 21 games and 9-12 where the official figure is
+# 18 and 8-10.
+big12_members = {}
+for (season, key) in records:
+    big12_members.setdefault(season, set()).add(key)
+
+# KU's own games as the sweep saw them, so the bracket flag carries over.
+ku_bracket = set()
+for g in big12_games:
+    sides = [g.get("home") or {}, g.get("away") or {}]
+    if any((s.get("seo") or "") == TEAM_SEO for s in sides) and g.get("bracket"):
+        other = next((s for s in sides if (s.get("seo") or "") != TEAM_SEO), {})
+        ku_bracket.add((g.get("date", ""), norm_team(other.get("name", ""))))
+
+conference_counts = {}
+for game in games.values():
+    season = game["season"]
+    key = norm_team(game["opponent"])
+    cutoff = tournament_start.get(season)
+    game["conference"] = bool(
+        key in big12_members.get(season, ())
+        and (game["date"], key) not in ku_bracket
+        and (cutoff is None or game["date"] < cutoff)
+    )
+    if game["conference"]:
+        conference_counts[season] = conference_counts.get(season, 0) + 1
+for season, count in sorted(conference_counts.items()):
+    print(f"conference games {season}: {count}")
+
+# --- Rankings snapshots (AP poll + NCAA NET) ---------------------------------
+# Both endpoints serve only the current snapshot, so each is keyed by the
+# season in its "Through Games APR. 5, 2026" label (Aug-Dec dates belong to the
+# season starting that year; Jan-Jul to the one that started the year before).
+def row_value(row, *candidates):
+    """First matching column: sources vary in header capitalization."""
+    lowered = {k.strip().lower(): v for k, v in row.items()}
+    for c in candidates:
+        if c in lowered:
+            return lowered[c]
+    return None
+
+
+polls = []
+ap = load_json("scraped/rankings-ap.json", {})
+net = load_json("scraped/rankings-net.json", {})
+
+net_season = snapshot_season(net)
+
+# The NET table lists every Division I team, so an opponent absent from it is
+# not Division I. That matters because the NCAA's own record and site splits
+# exclude such games: KU's 22-14 is 21-14 to the NET because of Haskell.
+d1_teams = {
+    norm_team(row_value(row, "school", "team") or "")
+    for row in net.get("data", [])
+}
+if d1_teams and net_season:
+    non_d1 = set()
+    for game in games.values():
+        if game["season"] != net_season or game.get("teamScore") is None:
+            continue
+        if norm_team(game["opponent"]) not in d1_teams:
+            game["nonD1"] = True
+            non_d1.add(game["opponent"])
+    if non_d1:
+        print(f"non-D1 opponents {net_season}: {', '.join(sorted(non_d1))}")
+
+net_by_team = {}
+for row in net.get("data", []):
+    if (row_value(row, "conf", "conference") or "") == "Big 12":
+        net_by_team[norm_team(row_value(row, "school", "team") or "")] = row
+
+# NET carries each team's official overall record — fold in the NET rank and
+# cross-check our computed record against it (a warning, never a failure: the
+# snapshot and our sweep can legitimately sit a game apart mid-season).
+for (season, key), rec in records.items():
+    row = net_by_team.get(key)
+    if not row or season != net_season:
+        continue
+    rank = str(row_value(row, "rank") or "")
+    rec["netRank"] = int(rank) if rank.isdigit() else None
+    official = (row_value(row, "record") or "").strip()
+    ours = f"{rec['overallW']}-{rec['overallL']}"
+    if official and official != ours:
+        print(f"  cross-check: {rec['team']} computed {ours} vs NET {official}")
+
+ap_season = snapshot_season(ap)
+if ap.get("data") and ap_season:
+    b12_keys = {k for (s, k) in records if s == ap_season}
+    rows = []
+    for row in ap["data"]:
+        label = str(row_value(row, "rank") or "").strip()  # can be a tie, e.g. "T-22."
+        digits = re.search(r"\d+", label)
+        raw_team = (row_value(row, "school (1st votes)", "school", "team") or "").strip()
+        team = re.sub(r"\s*\(\d+\)\s*$", "", raw_team).strip()
+        votes = re.search(r"\((\d+)\)\s*$", raw_team)
+        rows.append({
+            "rank": int(digits.group()) if digits else 0,
+            "rankLabel": label.rstrip("."),
+            "team": team,
+            "record": (row_value(row, "record") or "").strip(),
+            "points": (row_value(row, "points", "total points") or "").strip(),
+            "previous": (row_value(row, "previous", "prev") or "").strip(),
+            "firstPlaceVotes": int(votes.group(1)) if votes else 0,
+            "big12": norm_team(team) in b12_keys,
+        })
+    polls.append({
+        "season": ap_season,
+        "name": "AP Top 25",
+        "updated": (ap.get("updated") or "").strip(),
+        "rows": rows,
+    })
+
+    # The poll is the authoritative ranking. The scoreboard's per-game rank is
+    # only "the rank this team carried in that game", so a team that fell out
+    # of the top 25 would otherwise keep a stale number forever. Where we hold
+    # a poll for the season, it decides: absent from the poll means unranked.
+    poll_rank = {norm_team(r["team"]): r["rank"] for r in rows}
+    restated = 0
+    for (season, key), rec in records.items():
+        if season != ap_season:
+            continue
+        fresh = poll_rank.get(key)
+        if fresh != rec["nationalRank"]:
+            restated += 1
+        rec["nationalRank"] = fresh
+    if restated:
+        print(f"  national ranks restated from the poll for {restated} teams")
+    print(
+        f"  AP poll {ap_season}: {len(rows)} teams, "
+        f"{sum(1 for r in rows if r['big12'])} from the Big 12"
+    )
+
+# --- Win model: a chance for every game still to play ------------------------
+# scripts/win-model.json carries the constants and says at length what the
+# model is and is not worth. Attached only to games with no result: once a
+# game is played the question it answers has been answered on the floor.
+WIN_MODEL = load_json("scripts/win-model.json", {})
+
+
+def net_ranks(payload):
+    """{team key: rank} from a NET snapshot, or {} if it has none."""
+    out = {}
+    for row in payload.get("data", []):
+        rank = str(row_value(row, "rank") or "").strip()
+        team = norm_team(row_value(row, "school", "team") or "")
+        if rank.isdigit() and team:
+            out.setdefault(team, int(rank))
+    return out
+
+
+# The season being forecast is the one the upcoming games belong to. A game
+# that has been played carries no forecast even when its box score has not
+# landed yet: the question it asked was answered on the floor.
+upcoming = [g for g in games.values()
+            if g.get("teamScore") is None and g["date"] >= today]
+forecast_season = max((g["season"] for g in upcoming), default=None)
+
+# Bound here rather than only inside the branch below: the simulator reads
+# them after the standings are built, and before December - or in any season
+# with no NET to read - that branch does not run at all.
+model = None
+ku_z = None
+
+if WIN_MODEL and upcoming and forecast_season:
+    # This season's NET if the NCAA has published one yet (it arrives around
+    # the first Monday of December); otherwise last season's final, shrunk.
+    if net_season == forecast_season:
+        ranks, net_weight, net_label = net_ranks(net), 1.0, f"NET {net_season}"
+    else:
+        prior_season = season_label(int(forecast_season[:4]) - 1)
+        archived = load_json(f"scraped/rankings-net-{prior_season}.json", {})
+        ranks = net_ranks(archived)
+        net_weight = WIN_MODEL.get("staleNetWeight", 0.75)
+        net_label = f"NET {prior_season} x{net_weight:g}"
+
+    if not ranks:
+        print("win model: no NET ranks available; no games rated")
+    else:
+        # Ranked teams are rated from the poll, which is current where the NET
+        # may be a season old. Points as a share of the most any team could
+        # score - every ballot carries one first-place vote, so the first-place
+        # votes count the ballots, which keeps the mapping steady if the panel
+        # changes size.
+        poll_share = {}
+        current_poll = next((p for p in polls if p["season"] == forecast_season), None)
+        if current_poll:
+            ballots = sum(to_int(r.get("firstPlaceVotes")) for r in current_poll["rows"])
+            most = ballots * 25
+            if most:
+                for row in current_poll["rows"]:
+                    poll_share[norm_team(row.get("team") or "")] = to_int(row.get("points")) / most
+
+        model = Model(WIN_MODEL, ranks, poll_share, net_weight)
+        ku_z, ku_source = model.rating_of(norm_team("Kansas"))
+        rated = 0
+        unrated = []
+        for game in upcoming:
+            game.pop("winProbability", None)
+            game.pop("ratingSource", None)
+            if ku_z is None:
+                continue
+            opponent_z, source = model.rating_of(norm_team(game["opponent"]))
+            if opponent_z is None:
+                unrated.append(game["opponent"])
+                continue
+            game["winProbability"] = round(
+                model.probability(ku_z, opponent_z, game.get("site")), 4)
+            game["ratingSource"] = source
+            rated += 1
+        if ku_z is None:
+            print("win model: Kansas is not rated by the poll or the NET; no games rated")
+        else:
+            print(
+                f"win model: {rated} upcoming game(s) rated from {net_label}, "
+                f"Kansas {ku_z:+.2f} from the {ku_source} ({model.fit_note})"
+            )
+            if unrated:
+                print(f"  not rated (no NET row): {', '.join(sorted(set(unrated)))}")
+
+
+# Sorted by conference win %, then conference wins, then overall win % — NOT
+# official Big 12 tiebreakers (those use head-to-head); the UI says as much.
+def standing_sort(rec):
+    conf_games = rec["confW"] + rec["confL"]
+    overall = rec["overallW"] + rec["overallL"]
+    return (
+        -(rec["confW"] / conf_games if conf_games else 0),
+        -rec["confW"],
+        -(rec["overallW"] / overall if overall else 0),
+        rec["team"],
+    )
+
+
+standings = []
+for rec in sorted(records.values(), key=standing_sort):
+    standings.append({k: v for k, v in rec.items() if not k.startswith("_")})
+if standings:
+    seasons = sorted({r["season"] for r in standings})
+    print(f"standings computed for seasons {', '.join(seasons)}: {len(standings)} team rows")
+
+# The simulator's inputs. Needs the standings, so it runs after them; the
+# simulation itself runs on the reader's device, not here.
+simulation = sim_inputs.build(
+    ku_key=norm_team("Kansas"),
+    remaining=upcoming,
+    standings=standings,
+    season=forecast_season,
+    model=model,
+    ku_z=ku_z,
+    norm=norm_team,
+)
+if simulation:
+    left = len(simulation["remaining"])
+    print(f"simulator: {left} game(s) to play, {len(simulation['others']) + 1} teams in the table"
+          + (f", not rated: {', '.join(simulation['unrated'])}" if simulation["unrated"] else ""))
+else:
+    print("simulator: no inputs (nothing left to play, or no ratings yet)")
+
+seed = {
+    "formatVersion": 1,
+    "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "team": "Kansas Jayhawks Women's Basketball",
+    "players": sorted(players.values(), key=lambda p: p["name"]),
+    "games": [games[k] for k in sorted(games)],
+}
+# Additive only: formatVersion stays 1 so already-installed APKs (which reject
+# anything newer) keep syncing, and older seeds without these keys stay valid.
+if standings:
+    seed["standings"] = standings
+if polls:
+    seed["polls"] = polls
+if opponent_roster_seed:
+    seed["opponentRosters"] = opponent_roster_seed
+if simulation:
+    seed["simulation"] = simulation
+
+os.makedirs(os.path.dirname(SEED_PATH), exist_ok=True)
+
+# Skip the write when nothing but the timestamp would change, so the nightly
+# job doesn't commit (and rebuild the APK) on quiet days.
+previous = load_json(SEED_PATH, {})
+current_cmp = {k: v for k, v in seed.items() if k != "generatedAt"}
+previous_cmp = {k: v for k, v in previous.items() if k != "generatedAt"}
+if current_cmp == previous_cmp:
+    print("seed.json unchanged (ignoring timestamp); not rewriting")
+else:
+    with open(SEED_PATH, "w") as f:
+        json.dump(seed, f, indent=1)
+        f.write("\n")
+    print(
+        f"seed.json written: {len(seed['players'])} players, "
+        f"{len(seed['games'])} games "
+        f"({sum(1 for g in seed['games'] if 'teamScore' in g)} with results)"
+    )
+
+# Flat tables Claude can load and compute on, for "Ask about the team"
+# (scripts/ask_pack.py). Written from the seed that was just validated, and
+# only when something other than the timestamp changed.
+import sys  # noqa: E402
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from ask_pack import write_pack  # noqa: E402
+
+if write_pack(seed, "docs/ask-data.json"):
+    print("ask data written: docs/ask-data.json")
+else:
+    print("ask data unchanged (ignoring timestamp); not rewriting")

@@ -1,0 +1,834 @@
+package com.example
+
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import com.example.data.Game
+import com.example.data.JayhawksDatabase
+import com.example.data.Player
+import com.example.data.Seeder
+import com.example.data.StatLine
+import kotlinx.coroutines.test.runTest
+import com.example.json.JSONObject
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [36])
+class MergeSyncTest {
+
+    private lateinit var db: JayhawksDatabase
+
+    @Before
+    fun setUp() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(context, JayhawksDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+    }
+
+    private fun seedJson(): JSONObject = JSONObject(
+        """
+        {
+          "players": [{"name": "Ada Alpha", "jerseyNumber": "1", "position": "G"}],
+          "games": [
+            {"date": "2025-11-05", "opponent": "Kansas City", "season": "2025-26",
+             "home": true, "teamScore": 74, "opponentScore": 64,
+             "periodScores": "8-11, 26-17, 17-16, 23-20",
+             "lines": [{"player": "Ada Alpha", "min": 29, "fgm": 7, "fga": 15,
+                        "tpm": 1, "tpa": 4, "ftm": 6, "fta": 6, "oreb": 1, "reb": 4,
+                        "ast": 6, "to": 2, "stl": 1, "blk": 0, "pf": 2, "pts": 21,
+                        "gs": 1}]}
+          ]
+        }
+        """
+    )
+
+    @Test
+    fun `merge into empty database inserts everything`() = runTest {
+        Seeder.merge(seedJson(), db.dao())
+        assertEquals(1, db.dao().playersOnce().size)
+        val game = db.dao().gamesOnce().single()
+        assertEquals(74, game.teamScore)
+        assertEquals(64, game.opponentScore)
+        assertEquals("8-11, 26-17, 17-16, 23-20", game.periodScores)
+        val line = db.dao().statLinesOnce().single()
+        assertEquals(21, line.points)
+        assertEquals(15, line.fieldGoalsAttempted)
+        assertEquals(6, line.assists)
+        assertEquals(true, line.started)
+    }
+
+    @Test
+    fun `opponent lines merge, replace per game, and never reach the roster`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2025-11-05","opponent":"Kansas City",
+                    "season":"2025-26","site":"home","teamScore":74,"opponentScore":64,
+                    "opponentLines":[
+                      {"player":"Funmi Amode","number":"3","position":"F","min":15,
+                       "pts":4,"reb":3,"ast":1,"gs":0},
+                      {"player":"Tierra Trotter","number":"5","min":30,"pts":18,
+                       "reb":6,"ast":2,"gs":1}]}]}"""
+            ),
+            dao
+        )
+        val rows = dao.opponentLinesOnce()
+        assertEquals(2, rows.size)
+        assertEquals(18, rows.single { it.playerName == "Tierra Trotter" }.points)
+        assertTrue(rows.single { it.playerName == "Tierra Trotter" }.started)
+        // They are the other team: nothing about them belongs on the roster.
+        assertTrue(dao.playersOnce().none { it.name == "Tierra Trotter" })
+
+        // A corrected box score replaces the game's rows rather than adding to
+        // them, so a player removed upstream does not linger.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2025-11-05","opponent":"Kansas City",
+                    "season":"2025-26","site":"home","teamScore":74,"opponentScore":64,
+                    "opponentLines":[{"player":"Tierra Trotter","min":31,"pts":20}]}]}"""
+            ),
+            dao
+        )
+        val after = dao.opponentLinesOnce()
+        assertEquals(1, after.size)
+        assertEquals(20, after.single().points)
+    }
+
+    @Test
+    fun `conference, overtime and non-D1 flags come through and can be corrected`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2025-12-17","opponent":"Haskell",
+                    "season":"2025-26","site":"home","teamScore":107,"opponentScore":39,
+                    "nonD1":true},
+                   {"date":"2025-12-07","opponent":"Missouri St.","season":"2025-26",
+                    "site":"away","teamScore":73,"opponentScore":70,"overtime":1},
+                   {"date":"2026-01-14","opponent":"Oklahoma St.","season":"2025-26",
+                    "site":"home","teamScore":76,"opponentScore":85,"conference":true}]}"""
+            ),
+            dao
+        )
+        val byOpponent = dao.gamesOnce().associateBy { it.opponent }
+        assertTrue(byOpponent.getValue("Haskell").nonD1)
+        assertEquals(1, byOpponent.getValue("Missouri St.").overtime)
+        assertTrue(byOpponent.getValue("Oklahoma St.").conference)
+        assertTrue(!byOpponent.getValue("Haskell").conference)
+
+        // Classification is derived, never typed in, so a recomputation must be
+        // able to clear a flag as well as set one.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-01-14","opponent":"Oklahoma St.",
+                    "season":"2025-26","site":"home","teamScore":76,"opponentScore":85,
+                    "conference":false}]}"""
+            ),
+            dao
+        )
+        assertTrue(!dao.gamesOnce().single { it.opponent == "Oklahoma St." }.conference)
+    }
+
+    @Test
+    fun `player bios merge and survive a player leaving the roster`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(
+            JSONObject(
+                """{"players":[{"name":"S'Mya Nichols","jerseyNumber":"12","position":"G",
+                    "height":"6-0","academicYear":"Sr.","hometown":"Overland Park, Kan.",
+                    "lastSchool":"Shawnee Mission West HS","active":true}],"games":[]}"""
+            ),
+            dao
+        )
+        val p = dao.playersOnce().single()
+        assertEquals("6-0", p.height)
+        assertEquals("Overland Park, Kan.", p.hometown)
+
+        // Once she is off the roster the scrape stops sending a bio; the app
+        // should still know who she was.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[{"name":"S'Mya Nichols","jerseyNumber":"12",
+                    "position":"G","active":false}],"games":[]}"""
+            ),
+            dao
+        )
+        val former = dao.playersOnce().single()
+        assertEquals("6-0", former.height)
+        assertEquals("Shawnee Mission West HS", former.lastSchool)
+        assertTrue(!former.active)
+    }
+
+    @Test
+    fun `a fixture carries its tip time, venue and event, and drops the tip once played`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-11-14","opponent":"Nebraska",
+                    "season":"2026-27","site":"neutral","venue":"Sanford Pentagon",
+                    "city":"Sioux Falls, SD","time":"15:30","tv":"BTN+",
+                    "event":"MarketBeat Invitational"}]}"""
+            ),
+            dao
+        )
+        val fixture = dao.gamesOnce().single()
+        assertEquals("15:30", fixture.tipTime)
+        assertEquals("BTN+", fixture.tv)
+        assertEquals("MarketBeat Invitational", fixture.event)
+        assertEquals("neutral", fixture.siteOrLegacy)
+        assertEquals("Sanford Pentagon", fixture.venue)
+
+        // Once it is played the feed stops sending a tip time; keeping the old
+        // one would leave a finished game advertising a start time.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-11-14","opponent":"Nebraska",
+                    "season":"2026-27","site":"neutral","venue":"Sanford Pentagon",
+                    "teamScore":71,"opponentScore":64}]}"""
+            ),
+            dao
+        )
+        val played = dao.gamesOnce().single()
+        assertNull(played.tipTime)
+        assertEquals(71, played.teamScore)
+        // Broadcast and event are not re-sent by the box score, and survive.
+        // The schedule page drops a game once it has been played, so this is
+        // the only thing keeping the tournament name on it.
+        assertEquals("BTN+", played.tv)
+        assertEquals("MarketBeat Invitational", played.event)
+    }
+
+    @Test
+    fun `a wrong event name is corrected on a game still to be played`() = runTest {
+        // The schedule page puts a "Game Info" link above whichever game is
+        // next, and the parser briefly read that as a tournament name. Fixing
+        // the parser only helps if the correction can reach a phone that
+        // already stored the wrong name, so event is feed-owned while the
+        // game is still a fixture rather than gap-filled.
+        val dao = db.dao()
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-11-10","opponent":"Oral Roberts",
+                    "season":"2026-27","site":"home","event":"Game Info"}]}"""
+            ),
+            dao
+        )
+        assertEquals("Game Info", dao.gamesOnce().single().event)
+
+        // The same fixture, re-sent with no event at all.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-11-10","opponent":"Oral Roberts",
+                    "season":"2026-27","site":"home"}]}"""
+            ),
+            dao
+        )
+        assertNull(dao.gamesOnce().single().event)
+    }
+
+    @Test
+    fun `a fixture and its box score spelled differently are one game`() = runTest {
+        val dao = db.dao()
+        // kuathletics spells it out; the NCAA box score abbreviates. Keying on
+        // the raw name would leave the season showing two games.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-11-22","opponent":"South Dakota State",
+                    "season":"2026-27","site":"home"}]}"""
+            ),
+            dao
+        )
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-11-22","opponent":"South Dakota St.",
+                    "season":"2026-27","site":"home","teamScore":80,"opponentScore":61}]}"""
+            ),
+            dao
+        )
+        val games = dao.gamesOnce()
+        assertEquals(1, games.size)
+        assertEquals(80, games.single().teamScore)
+    }
+
+    @Test
+    fun `a corrected site reaches a game that already has a result`() = runTest {
+        val dao = db.dao()
+        // The schedule page cannot express a neutral site, so a fixture is
+        // stored home/away and only the box score's venue settles it. Gap-
+        // filling would strand the wrong value on every synced phone.
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-03-04","opponent":"UCF",
+                    "season":"2025-26","home":true,"site":"home",
+                    "teamScore":70,"opponentScore":66}]}"""
+            ),
+            dao
+        )
+        assertEquals("home", dao.gamesOnce().single().siteOrLegacy)
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2026-03-04","opponent":"UCF",
+                    "season":"2025-26","home":false,"site":"neutral",
+                    "venue":"T-Mobile Center","city":"Kansas City, MO",
+                    "teamScore":70,"opponentScore":66}]}"""
+            ),
+            dao
+        )
+        val game = dao.gamesOnce().single()
+        assertEquals("neutral", game.siteOrLegacy)
+        assertEquals("T-Mobile Center", game.venue)
+    }
+
+    @Test
+    fun `team totals merge onto a game that already has player lines`() = runTest {
+        val dao = db.dao()
+        // Regression: team stats used to be skipped by the early return that
+        // protects existing stat lines, so they landed only on a fresh install.
+        Seeder.merge(seedJson(), dao)
+        assertEquals(1, dao.statLinesOnce().size)
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2025-11-05","opponent":"Kansas City",
+                    "season":"2025-26","home":true,"site":"home",
+                    "teamScore":74,"opponentScore":64,
+                    "teamStats":{"reb":36,"pts":74,"ast":20,"to":18},
+                    "opponentStats":{"reb":29,"pts":64,"ast":11,"to":21}}]}"""
+            ),
+            dao
+        )
+        val rows = dao.teamStatsOnce()
+        assertEquals(2, rows.size)
+        val ku = rows.single { !it.opponent }
+        // 36 team rebounds, not the 9 the one seeded player line carries.
+        assertEquals(36, ku.reb)
+        assertEquals(29, rows.single { it.opponent }.reb)
+    }
+
+    @Test
+    fun `home flag comes through and gap-fills a game that lacks it`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(seedJson(), dao)
+        assertEquals(true, dao.gamesOnce().single().home)
+
+        // A game stored before the flag existed (or hand-entered) picks the
+        // site up on the next sync, even though it already has a result.
+        val other = com.example.data.Game(
+            date = "2025-11-15", opponent = "Missouri", season = "2025-26",
+            teamScore = 82, opponentScore = 77
+        )
+        dao.insertGame(other)
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2025-11-15","opponent":"Missouri",
+                    "season":"2025-26","home":false,"teamScore":82,"opponentScore":77}]}"""
+            ),
+            dao
+        )
+        val missouri = dao.gamesOnce().single { it.opponent == "Missouri" }
+        assertEquals(false, missouri.home)
+        assertEquals(82, missouri.teamScore)
+    }
+
+    @Test
+    fun `a seed without the home flag leaves an existing site alone`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(seedJson(), dao)
+        Seeder.merge(
+            JSONObject(
+                """{"players":[],"games":[{"date":"2025-11-05","opponent":"Kansas City",
+                    "season":"2025-26"}]}"""
+            ),
+            dao
+        )
+        assertEquals(true, dao.gamesOnce().single().home)
+    }
+
+    @Test
+    fun `merge is idempotent`() = runTest {
+        Seeder.merge(seedJson(), db.dao())
+        Seeder.merge(seedJson(), db.dao())
+        assertEquals(1, db.dao().playersOnce().size)
+        assertEquals(1, db.dao().gamesOnce().size)
+        assertEquals(1, db.dao().statLinesOnce().size)
+    }
+
+    @Test
+    fun `two games on the same date but different opponents both merge`() = runTest {
+        val json = seedJson().apply {
+            getJSONArray("games").put(
+                JSONObject(
+                    """{"date": "2025-11-05", "opponent": "Creighton", "season": "2025-26",
+                        "teamScore": 80, "opponentScore": 60}"""
+                )
+            )
+        }
+        Seeder.merge(json, db.dao())
+        assertEquals(2, db.dao().gamesOnce().size)
+    }
+
+    @Test
+    fun `merge fills result of an existing resultless game but never changes an existing result`() =
+        runTest {
+            val dao = db.dao()
+            dao.insertGame(
+                com.example.data.Game(date = "2025-11-05", opponent = "Kansas City", season = "2025-26")
+            )
+            Seeder.merge(seedJson(), dao)
+            assertEquals(74, dao.gamesOnce().single().teamScore)
+
+            // A second merge with a different result must NOT overwrite.
+            val altered = seedJson().apply {
+                getJSONArray("games").getJSONObject(0).put("teamScore", 99)
+            }
+            Seeder.merge(altered, dao)
+            assertEquals(74, dao.gamesOnce().single().teamScore)
+        }
+
+    @Test
+    fun `merge never adds lines to a game that already has any`() = runTest {
+        val dao = db.dao()
+        Seeder.merge(seedJson(), dao)
+        val game = dao.gamesOnce().single()
+        val player = dao.playersOnce().single()
+        // User records their own corrected line set: one line only.
+        dao.statLinesOnce().forEach { dao.deleteStatLine(it) }
+        dao.upsertStatLine(
+            StatLine(playerId = player.id, gameId = game.id, minutes = 30, points = 25)
+        )
+
+        Seeder.merge(seedJson(), dao)
+        val lines = dao.statLinesOnce()
+        assertEquals(1, lines.size)
+        assertEquals(25, lines.single().points)
+    }
+
+    @Test
+    fun `merge refreshes roster facts on existing players without duplicating them`() = runTest {
+        Seeder.merge(seedJson(), db.dao())
+        // Next season: new number, new position, off the roster.
+        val nextSeason = seedJson().apply {
+            getJSONArray("players").getJSONObject(0)
+                .put("jerseyNumber", "12")
+                .put("position", "F")
+                .put("active", false)
+        }
+        Seeder.merge(nextSeason, db.dao())
+        val player = db.dao().playersOnce().single()
+        assertEquals("12", player.jerseyNumber)
+        assertEquals("F", player.position)
+        assertEquals(false, player.active)
+    }
+
+    @Test
+    fun `blank seed fields never erase existing roster facts`() = runTest {
+        Seeder.merge(seedJson(), db.dao())
+        val blanked = seedJson().apply {
+            getJSONArray("players").getJSONObject(0)
+                .put("jerseyNumber", "")
+                .put("position", "")
+        }
+        Seeder.merge(blanked, db.dao())
+        val player = db.dao().playersOnce().single()
+        assertEquals("1", player.jerseyNumber)
+        assertEquals("G", player.position)
+    }
+
+    @Test
+    fun `player missing an active flag defaults to active and user-added players are untouched`() =
+        runTest {
+            val dao = db.dao()
+            dao.insertPlayer(
+                com.example.data.Player(name = "Hand Entered", jerseyNumber = "99", active = false)
+            )
+            Seeder.merge(seedJson(), dao)
+            val byName = dao.playersOnce().associateBy { it.name }
+            assertEquals(true, byName.getValue("Ada Alpha").active)
+            assertEquals(false, byName.getValue("Hand Entered").active)
+            assertEquals("99", byName.getValue("Hand Entered").jerseyNumber)
+        }
+
+    @Test
+    fun `unknown player in lines is skipped without error`() = runTest {
+        val json = seedJson().apply {
+            getJSONArray("games").getJSONObject(0).getJSONArray("lines").getJSONObject(0)
+                .put("player", "Nobody Known")
+        }
+        Seeder.merge(json, db.dao())
+        assertEquals(0, db.dao().statLinesOnce().size)
+        assertEquals(1, db.dao().gamesOnce().size)
+    }
+
+    private fun withRoster(vararg teams: String): JSONObject = seedJson().apply {
+        put("opponentRosters", com.example.json.JSONArray(teams.joinToString(",", "[", "]")))
+    }
+
+    @Test
+    fun `opponent rosters are stored with their bios`() = runTest {
+        val json = withRoster(
+            """{"team": "arizona", "fetchedAt": "2026-10-21", "players": [
+                 {"name": "Arynn Finley", "jerseyNumber": "2", "position": "G",
+                  "height": "5-10", "academicYear": "Fr.",
+                  "hometown": "Rancho Cucamonga, Calif.",
+                  "lastSchool": "Etiwanda High School"}]}"""
+        )
+        Seeder.merge(json, db.dao())
+        val row = db.dao().opponentRosterOnce().single()
+        assertEquals("arizona", row.team)
+        assertEquals("Arynn Finley", row.name)
+        assertEquals("5-10", row.height)
+        assertEquals("Rancho Cucamonga, Calif.", row.hometown)
+        assertEquals("Etiwanda High School", row.lastSchool)
+        // The fetch date rides on every row so a screen can say how old it is.
+        assertEquals("2026-10-21", row.fetchedAt)
+    }
+
+    @Test
+    fun `a resync replaces a team's roster rather than adding to it`() = runTest {
+        // A player who has left must not linger: these rows are scraper-owned
+        // and nothing about them is ever user-entered.
+        Seeder.merge(
+            withRoster(
+                """{"team": "byu", "fetchedAt": "2026-10-14", "players": [
+                     {"name": "Gone Away", "jerseyNumber": "3"},
+                     {"name": "Still Here", "jerseyNumber": "4"}]}"""
+            ),
+            db.dao()
+        )
+        Seeder.merge(
+            withRoster(
+                """{"team": "byu", "fetchedAt": "2026-10-21", "players": [
+                     {"name": "Still Here", "jerseyNumber": "4"},
+                     {"name": "Just Arrived", "jerseyNumber": "5"}]}"""
+            ),
+            db.dao()
+        )
+        assertEquals(
+            listOf("Just Arrived", "Still Here"),
+            db.dao().opponentRosterOnce().map { it.name }.sorted()
+        )
+    }
+
+    @Test
+    fun `one school failing to parse leaves the others alone`() = runTest {
+        Seeder.merge(
+            withRoster(
+                """{"team": "byu", "fetchedAt": "2026-10-14", "players": [{"name": "Still Here"}]}""",
+                """{"team": "utah", "fetchedAt": "2026-10-14", "players": [{"name": "Also Here"}]}"""
+            ),
+            db.dao()
+        )
+        // An empty list means the page could not be read this week, not that
+        // the school has no players — a stale roster beats none.
+        Seeder.merge(
+            withRoster("""{"team": "byu", "fetchedAt": "2026-10-21", "players": []}"""),
+            db.dao()
+        )
+        assertEquals(
+            listOf("Also Here", "Still Here"),
+            db.dao().opponentRosterOnce().map { it.name }.sorted()
+        )
+    }
+
+    @Test
+    fun `a seed with no rosters leaves stored ones untouched`() = runTest {
+        // Older payloads predate the key entirely and must not clear the table.
+        Seeder.merge(
+            withRoster("""{"team": "tcu", "fetchedAt": "2026-10-21", "players": [{"name": "Still Here"}]}"""),
+            db.dao()
+        )
+        Seeder.merge(seedJson(), db.dao())
+        assertEquals(1, db.dao().opponentRosterOnce().size)
+    }
+
+    @Test
+    fun `an opponent can be on a roster and in a box score at once`() = runTest {
+        // Two rows about the same person answering different questions: what
+        // she did against Kansas, and that she is on the team now.
+        val json = withRoster(
+            """{"team": "kansas city", "fetchedAt": "2026-10-21",
+                "players": [{"name": "Opp One", "height": "6-0"}]}"""
+        )
+        json.getJSONArray("games").getJSONObject(0).put(
+            "opponentLines",
+            com.example.json.JSONArray("""[{"player": "Opp One", "pts": 12, "number": "7"}]""")
+        )
+        Seeder.merge(json, db.dao())
+        assertEquals("6-0", db.dao().opponentRosterOnce().single().height)
+        assertEquals(12, db.dao().opponentLinesOnce().single().points)
+    }
+
+    @Test
+    fun `a roster entry without a name is skipped without error`() = runTest {
+        Seeder.merge(
+            withRoster(
+                """{"team": "utah", "fetchedAt": "2026-10-21", "players": [
+                     {"name": "", "height": "6-0"}, {"name": "Real Player"}]}"""
+            ),
+            db.dao()
+        )
+        assertEquals(listOf("Real Player"), db.dao().opponentRosterOnce().map { it.name })
+    }
+
+    // --- a rank that used to live inside the opponent's name ---------------
+    //
+    // The schedule page writes "#25 Nebraska". That reached the seed as the
+    // name until the parser was fixed, and normTeam keeps the prefix, so the
+    // corrected name keyed differently from the row already stored and the
+    // next sync inserted a second one beside it. Nothing else took it away:
+    // a sync only adds and updates, because a game entered by hand has to
+    // survive one. Every phone that synced before the fix showed the game
+    // twice, and these go through merge() because that is the only thing a
+    // phone ever calls.
+
+    private fun fixtureJson(opponent: String, rank: Int? = null): JSONObject {
+        val rankField = if (rank == null) "" else """, "opponentRank": $rank"""
+        return JSONObject(
+            """{"games": [{"date": "2026-11-14", "opponent": "$opponent",
+                 "season": "2026-27", "site": "neutral"$rankField}]}"""
+        )
+    }
+
+    /** A sync carrying no games at all: the repair still runs. */
+    private fun emptyJson() = JSONObject("""{"games": []}""")
+
+    @Test
+    fun `a fixture stored under a ranked name is not synced in again beside itself`() = runTest {
+        // What a phone that synced before the fix is holding.
+        Seeder.merge(fixtureJson("#25 Nebraska"), db.dao())
+        assertEquals(listOf("#25 Nebraska"), db.dao().gamesOnce().map { it.opponent })
+
+        // The seed spells it properly now, and carries the rank beside it.
+        Seeder.merge(fixtureJson("Nebraska", rank = 25), db.dao())
+
+        val games = db.dao().gamesOnce()
+        assertEquals(1, games.size)
+        assertEquals("Nebraska", games.single().opponent)
+        assertEquals(25, games.single().opponentRank)
+    }
+
+    @Test
+    fun `the rank is read back out of the name with no fresh row to merge into`() = runTest {
+        Seeder.merge(fixtureJson("#25 Nebraska"), db.dao())
+
+        Seeder.merge(emptyJson(), db.dao())
+
+        val game = db.dao().gamesOnce().single()
+        assertEquals("Nebraska", game.opponent)
+        assertEquals(25, game.opponentRank)
+    }
+
+    @Test
+    fun `when both rows exist the one carrying stat lines is the one kept`() = runTest {
+        // A line was entered against the stale row before the fix landed...
+        Seeder.merge(fixtureJson("#25 Nebraska"), db.dao())
+        val stale = db.dao().gamesOnce().single()
+        val playerId = db.dao().insertPlayer(Player(name = "Ada Alpha"))
+        db.dao().upsertStatLine(StatLine(gameId = stale.id, playerId = playerId, points = 14))
+        // ...and a later sync put the corrected one beside it.
+        val freshId = db.dao().insertGame(
+            Game(date = "2026-11-14", opponent = "Nebraska", season = "2026-27", site = "neutral")
+        )
+        assertEquals(2, db.dao().gamesOnce().size)
+
+        Seeder.merge(emptyJson(), db.dao())
+
+        val game = db.dao().gamesOnce().single()
+        assertEquals("Nebraska", game.opponent)
+        assertEquals(stale.id, game.id)
+        assertTrue(freshId != game.id)
+        assertEquals(14, db.dao().statLinesOnce().single().points)
+    }
+
+    @Test
+    fun `a stand-in row for an opponent that was not known yet is dropped`() = runTest {
+        // kuathletics showed the Cancun Challenge games as "versus TBD" in its
+        // rotator while naming the teams in the table, and the parser kept
+        // both. The ghost had no venue, so it read as a home game, and the
+        // phone held on to it after the page filled the name in.
+        db.dao().insertGame(Game(date = "2026-11-26", opponent = "TBD", season = "2026-27"))
+        Seeder.merge(
+            JSONObject(
+                """{"games": [{"date": "2026-11-26", "opponent": "Washington State",
+                     "season": "2026-27", "site": "neutral",
+                     "venue": "Hard Rock Hotel Rivera Maya"}]}"""
+            ),
+            db.dao()
+        )
+
+        val games = db.dao().gamesOnce()
+        assertEquals(1, games.size)
+        assertEquals("Washington State", games.single().opponent)
+    }
+
+    @Test
+    fun `a stand-in row somebody entered a result against is left alone`() = runTest {
+        // Nothing is called TBD, but if a reader put a score on that row it is
+        // theirs, and a sync does not get to tidy away what it cannot restore.
+        db.dao().insertGame(
+            Game(date = "2026-11-26", opponent = "TBD", season = "2026-27",
+                teamScore = 70, opponentScore = 60)
+        )
+
+        Seeder.merge(emptyJson(), db.dao())
+
+        assertEquals(listOf("TBD"), db.dao().gamesOnce().map { it.opponent })
+    }
+
+    // --- the general case: the source renames a fixture --------------------
+
+    private fun cancunJson(opponent: String) = JSONObject(
+        """{"games": [{"date": "2026-11-26", "opponent": "$opponent", "season": "2026-27",
+             "site": "neutral", "venue": "Hard Rock Hotel Rivera Maya",
+             "city": "Cancun, Mexico", "time": "15:00", "tv": "FloSports"}]}"""
+    )
+
+    @Test
+    fun `a fixture renamed at the source is taken over, not duplicated`() = runTest {
+        // The bracket is drawn between one sync and the next. Same date, same
+        // venue, same tip time, different name.
+        Seeder.merge(cancunJson("Cancun Challenge Winner"), db.dao())
+        val before = db.dao().gamesOnce().single()
+
+        Seeder.merge(cancunJson("Washington State"), db.dao())
+
+        val games = db.dao().gamesOnce()
+        assertEquals(1, games.size)
+        assertEquals("Washington State", games.single().opponent)
+        // Taken over, not replaced: the row the reader may have been looking at
+        // keeps its identity, and anything hanging off it keeps pointing here.
+        assertEquals(before.id, games.single().id)
+    }
+
+    @Test
+    fun `a real fixture is never taken over into a stand-in name`() = runTest {
+        // The parser still keeps a rotator-only game the schedule table has
+        // not listed, and the rotator says "TBD" until a bracket is drawn: a
+        // tip time, no venue. Adopting the real fixture into that name would
+        // hand the placeholder sweep a live row to delete on the next sync,
+        // and every table pointing at a game goes with it.
+        db.dao().insertGame(
+            Game(date = "2026-11-26", opponent = "Washington State", season = "2026-27",
+                venue = "Hard Rock Hotel Rivera Maya", tipTime = "18:00")
+        )
+        val rotatorOnly = JSONObject(
+            """{"games": [{"date": "2026-11-26", "opponent": "TBD",
+                 "season": "2026-27", "time": "18:00"}]}"""
+        )
+
+        Seeder.merge(rotatorOnly, db.dao())
+        // And again, because the delete would land on the sync after the rename.
+        Seeder.merge(rotatorOnly, db.dao())
+
+        assertTrue(
+            "the real fixture must survive",
+            db.dao().gamesOnce().any { it.opponent == "Washington State" }
+        )
+    }
+
+    @Test
+    fun `a taken-over row does not keep the last opponent's rank and record`() = runTest {
+        db.dao().insertGame(
+            Game(date = "2026-11-26", opponent = "Cancun Challenge Winner", season = "2026-27",
+                venue = "Hard Rock Hotel Rivera Maya", tipTime = "15:00",
+                opponentRank = 25, opponentSeed = 3, opponentRecord = "5-0")
+        )
+
+        Seeder.merge(cancunJson("Washington State"), db.dao())
+
+        val game = db.dao().gamesOnce().single()
+        assertEquals("Washington State", game.opponent)
+        assertNull(game.opponentRank)
+        assertNull(game.opponentSeed)
+        assertNull(game.opponentRecord)
+    }
+
+    @Test
+    fun `a game somebody entered themselves is not taken over by a rename`() = runTest {
+        // Same date as a scheduled game, but none of its details - which is
+        // what a hand-entered game looks like, and why the venue or the tip
+        // time has to match before anything is adopted.
+        val mine = db.dao().insertGame(
+            Game(date = "2026-11-26", opponent = "Practice Scrimmage", season = "2026-27")
+        )
+
+        Seeder.merge(cancunJson("Washington State"), db.dao())
+
+        val games = db.dao().gamesOnce().sortedBy { it.opponent }
+        assertEquals(listOf("Practice Scrimmage", "Washington State"), games.map { it.opponent })
+        assertEquals(mine, games.first().id)
+    }
+
+    @Test
+    fun `a played game is never taken over by a rename`() = runTest {
+        // A result is the one thing a sync cannot put back, so a row carrying
+        // one is never adopted even when everything else lines up.
+        db.dao().insertGame(
+            Game(date = "2026-11-26", opponent = "Someone Else", season = "2026-27",
+                venue = "Hard Rock Hotel Rivera Maya", tipTime = "15:00",
+                teamScore = 70, opponentScore = 60)
+        )
+
+        Seeder.merge(cancunJson("Washington State"), db.dao())
+
+        assertEquals(
+            listOf("Someone Else", "Washington State"),
+            db.dao().gamesOnce().map { it.opponent }.sorted()
+        )
+    }
+
+    @Test
+    fun `a row another game in the same sync answers to is not taken over`() = runTest {
+        // Two games on nearby dates in one tournament. The second must not
+        // swallow the first's row just because the first was renamed.
+        db.dao().insertGame(
+            Game(date = "2026-11-26", opponent = "Washington State", season = "2026-27",
+                venue = "Hard Rock Hotel Rivera Maya", tipTime = "15:00")
+        )
+        val json = JSONObject(
+            // "Someone New" FIRST, deliberately. Listed second it reaches the
+            // stored row only after the exact match in the loop has claimed
+            // it, so the test would pass with the pre-pass deleted and guard
+            // nothing. First, it can only be stopped by the pre-pass.
+            """{"games": [
+                 {"date": "2026-11-26", "opponent": "Someone New", "season": "2026-27",
+                  "venue": "Hard Rock Hotel Rivera Maya", "time": "15:00"},
+                 {"date": "2026-11-26", "opponent": "Washington State", "season": "2026-27",
+                  "venue": "Hard Rock Hotel Rivera Maya", "time": "15:00"}]}"""
+        )
+
+        Seeder.merge(json, db.dao())
+
+        assertEquals(
+            listOf("Someone New", "Washington State"),
+            db.dao().gamesOnce().map { it.opponent }.sorted()
+        )
+    }
+
+    @Test
+    fun `an ordinary opponent name is left exactly as it is`() = runTest {
+        // A "#" is a rank only at the very front and only before a number.
+        val names = listOf("Nebraska", "Miami (OH)", "Texas A&M", "St. #1 Fan")
+        names.forEachIndexed { i, name ->
+            db.dao().insertGame(
+                Game(date = "2026-12-1$i", opponent = name, season = "2026-27")
+            )
+        }
+
+        Seeder.merge(emptyJson(), db.dao())
+
+        assertEquals(names.sorted(), db.dao().gamesOnce().map { it.opponent }.sorted())
+    }
+}

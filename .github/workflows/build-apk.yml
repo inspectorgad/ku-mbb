@@ -1,0 +1,275 @@
+name: Build debug APK
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'probe/**'
+      - 'docs/**'
+      # No prose changes the APK, and rebuilding republishes the rolling
+      # release. DATA-VALIDATION.md was already listed on its own; this covers
+      # the README and anything else written rather than compiled.
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.4.1'
+
+      # Signing keystores are stored base64-encoded in the repo; the build
+      # expects them at ${rootDir}/debug.keystore and ${rootDir}/upload.keystore.
+      - name: Restore keystores
+        run: |
+          base64 -d debug.keystore.base64 > debug.keystore
+          base64 -d upload.keystore.base64 > upload.keystore
+
+      # testAndroidHostTest runs the shared module's commonTest on the JVM.
+      # Those are the cross-platform agreement checks: the iPhone has no
+      # String.format, SimpleDateFormat, org.json or MessageDigest, so the
+      # replacements are checked here against answers recorded on the JVM, and
+      # again on a simulator once the iPhone build exists.
+      - name: Run unit tests
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+        run: gradle :app:testDebugUnitTest :shared:testAndroidHostTest
+
+      # The scrape's parsers, the seed builder, the calendar feed and the Ask
+      # pack. These used to run only inside scrape-data.yml, on a schedule,
+      # against main - so nothing that could be dispatched on a branch ever
+      # ran them, and the shared-module port moved a file one of them opens
+      # by path without a single build noticing. Four scrapes failed before
+      # anyone saw it. They belong in front of a merge, not after one.
+      #
+      # `node --test` prints "Could not find" for a file that is not there and
+      # still exits 0, so naming a file here is a trap: this step named
+      # docs/sim.test.mjs, which had never existed in this repository, and
+      # passed green every time while running nothing. Glob instead, say what
+      # matched, and fail when nothing does.
+      - name: Run the script tests
+        run: |
+          shopt -s nullglob
+          tests=(scripts/*.test.mjs docs/*.test.mjs)
+          if [ ${#tests[@]} -eq 0 ]; then
+            echo "No JavaScript test files matched - the test step is not testing anything."
+            exit 1
+          fi
+          printf 'running: %s\n' "${tests[@]}"
+          node --test "${tests[@]}"
+          python3 -m unittest discover -s scripts -p 'test_*.py'
+
+      # A branch build is the test build, so Ask Claude must read this
+      # branch's data: the published pack is main's, and would have neither
+      # the new tables nor a prompt that mentions them. Pinned to this exact
+      # commit, so the APK handed out keeps reading the data it was built
+      # against even after the branch moves on. Never on main, where the
+      # published pack is the right one.
+      - name: Point Ask Claude at this branch's data
+        if: github.ref != 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          python3 scripts/pin_ask_pack.py \
+            "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/docs/ask-data.json"
+
+      - name: Build debug APK and Play release bundle
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+        run: gradle :app:assembleDebug :app:bundleRelease
+
+      # Room's generated schema, so a change to it is seen rather than
+      # inferred. The move to a shared Android/iPhone module changes the Room
+      # version, the KSP version and the code generator at once, and all three
+      # feed the hash Room checks when it opens the database — a hash that
+      # comes out different is a crash on launch for everyone upgrading.
+      #
+      # The diff is the guard. While the schema is untracked it reports
+      # nothing and this passes, which is what seeds the committed copy; once
+      # the file is committed, a regeneration that differs fails the build.
+      - name: Check the Room schema
+        run: |
+          set -euo pipefail
+          schema="$(find app shared -type d -name schemas -exec find {} -name '*.json' \; 2>/dev/null | sort | tail -1)"
+          if [ -z "$schema" ]; then
+            echo "Room generated no schema — is exportSchema still true?" >&2
+            exit 1
+          fi
+          # A schema at a path git does not know about means the layout moved,
+          # which an unchanged committed copy would otherwise hide: the old
+          # file still matches itself while nothing regenerates it. Room's
+          # output path moves with Room's compiler, so this has to be caught.
+          untracked="$(git ls-files --others --exclude-standard -- '*schemas*')"
+          if [ -n "$untracked" ]; then
+            echo "Room wrote a schema where none is committed:" >&2
+            echo "$untracked" >&2
+            echo "A version bump looks like this, and the file below is the one" >&2
+            echo "to commit. If instead the path moved, commit it there and" >&2
+            echo "delete the old one." >&2
+            # Printed for the same reason the diff branch prints it: the
+            # artifact is served from a host some tooling cannot reach, and a
+            # schema nobody can read is a schema nobody can commit.
+            for f in $untracked; do
+              echo "::group::$f (base64)"
+              base64 -w0 "$f"
+              echo
+              echo "::endgroup::"
+            done
+            exit 1
+          fi
+          if ! git diff --exit-code -- app/schemas shared/schemas; then
+            echo >&2
+            echo "The generated schema differs from the committed one. Either a" >&2
+            echo "migration changed it on purpose — commit the new file — or the" >&2
+            echo "toolchain changed it by accident, which breaks every upgrade." >&2
+            # The new schema, so it can be read and committed from the log.
+            # The artifact above is served from a host some tooling cannot
+            # reach, and the pretty-printed file is a thousand lines once each
+            # carries a timestamp. Only printed on failure, which is the only
+            # time anyone needs it.
+            echo "::group::$schema (base64)"
+            base64 -w0 "$schema"
+            echo "::endgroup::"
+            exit 1
+          fi
+
+      - name: Upload Room schema
+        uses: actions/upload-artifact@v4
+        with:
+          name: ku-wbb-room-schema
+          path: shared/schemas/
+          if-no-files-found: error
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ku-wbb-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Play bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ku-wbb-release-aab
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      # A branch build otherwise leaves only an Actions artifact, which is a
+      # zip that needs a GitHub login to fetch - no use on a phone. This puts
+      # the APK in a pre-release of its own instead.
+      #
+      # Never latest-apk, and never --latest: SeasonSync, AskEngine.PACK_URLS
+      # and the README's install link all read releases/latest/download/...,
+      # so a new "latest" would point every installed app at a test build.
+      # The Play bundle is not published at all - its pack URL is pinned to
+      # this commit, which is not something to hand to Play.
+      #
+      # It stays in this workflow because github.run_number here already
+      # numbers a branch build above main's, so the test APK installs over
+      # the everyday app and keeps the saved API key. A workflow of its own
+      # would start again at 1 and Android would refuse it as a downgrade.
+      - name: Publish the test APK to its own pre-release
+        if: github.ref != 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=ask-claude-test
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || \
+            gh release create "$tag" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Ask Claude test build" \
+              --notes "A test build of the Ask Claude work, from branch $GITHUB_REF_NAME. Its season data is pinned to the commit it was built from. Not the everyday app: that is the latest-apk release." \
+              --prerelease \
+              --latest=false \
+              --target "$GITHUB_SHA"
+          cp app/build/outputs/apk/debug/app-debug.apk ku-wbb-ask-test.apk
+          gh release upload "$tag" ku-wbb-ask-test.apk --repo "$GITHUB_REPOSITORY" --clobber
+          echo "Test APK: https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/ku-wbb-ask-test.apk"
+
+      # Publish the APK to a rolling "latest-apk" release for one-tap phone
+      # download:
+      # https://github.com/inspectorgad/ku-wbb/releases/latest/download/app-debug.apk
+      #
+      # Trunk only. The push trigger above is already limited to main, but
+      # workflow_dispatch is not, and the release this writes to is the one a
+      # phone downloads from — so a dispatch against a branch would hand out
+      # unreviewed code under the same link. Guarding it here rather than
+      # relying on the trigger means a branch can be dispatched to compile it
+      # and run its tests, which is otherwise impossible: this is the only
+      # workflow that builds the app at all.
+      - name: Publish APK to rolling release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          gh release view latest-apk --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || \
+            gh release create latest-apk \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "KU WBB - latest build" \
+              --notes "Rolling release: always carries the newest APK with current season data. Download app-debug.apk below and install it on your Android device." \
+              --latest
+
+          asset_id() {
+            gh api "repos/$GITHUB_REPOSITORY/releases/tags/latest-apk" \
+              --jq ".assets[] | select(.name == \"$1\") | .id" | head -n 1
+          }
+
+          # Upload first, swap second.
+          #
+          # `gh release upload --clobber` deletes the live asset and only then
+          # starts putting the new one back, so the download link 404s for as
+          # long as the transfer takes — tens of seconds for the APK and the
+          # bundle. Anyone tapping the link mid-build got an error, and so did
+          # an installed app reaching for season-data.json.
+          #
+          # So each file goes up under a staging name nothing links to, and is
+          # then renamed onto the real one. GitHub will not hold two assets
+          # under one name, so the live copy still has to be deleted first —
+          # but the gap is now a delete and a rename, two API calls, instead of
+          # a 25 MB upload.
+          swap_in() {
+            local path="$1" name staged live
+            name="$(basename "$path")"
+            staged="$RUNNER_TEMP/$name.incoming"
+            cp "$path" "$staged"
+            # --clobber covers a staging asset left behind by a run that died
+            # between the upload and the rename.
+            gh release upload latest-apk "$staged" --repo "$GITHUB_REPOSITORY" --clobber
+            live="$(asset_id "$name")"
+            if [ -n "$live" ]; then
+              gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/assets/$live" --silent
+            fi
+            gh api -X PATCH \
+              "repos/$GITHUB_REPOSITORY/releases/assets/$(asset_id "$name.incoming")" \
+              -f name="$name" --silent
+            rm -f "$staged"
+            echo "swapped in $name"
+          }
+
+          swap_in app/build/outputs/apk/debug/app-debug.apk
+          # The parsed season data rides along so the app can sync itself
+          # without an APK reinstall.
+          cp app/src/main/assets/seed.json season-data.json
+          swap_in season-data.json
+          # And the tables behind "Ask about the team", so the app can reach
+          # them without naming a branch in a raw.githubusercontent URL.
+          python3 scripts/ask_pack.py
+          cp docs/ask-data.json ask-data.json
+          swap_in ask-data.json
+          # Play Store bundle: download this and upload it to the Play
+          # Console (internal testing) whenever the app code changes.
+          swap_in app/build/outputs/bundle/release/app-release.aab

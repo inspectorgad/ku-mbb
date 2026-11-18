@@ -1,0 +1,234 @@
+package com.example.ui
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.JayhawksViewModel
+
+enum class Tab(val label: String) {
+    Roster("Roster"), Games("Games"), Leaders("Leaders"),
+    Season("Season"), Opponents("Opponents"), Big12("Big 12")
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun JayhawksApp(viewModel: JayhawksViewModel) {
+    var currentTab by rememberSaveable { mutableStateOf(Tab.Roster) }
+    // Detail overlays: at most one is open at a time; back closes it.
+    var openPlayerId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var openGameId by rememberSaveable { mutableStateOf<Long?>(null) }
+    // Held by name, not id: an opponent is a group of games, and the name is
+    // what identifies it across the spellings the sources use.
+    var openOpponent by rememberSaveable { mutableStateOf<String?>(null) }
+    var askOpen by rememberSaveable { mutableStateOf(false) }
+    // A question a game's Preview or Recap button handed to the Ask screen.
+    var askPrefill by rememberSaveable { mutableStateOf<String?>(null) }
+    var simOpen by rememberSaveable { mutableStateOf(false) }
+
+    val players by viewModel.players.collectAsStateWithLifecycle()
+    val games by viewModel.games.collectAsStateWithLifecycle()
+    val statLines by viewModel.statLines.collectAsStateWithLifecycle()
+    val standings by viewModel.standings.collectAsStateWithLifecycle()
+    val pollEntries by viewModel.pollEntries.collectAsStateWithLifecycle()
+    val simulation by viewModel.simulation.collectAsStateWithLifecycle()
+    val opponentLines by viewModel.opponentLines.collectAsStateWithLifecycle()
+    val teamStats by viewModel.teamStats.collectAsStateWithLifecycle()
+    val opponentRoster by viewModel.opponentRoster.collectAsStateWithLifecycle()
+    val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
+    val dataUpdatedAt by viewModel.dataUpdatedAt.collectAsStateWithLifecycle()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(Unit) {
+        viewModel.syncMessages.collect { snackbarHostState.showSnackbar(it) }
+    }
+
+    val showingDetail =
+        openPlayerId != null || openGameId != null || openOpponent != null ||
+            askOpen || simOpen
+    // Back closes the top screen only, in the order they stack: Ask opened
+    // from a game's Preview or Recap button steps back to that game rather
+    // than dropping the reader on the list it came from two screens ago.
+    SystemBackHandler(enabled = showingDetail) {
+        when {
+            askOpen -> {
+                askOpen = false
+                askPrefill = null
+            }
+            simOpen -> simOpen = false
+            else -> {
+                openPlayerId = null
+                openGameId = null
+                openOpponent = null
+            }
+        }
+    }
+
+    val openPlayer = openPlayerId?.let { id -> players.firstOrNull { it.id == id } }
+    val openGame = openGameId?.let { id -> games.firstOrNull { it.id == id } }
+
+    when {
+        // Ask keeps its thread in AskSession, so closing it and coming back
+        // finds the conversation — and any answer still being worked on —
+        // where it was.
+        askOpen -> AskScreen(
+            onBack = {
+                askOpen = false
+                askPrefill = null
+            },
+            prefill = askPrefill,
+            // Dropped the moment it has been dealt with, so coming back to
+            // this screen - after a rotation, or after Android rebuilt the
+            // app from its saved state - never asks it a second time.
+            onPrefillTaken = { askPrefill = null }
+        )
+
+        // Only openable when there are inputs, but checked again here: a sync
+        // between the tap and the draw could take them away.
+        simOpen && simulation != null ->
+            SimulatorScreen(inputs = simulation!!, onBack = { simOpen = false })
+
+        openOpponent != null -> OpponentDetailScreen(
+            opponentName = openOpponent!!,
+            games = games,
+            opponentLines = opponentLines,
+            teamStats = teamStats,
+            roster = opponentRoster,
+            onBack = { openOpponent = null }
+        )
+
+        openPlayer != null -> PlayerDetailScreen(
+            player = openPlayer,
+            games = games,
+            statLines = statLines,
+            onSavePlayer = viewModel::savePlayer,
+            onDeletePlayer = {
+                viewModel.deletePlayer(it)
+                openPlayerId = null
+            },
+            onBack = { openPlayerId = null }
+        )
+
+        openGame != null -> GameDetailScreen(
+            game = openGame,
+            players = players,
+            statLines = statLines,
+            opponentLines = opponentLines,
+            teamStats = teamStats,
+            allGames = games,
+            onSaveGame = { viewModel.saveGame(it) },
+            onDeleteGame = {
+                viewModel.deleteGame(it)
+                openGameId = null
+            },
+            onSaveStatLine = viewModel::saveStatLine,
+            onDeleteStatLine = viewModel::deleteStatLine,
+            onBack = { openGameId = null },
+            onAskClaude = { q ->
+                askPrefill = q
+                askOpen = true
+            }
+        )
+
+        else -> Scaffold(
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            bottomBar = {
+                NavigationBar {
+                    Tab.entries.forEach { tab ->
+                        NavigationBarItem(
+                            selected = currentTab == tab,
+                            onClick = { currentTab = tab },
+                            icon = {
+                                Icon(
+                                    imageVector = when (tab) {
+                                        Tab.Roster -> AppIcons.Groups
+                                        Tab.Games -> AppIcons.List
+                                        Tab.Leaders -> AppIcons.EmojiEvents
+                                        Tab.Season -> AppIcons.QueryStats
+                                        Tab.Opponents -> AppIcons.Shield
+                                        Tab.Big12 -> AppIcons.Leaderboard
+                                    },
+                                    contentDescription = tab.label
+                                )
+                            },
+                            label = { Text(tab.label) }
+                        )
+                    }
+                }
+            }
+        ) { innerPadding ->
+            PullToRefreshBox(
+                isRefreshing = isSyncing,
+                onRefresh = viewModel::refresh,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                when (currentTab) {
+                    Tab.Roster -> RosterScreen(
+                        players = players,
+                        statLines = statLines,
+                        onSavePlayer = viewModel::savePlayer,
+                        onOpenPlayer = { openPlayerId = it.id }
+                    )
+
+                    Tab.Games -> GamesScreen(
+                        games = games,
+                        statLines = statLines,
+                        onSaveGame = { game -> viewModel.saveGame(game) { openGameId = it } },
+                        onOpenGame = { openGameId = it.id }
+                    )
+
+                    Tab.Leaders -> LeadersScreen(
+                        players = players,
+                        games = games,
+                        statLines = statLines,
+                        dataUpdatedAt = dataUpdatedAt,
+                        // A plain "Ask about the team" starts on an empty box,
+                        // never on whatever game was previewed last.
+                        onOpenAsk = {
+                            askPrefill = null
+                            askOpen = true
+                        },
+                        onOpenSimulator = if (simulation != null) ({ simOpen = true }) else null
+                    )
+
+                    Tab.Season -> SeasonScreen(
+                        games = games,
+                        teamStats = teamStats,
+                        statLines = statLines,
+                        players = players
+                    )
+
+                    Tab.Opponents -> OpponentsScreen(
+                        games = games,
+                        teamStats = teamStats,
+                        roster = opponentRoster,
+                        onOpenOpponent = { openOpponent = it }
+                    )
+
+                    Tab.Big12 -> StandingsScreen(
+                        standings = standings,
+                        pollEntries = pollEntries
+                    )
+                }
+            }
+        }
+    }
+}
