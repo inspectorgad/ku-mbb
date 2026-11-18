@@ -16,17 +16,56 @@ has to be found again in the other, and that is accepted.
 
 ## Where this repo has got to
 
-This document was written as a plan for a fresh port. `inspectorgad/ku-mbb` is that
-port, part-done. What is finished here:
+This began as a plan for a port that had not started. The port has since been
+carried out, here, so most of what follows is a record rather than instructions.
+Read this section before anything below it.
 
 | Step | State |
 |---|---|
-| §1 Verify the data sources | **Done.** `scripts/probe-ku-mbb.mjs` ran against the live NCAA API on 18 Nov and passed; §1 below records what it found, including the NET slug and the two-period linescore. |
+| §1 Verify the data sources | **Done.** `scripts/probe-ku-mbb.mjs` ran against the live NCAA API and passed, twice; §1 records what it found, including the NET slug and the linescore shape. |
 | §2 Rename | **Done.** Identity, paths, URLs, bundle IDs, the database filename and the Keystore alias all say men's/MBB. The parser fixtures are genuine men's pages captured by the probe. |
 | §3 Quarters → halves | **Done**, and it was not only labels — see the correction at the head of §3. |
-| §4 Rebuild the seed | **Not started.** `app/src/main/assets/seed.json` ships its shape with no season in it, so four `ShippedSeedTest` cases skip. |
-| §5 Infrastructure | **Not started.** `.github/workflows` is parked at `.github/workflows-disabled` so nothing fires before it is meant to; Pages, the Apple secrets and a fresh upload keystore are still to do. |
-| §6-§9 | Unchanged guidance; read them. |
+| §4 Rebuild the seed | **Done.** The scrape runs six times a day and the seed carries a real season: 71 games, 36 of them this one, 39 played, 29 players, the whole Big 12 table. |
+| §5 Infrastructure | **Done** bar one step only a person can take — below. All nine workflows are live, Pages publishes the dashboard, the four Apple secrets pass all 13 checks, and the app has its own upload key. |
+| §6-§9 | Unchanged guidance, and still worth reading — especially §6 on what not to change. |
+
+### What is running
+
+- **Dashboard** — <https://inspectorgad.github.io/ku-mbb>, redeployed whenever
+  `docs/` changes.
+- **Android** — the rolling `latest-apk` release carries `app-debug.apk`, the
+  season data and the Ask pack. Installed apps sync their season from it, which
+  is why §6 says to leave that release alone.
+- **iPhone** — TestFlight, built by hand or from a branch.
+- **The scrape** — six times a day at :37, and a game-night watcher that polls
+  for a result once a game is under way.
+
+### The one thing still outstanding
+
+TestFlight has **no internal tester group**, so every build processes to `VALID`
+and then reaches nobody. In App Store Connect → KU MBB → TestFlight → Internal
+Testing: create a group, add yourself — owning the account does not make you a
+tester — and turn on automatic distribution so later builds go out by themselves.
+
+`scripts/ios_build_status.py`, run as the **iOS build status** workflow, says
+where any build has got to and prints no secrets. It diagnoses exactly this.
+
+### Picking this up elsewhere — another machine, or another Claude account
+
+Nothing of value lives outside this repository, and there is no session to move:
+clone it, or point a new Claude Code session at it, and start. In particular:
+
+- **The four Apple secrets** are GitHub Actions secrets *on this repository*, not
+  on anybody's account, so they travel with it and need no re-entry.
+- **The upload keystore** is committed as `upload.keystore.base64` with its
+  password in `app/build.gradle.kts`. Deliberate — see §5 — and it is this app's
+  own key, not an inherited one.
+- **The Apple Developer account** is the one genuinely separate thing. Signing
+  uses an App Store Connect API key of **Admin** role; APPLE-SETUP.md has the
+  detail, and the keys check validates it in half a minute.
+- **The reasoning** is in this file, in DATA-VALIDATION.md, and in the comments.
+  Where the code looks odd there is usually a comment saying which bug put it
+  that way. §8 is the short list of traps.
 
 ~~One thing §1 could not settle: the overtime linescore shape.~~ **Settled.** The
 second probe run, from GitHub's network, caught two overtime games among the 32:
