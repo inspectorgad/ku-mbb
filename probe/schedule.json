@@ -10,6 +10,16 @@
   "kuIsHome": true
  },
  {
+  "gameId": "6501513",
+  "date": "2025-11-07",
+  "state": "final",
+  "home": "North Carolina",
+  "homeScore": "87",
+  "away": "Kansas",
+  "awayScore": "74",
+  "kuIsHome": false
+ },
+ {
   "gameId": "6529265",
   "date": "2025-11-11",
   "state": "final",
@@ -17,6 +27,16 @@
   "homeScore": "77",
   "away": "A&M-Corpus Christi",
   "awayScore": "46",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6501514",
+  "date": "2025-11-15",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "76",
+  "away": "Princeton",
+  "awayScore": "57",
   "kuIsHome": true
  },
  {
@@ -130,14 +150,14 @@
   "kuIsHome": true
  },
  {
-  "gameId": "6503878",
-  "date": "2026-01-10",
+  "gameId": "6504399",
+  "date": "2026-01-13",
   "state": "final",
-  "home": "West Virginia",
-  "homeScore": "86",
-  "away": "Kansas",
-  "awayScore": "75",
-  "kuIsHome": false
+  "home": "Kansas",
+  "homeScore": "84",
+  "away": "Iowa St.",
+  "awayScore": "63",
+  "kuIsHome": true
  },
  {
   "gameId": "6504385",
@@ -287,26 +307,6 @@
   "homeScore": "78",
   "away": "TCU",
   "awayScore": "73",
-  "kuIsHome": true
- },
- {
-  "gameId": "6593574",
-  "date": "2026-03-13",
-  "state": "final",
-  "home": "Houston",
-  "homeScore": "69",
-  "away": "Kansas",
-  "awayScore": "47",
-  "kuIsHome": false
- },
- {
-  "gameId": "6534599",
-  "date": "2026-03-20",
-  "state": "final",
-  "home": "Kansas",
-  "homeScore": "68",
-  "away": "California Baptist",
-  "awayScore": "60",
   "kuIsHome": true
  },
  {
