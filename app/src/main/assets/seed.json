@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T05:09:13Z",
+ "generatedAt": "2026-11-18T13:15:58Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -18762,7 +18762,7 @@
     "pf": 17,
     "pts": 89
    },
-   "site": "away",
+   "site": "neutral",
    "home": false,
    "conference": false
   },
@@ -19376,19 +19376,22 @@
   },
   {
    "date": "2026-11-18",
-   "opponent": "Auburn/West Virginia",
+   "opponent": "West Virginia",
    "season": "2026-27",
    "opponentRank": null,
    "venue": "Michelob Ultra Arena",
    "city": "Las Vegas, NV",
-   "tv": "ESPN Family",
+   "tv": "ESPN2",
+   "time": "18:30",
    "site": "neutral",
    "home": false,
-   "conference": false
+   "conference": true,
+   "winProbability": 0.834,
+   "ratingSource": "net"
   },
   {
    "date": "2026-11-19",
-   "opponent": "TBD",
+   "opponent": "Houston/Florida",
    "season": "2026-27",
    "opponentRank": null,
    "venue": "Michelob Ultra Arena",
@@ -20041,7 +20044,7 @@
    "seo": "west-virginia",
    "confW": 0,
    "confL": 0,
-   "overallW": 3,
+   "overallW": 4,
    "overallL": 0,
    "nationalRank": null
   },
@@ -22544,6 +22547,14 @@
   },
   "remaining": [
    {
+    "date": "2026-11-18",
+    "opponent": "West Virginia",
+    "site": "neutral",
+    "conference": true,
+    "key": "west virginia",
+    "p": 0.834
+   },
+   {
     "date": "2026-11-23",
     "opponent": "Denver",
     "site": "home",
@@ -22787,7 +22798,7 @@
     "key": "west virginia",
     "confW": 0,
     "confL": 0,
-    "remaining": 17,
+    "remaining": 16,
     "pVsAverage": 0.4192,
     "rating": 0.7876
    },
@@ -22874,11 +22885,10 @@
    }
   ],
   "unrated": [
-   "Auburn/West Virginia",
    "Big 12 Tournament",
+   "Houston/Florida",
    "LSU New Orleans",
-   "Northern Iowa",
-   "TBD"
+   "Northern Iowa"
   ]
  }
 }
