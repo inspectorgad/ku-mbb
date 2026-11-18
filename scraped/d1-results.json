@@ -3332,6 +3332,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650342": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Utah",
+    "seo": "utah",
+    "score": 67,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Eastern Wash.",
+    "seo": "eastern-wash",
+    "score": 71,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650356": {
    "date": "2026-11-02",
    "season": "2026",
@@ -9140,6 +9162,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6652874": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Ga. Southern",
+    "seo": "ga-southern",
+    "score": 78,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Middle Tenn.",
+    "seo": "middle-tenn",
+    "score": 85,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6652878": {
    "date": "2026-11-14",
    "season": "2026",
@@ -10299,6 +10343,28 @@
     "name": "Central Ark.",
     "seo": "central-ark",
     "score": 60,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6653392": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Ole Miss",
+    "seo": "ole-miss",
+    "score": 76,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Nicholls",
+    "seo": "nicholls-st",
+    "score": 41,
     "winner": false,
     "rank": null,
     "inConference": false
@@ -16510,6 +16576,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6655328": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Northern Ariz.",
+    "seo": "northern-ariz",
+    "score": 72,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Embry-Riddle (AZ)",
+    "seo": "embry-riddle-az",
+    "score": 59,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6655329": {
    "date": "2026-11-02",
    "season": "2026",
@@ -16899,6 +16987,28 @@
     "name": "Dallas Christian",
     "seo": "dallas-christian",
     "score": 58,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655432": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Rice",
+    "seo": "rice",
+    "score": 81,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "A&M-Corpus Christi",
+    "seo": "am-corpus-chris",
+    "score": 74,
     "winner": false,
     "rank": null,
     "inConference": false
@@ -20904,6 +21014,28 @@
     "seo": "muskingum",
     "score": 64,
     "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6677603": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Southern Miss.",
+    "seo": "southern-miss",
+    "score": 72,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "UT Arlington",
+    "seo": "texas-arlington",
+    "score": 83,
+    "winner": true,
     "rank": null,
     "inConference": false
    },

@@ -24,6 +24,66 @@
   "event": null
  },
  {
+  "date": "2026-10-16",
+  "opponent": "Pittsburg State (Exhibition)",
+  "opponentRank": null,
+  "site": "home",
+  "home": true,
+  "venue": "Allen Fieldhouse",
+  "city": "Lawrence, KS",
+  "time": "19:00",
+  "tv": "ESPN+",
+  "event": "Late Night in the Phog"
+ },
+ {
+  "date": "2026-10-21",
+  "opponent": "Louisville (Exhibition)",
+  "opponentRank": null,
+  "site": "home",
+  "home": true,
+  "venue": "Allen Fieldhouse",
+  "city": "Lawrence, KS",
+  "time": "18:00",
+  "tv": "ESPNU",
+  "event": null
+ },
+ {
+  "date": "2026-10-25",
+  "opponent": "Duke (Exhibition)",
+  "opponentRank": null,
+  "site": "home",
+  "home": true,
+  "venue": "Allen Fieldhouse",
+  "city": "Lawrence, KS",
+  "time": "12:00",
+  "tv": "ESPN",
+  "event": null
+ },
+ {
+  "date": "2026-11-02",
+  "opponent": "Fordham",
+  "opponentRank": null,
+  "site": "home",
+  "home": true,
+  "venue": "Allen Fieldhouse",
+  "city": "Lawrence, KS",
+  "time": "19:00",
+  "tv": "ESPN+",
+  "event": null
+ },
+ {
+  "date": "2026-11-06",
+  "opponent": "Middle Tennessee",
+  "opponentRank": null,
+  "site": "home",
+  "home": true,
+  "venue": "Allen Fieldhouse",
+  "city": "Lawrence, KS",
+  "time": "20:00",
+  "tv": "ESPNU",
+  "event": null
+ },
+ {
   "date": "2026-11-17",
   "opponent": "UNLV",
   "opponentRank": null,
@@ -358,5 +418,17 @@
   "time": null,
   "tv": null,
   "event": "Phillips 66 Big 12 Tournament"
+ },
+ {
+  "date": "2026-11-10",
+  "opponent": "Kentucky",
+  "opponentRank": null,
+  "site": "neutral",
+  "home": false,
+  "venue": null,
+  "city": "Chicago, IL",
+  "time": null,
+  "tv": "ESPN",
+  "event": "State Farm Champions Classic"
  }
 ]
