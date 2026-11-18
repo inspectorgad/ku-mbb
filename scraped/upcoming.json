@@ -1,5 +1,29 @@
 [
  {
+  "date": "2026-11-18",
+  "opponent": "Auburn/West Virginia",
+  "opponentRank": null,
+  "site": "neutral",
+  "home": false,
+  "venue": "Michelob Ultra Arena",
+  "city": "Las Vegas, NV",
+  "time": null,
+  "tv": "ESPN Family",
+  "event": null
+ },
+ {
+  "date": "2026-11-19",
+  "opponent": "TBD",
+  "opponentRank": null,
+  "site": "neutral",
+  "home": false,
+  "venue": "Michelob Ultra Arena",
+  "city": "Las Vegas, NV",
+  "time": null,
+  "tv": "ESPN Family",
+  "event": null
+ },
+ {
   "date": "2026-11-17",
   "opponent": "UNLV",
   "opponentRank": null,
@@ -334,29 +358,5 @@
   "time": null,
   "tv": null,
   "event": "Phillips 66 Big 12 Tournament"
- },
- {
-  "date": "2026-11-18",
-  "opponent": "Auburn/West Virginia",
-  "opponentRank": null,
-  "site": "home",
-  "home": true,
-  "venue": null,
-  "city": null,
-  "time": null,
-  "tv": null,
-  "event": null
- },
- {
-  "date": "2026-11-19",
-  "opponent": "TBD",
-  "opponentRank": null,
-  "site": "home",
-  "home": true,
-  "venue": null,
-  "city": null,
-  "time": null,
-  "tv": null,
-  "event": null
  }
 ]

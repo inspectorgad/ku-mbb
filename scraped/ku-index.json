@@ -182,7 +182,9 @@
   "2026-11-15": true,
   "2026-11-16": true,
   "2026-11-17": true,
-  "2026-11-18": true
+  "2026-11-18": true,
+  "2025-11-15": true,
+  "2025-12-02": true
  },
  "games": {
   "6501504": {
@@ -190,14 +192,14 @@
    "final": true,
    "home": "Kansas",
    "away": "Notre Dame",
-   "boxscored": false
+   "boxscored": true
   },
   "6501512": {
    "date": "2025-11-03",
    "final": true,
    "home": "Kansas",
    "away": "Green Bay",
-   "boxscored": false
+   "boxscored": true
   },
   "6501513": {
    "date": "2025-11-07",
@@ -206,12 +208,19 @@
    "away": "Kansas",
    "boxscored": true
   },
+  "6501514": {
+   "date": "2025-11-15",
+   "final": true,
+   "home": "Kansas",
+   "away": "Princeton",
+   "boxscored": true
+  },
   "6501515": {
    "date": "2025-11-18",
    "final": true,
    "home": "Duke",
    "away": "Kansas",
-   "boxscored": false
+   "boxscored": true
   },
   "6501516": {
    "date": "2025-11-25",
@@ -220,12 +229,19 @@
    "away": "Syracuse",
    "boxscored": true
   },
+  "6501518": {
+   "date": "2025-12-02",
+   "final": true,
+   "home": "Kansas",
+   "away": "UConn",
+   "boxscored": true
+  },
   "6501519": {
    "date": "2025-12-07",
    "final": true,
    "home": "Kansas",
    "away": "Missouri",
-   "boxscored": false
+   "boxscored": true
   },
   "6501520": {
    "date": "2025-12-13",
@@ -253,7 +269,7 @@
    "final": true,
    "home": "Kansas St.",
    "away": "Kansas",
-   "boxscored": false
+   "boxscored": true
   },
   "6503418": {
    "date": "2026-03-07",
@@ -267,7 +283,7 @@
    "final": true,
    "home": "Kansas",
    "away": "Arizona",
-   "boxscored": false
+   "boxscored": true
   },
   "6503872": {
    "date": "2026-02-28",
@@ -316,7 +332,7 @@
    "final": true,
    "home": "Kansas",
    "away": "Baylor",
-   "boxscored": false
+   "boxscored": true
   },
   "6504399": {
    "date": "2026-01-13",
@@ -358,7 +374,7 @@
    "final": true,
    "home": "Kansas",
    "away": "TCU",
-   "boxscored": false
+   "boxscored": true
   },
   "6505936": {
    "date": "2026-02-02",
@@ -407,14 +423,14 @@
    "final": true,
    "home": "Houston",
    "away": "Kansas",
-   "boxscored": false
+   "boxscored": true
   },
   "6593578": {
    "date": "2026-03-12",
    "final": true,
    "home": "Kansas",
    "away": "TCU",
-   "boxscored": false
+   "boxscored": true
   },
   "6650631": {
    "date": "2026-11-10",
@@ -706,6 +722,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6501216": {
+   "date": "2025-11-15",
+   "season": "2025",
+   "home": {
+    "name": "UConn",
+    "seo": "uconn",
+    "score": 86,
+    "winner": true,
+    "rank": 3,
+    "inConference": false
+   },
+   "away": {
+    "name": "BYU",
+    "seo": "byu",
+    "score": 84,
+    "winner": false,
+    "rank": 7,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false
@@ -1128,6 +1166,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6501514": {
+   "date": "2025-11-15",
+   "season": "2025",
+   "home": {
+    "name": "Kansas",
+    "seo": "kansas",
+    "score": 76,
+    "winner": true,
+    "rank": 25,
+    "inConference": true
+   },
+   "away": {
+    "name": "Princeton",
+    "seo": "princeton",
+    "score": 57,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6501515": {
    "date": "2025-11-18",
    "season": "2025",
@@ -1167,6 +1227,28 @@
     "score": 60,
     "winner": false,
     "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6501518": {
+   "date": "2025-12-02",
+   "season": "2025",
+   "home": {
+    "name": "Kansas",
+    "seo": "kansas",
+    "score": 56,
+    "winner": false,
+    "rank": 21,
+    "inConference": true
+   },
+   "away": {
+    "name": "UConn",
+    "seo": "uconn",
+    "score": 61,
+    "winner": true,
+    "rank": 5,
     "inConference": false
    },
    "conferenceGame": false,
@@ -1986,6 +2068,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6502727": {
+   "date": "2025-12-02",
+   "season": "2025",
+   "home": {
+    "name": "Baylor",
+    "seo": "baylor",
+    "score": 110,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Sacramento St.",
+    "seo": "sacramento-st",
+    "score": 88,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6502737": {
    "date": "2025-12-17",
    "season": "2025",
@@ -2268,6 +2372,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6503214": {
+   "date": "2025-12-02",
+   "season": "2025",
+   "home": {
+    "name": "California",
+    "seo": "california",
+    "score": 79,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Utah",
+    "seo": "utah",
+    "score": 72,
+    "winner": false,
+    "rank": null,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false
@@ -3057,6 +3183,28 @@
     "name": "Holy Cross",
     "seo": "holy-cross",
     "score": 69,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6503431": {
+   "date": "2025-11-15",
+   "season": "2025",
+   "home": {
+    "name": "Utah",
+    "seo": "utah",
+    "score": 85,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Sam Houston",
+    "seo": "sam-houston-st",
+    "score": 79,
     "winner": false,
     "rank": null,
     "inConference": false
@@ -4248,6 +4396,28 @@
     "winner": true,
     "rank": null,
     "inConference": true
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6503974": {
+   "date": "2025-12-02",
+   "season": "2025",
+   "home": {
+    "name": "Oklahoma St.",
+    "seo": "oklahoma-st",
+    "score": 93,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Sam Houston",
+    "seo": "sam-houston-st",
+    "score": 83,
+    "winner": false,
+    "rank": null,
+    "inConference": false
    },
    "conferenceGame": false,
    "bracket": false
