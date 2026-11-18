@@ -101,6 +101,9 @@ export function parseSchedule(schedText) {
   // "Lawrence, Kan." / "Cancun, Mexico" — a place, then a region, nothing else.
   const CITY = /^[A-Z][A-Za-z.'\- ]*, ?[A-Z][A-Za-z. ]*\.?$/;
   const lines = schedText.split('\n').map((l) => l.trim());
+  // Which date lines this pass used, so the one below can tell a row it has
+  // already read from a row it has never seen.
+  const usedDates = new Set();
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] !== 'vs' && lines[i] !== 'at') continue;
     let j = i + 1;
@@ -119,6 +122,7 @@ export function parseSchedule(schedText) {
     const month = MONTHS.findIndex((name) => name.startsWith(found[1])) + 1;
     if (month === 0) continue;
     const year = month >= 8 ? seasonYear : seasonYear + 1;
+    usedDates.add(dateAt);
 
     // Between the opponent and the date sits the venue, the city, and an
     // optional broadcast note.
@@ -157,6 +161,71 @@ export function parseSchedule(schedText) {
       tv,
       event,
     });
+  }
+
+  // Source 3 — table rows with no "vs"/"at" line at all.
+  //
+  // kuathletics leaves the side marker off when it does not yet know which
+  // side we are. An undrawn bracket prints the opponent as "TBD", or as both
+  // teams who might win into it ("Auburn/West Virginia"), and no "vs":
+  //
+  //     Auburn/West Virginia / Michelob Ultra Arena / Las Vegas, Nev. /
+  //     TV: ESPN Family / Nov 18 / (Wed) / 6:30 or 9 p.m. CT
+  //
+  // The loop above anchors every row on that marker, so those rows are
+  // invisible to it. The game then survives only as its rotator entry, which
+  // carries no venue - and siteOf reads a fixture with no venue as a home
+  // game. Three of this season's first four are in Las Vegas, so that is not
+  // a rounding error: the app showed two neutral-floor tournament games as
+  // Allen Fieldhouse home games.
+  //
+  // Loosening the anchor above would start matching prose. Instead each date
+  // line that pass did NOT consume is read for the same venue/city/TV block,
+  // and what it finds fills the blanks on the fixture already standing on
+  // that date. It never invents a fixture and never overwrites a value.
+  for (let k = 0; k < lines.length; k++) {
+    if (usedDates.has(k)) continue;
+    const m = SHORT.exec(lines[k]);
+    if (!m) continue;
+    const month = MONTHS.findIndex((name) => name.startsWith(m[1])) + 1;
+    if (month === 0) continue;
+    const year = month >= 8 ? seasonYear : seasonYear + 1;
+    const date = `${year}-${String(month).padStart(2, '0')}-${String(m[2]).padStart(2, '0')}`;
+    const waiting = fixtures.filter((f) => f.date === date && !f.venue);
+    if (!waiting.length) continue;
+
+    // Backwards to the row's own block, stopping at the previous date line so
+    // one row cannot read the row above it.
+    const block = [];
+    let tv = null;
+    for (let b = k - 1; b >= 0 && k - b < 14; b--) {
+      if (SHORT.test(lines[b])) break;
+      const line = lines[b];
+      if (!line) continue;
+      if (line.startsWith('TV:')) tv = line.slice(3).trim() || null;
+      else block.unshift(line);
+    }
+    const cityAt = block.findIndex((line) => CITY.test(line));
+    if (cityAt <= 0) continue;
+    const venue = block[cityAt - 1];
+    const city = postalCity(block[cityAt]);
+
+    // The tip time, if the page has settled on one. A bracket that has not
+    // been drawn often prints "6:30 or 9 p.m. CT", which to24h rejects - and
+    // should, since neither hour is the answer.
+    let time = null;
+    for (let f = k + 1; f < Math.min(k + 5, lines.length); f++) {
+      if (SHORT.test(lines[f])) break;
+      const t = to24h(lines[f]);
+      if (t) { time = t; break; }
+    }
+
+    for (const f of waiting) {
+      f.venue = venue;
+      if (!f.city) f.city = city;
+      if (!f.tv) f.tv = tv;
+      if (!f.time) f.time = time;
+    }
   }
 
   // De-dup. The rotator repeats on every page view, and the games it names

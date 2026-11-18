@@ -164,13 +164,13 @@ test('site is home, away or neutral — "vs" alone does not mean home', () => {
 
 test('the saved schedule page yields the whole season', () => {
   const got = parseSchedule(page);
-  // As of the 18 Nov capture of the 2026-27 men's season: 30 fixtures, 28 of
-  // them listed in the schedule table with a venue and a city, 24 with a tip
-  // time. The other two are rotator-only rows for tournament games the table
-  // has not drawn yet - see the test below.
+  // As of the 18 Nov capture of the 2026-27 men's season: 30 fixtures, every
+  // one of them with a venue and a city, and 24 with a tip time. The six
+  // without a time are tournament games whose hour the page has not settled
+  // - two of them print "6:30 or 9 p.m. CT", which is not an hour.
   assert.equal(got.length, 30);
-  assert.equal(got.filter((f) => f.venue).length, 28);
-  assert.equal(got.filter((f) => f.city).length, 28);
+  assert.equal(got.filter((f) => f.venue).length, 30);
+  assert.equal(got.filter((f) => f.city).length, 30);
   assert.equal(got.filter((f) => f.time).length, 24);
 
   const opener = got.find((f) => f.opponent === 'UNLV');
@@ -228,14 +228,48 @@ test('the real page carries only genuine tournament names', () => {
   ]);
 });
 
-test('a tournament game the table has not drawn yet is kept from the rotator', () => {
-  // The men's page shows these right now: the Players Era bracket is undrawn,
-  // so the rotator carries "Auburn/West Virginia" and a bare "TBD" with no
-  // venue. Both are real future games and must survive the merge; the TBD row
-  // is cleared later, by the sync, once the table names the team.
+test('a tournament game the table has not drawn yet still gets its venue', () => {
+  // The Players Era bracket is undrawn, so the page names the opponent
+  // "Auburn/West Virginia" and "TBD" and prints NO "vs" line for either - it
+  // does not yet know which side we are. Those rows are invisible to a scan
+  // anchored on "vs"/"at", and the games then survived only as rotator
+  // entries, which carry no venue. siteOf reads a fixture with no venue as a
+  // home game, so two neutral floors in Las Vegas showed as Allen Fieldhouse.
+  //
+  // Both must come through with their venue, and must read neutral.
   const got = parseSchedule(page);
-  const rotatorOnly = got.filter((f) => !f.venue);
-  assert.equal(rotatorOnly.length, 2);
-  assert.deepEqual(rotatorOnly.map((f) => f.date).sort(), ['2026-11-18', '2026-11-19']);
+  const undrawn = got.filter((f) => ['2026-11-18', '2026-11-19'].includes(f.date));
+
+  assert.equal(undrawn.length, 2);
+  for (const f of undrawn) {
+    assert.equal(f.venue, 'Michelob Ultra Arena', `${f.date} venue`);
+    assert.equal(f.city, 'Las Vegas, NV', `${f.date} city`);
+    assert.equal(siteOf(f), 'neutral', `${f.date} site`);
+    // "6:30 or 9 p.m. CT" is not an hour, and must not be read as one.
+    assert.equal(f.time, null, `${f.date} time`);
+  }
+  assert.deepEqual(undrawn.map((f) => f.opponent).sort(), ['Auburn/West Virginia', 'TBD']);
+
+  // Nothing anywhere is left guessing a home floor it was never told about.
+  assert.equal(got.filter((f) => !f.venue).length, 0);
+});
+
+test('the no-marker pass invents nothing and overwrites nothing', () => {
+  // It fills blanks on fixtures that already exist. A page with a stray date
+  // and venue block but no game on that date must not grow one.
+  const stray = [
+    "2026-27 Men's Basketball Schedule",
+    'vs', 'Denver', '', 'Allen Fieldhouse', 'Lawrence, Kan.', '',
+    'Nov 23', '(Mon)', '', '7 p.m. CT', '',
+    // A block with no fixture of its own on that date.
+    'Somewhere Arena', 'Tulsa, Okla.', '', 'Dec 05', '(Sat)', '', '6 p.m. CT',
+  ].join('\n');
+
+  const got = parseSchedule(stray);
+
+  assert.equal(got.length, 1);
+  assert.equal(got[0].opponent, 'Denver');
+  assert.equal(got[0].venue, 'Allen Fieldhouse');
+  assert.equal(got[0].time, '19:00');
 });
 
