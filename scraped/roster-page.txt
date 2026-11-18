@@ -8,15 +8,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Louisville (Exhibition) on October 21, 2026 , Loss , 83, to, 89
-Final
-Oct 21
-Men's Basketball
-83
-vs Louisville (Exhibition)
-89
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Duke (Exhibition) on October 25, 2026 , Loss , 84, to, 90
 Final
 Oct 25
@@ -53,24 +44,25 @@ vs Kentucky
 69
 Story Recap
 Boxscore
-Upcoming Event: Men's Basketball versus UNLV on November 17, 2026 at 8:30 p.m. CT
-Tue. 11/17/26
--
-8:30 p.m. CT
+Completed Event: Men's Basketball versus UNLV on November 17, 2026 , Win , 102, to, 77
+Final
+Nov 17
 Men's Basketball
+102
 vs UNLV
-Audio
-Upcoming Event: Men's Basketball versus Auburn/West Virginia on November 18, 2026 at 6:30 or 9 p.m. CT
+77
+Boxscore
+Upcoming Event: Men's Basketball versus West Virginia on November 18, 2026 at 6:30 p.m. CT
 Wed. 11/18/26
 -
-6:30 or 9 p.m. CT
+6:30 p.m. CT
 Men's Basketball
-vs Auburn/West Virginia
+vs West Virginia
 Audio
-Upcoming Event: Men's Basketball versus TBD on November 19, 2026
+Upcoming Event: Men's Basketball versus Houston/Florida on November 19, 2026
 Thu. 11/19/26
 Men's Basketball
-vs TBD
+vs Houston/Florida
 Audio
 Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
 Mon. 11/23/26
@@ -86,6 +78,14 @@ Fri. 11/27/26
 4 p.m. CT
 Men's Basketball
 vs Villanova
+Audio
+Stats
+Upcoming Event: Men's Basketball versus Northern Iowa on December 1, 2026 at 7 p.m. CT
+Tue. 12/01/26
+-
+7 p.m. CT
+Men's Basketball
+vs Northern Iowa
 Audio
 Stats
 MENU
@@ -496,12 +496,12 @@ bcowgill@ku.edu
 Full Bio 
 for Bill Cowgill, MEd, ATC, LAT
 Related News
+No. 11 Kansas routs UNLV 102-77 in the Players Era 8
+Tuesday, November 17
 Hawk Talk with Bill Self Dates Announced for 2026-27
 Tuesday, November 17
 K’Majay Jenkins Signs with Kansas
 Tuesday, November 17
-White and Stokes Sweep Big 12 Weekly Honors
-Monday, November 16
 All News
 Related Videos
 Men's Basketball Highlights vs #24 Kentucky

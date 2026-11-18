@@ -459,6 +459,13 @@
    "home": "Kansas",
    "away": "UNLV",
    "boxscored": true
+  },
+  "6664650": {
+   "date": "2026-11-18",
+   "final": false,
+   "home": "Kansas",
+   "away": "West Virginia",
+   "boxscored": false
   }
  },
  "big12Games": {
@@ -9830,6 +9837,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6652460": {
+   "date": "2026-11-17",
+   "season": "2026",
+   "home": {
+    "name": "Auburn",
+    "seo": "auburn",
+    "score": 70,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "West Virginia",
+    "seo": "west-virginia",
+    "score": 76,
+    "winner": true,
+    "rank": null,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false

@@ -1,19 +1,19 @@
 [
  {
   "date": "2026-11-18",
-  "opponent": "Auburn/West Virginia",
+  "opponent": "West Virginia",
   "opponentRank": null,
   "site": "neutral",
   "home": false,
   "venue": "Michelob Ultra Arena",
   "city": "Las Vegas, NV",
-  "time": null,
-  "tv": "ESPN Family",
+  "time": "18:30",
+  "tv": "ESPN2",
   "event": null
  },
  {
   "date": "2026-11-19",
-  "opponent": "TBD",
+  "opponent": "Houston/Florida",
   "opponentRank": null,
   "site": "neutral",
   "home": false,
