@@ -11,7 +11,10 @@
 // Bumping this drops every previously cached response on activate, which is
 // how a stale feed already sitting in a phone's cache gets thrown away.
 const VERSION = "v1";
-const CACHE = `ku-mbb-${VERSION}`;
+// Every cache this app has ever opened starts with this, and the sweep on
+// activate is limited to them. See the comment there for why that matters.
+const PREFIX = "ku-mbb-";
+const CACHE = `${PREFIX}${VERSION}`;
 
 // Enough to open cold with no network. ask-data.json is deliberately not
 // precached: it is cached on first successful fetch instead, so a fresh
@@ -43,8 +46,17 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
+      // Only this app's caches. CacheStorage is keyed by ORIGIN, not by
+      // service-worker scope, and the women's dashboard is published from the
+      // same github.io account — inspectorgad.github.io/ku-wbb/ alongside
+      // /ku-mbb/. A sweep of everything that is not CACHE therefore deletes
+      // ku-wbb-v1 as well, and the two apps take it in turns to destroy each
+      // other's offline copy: whichever was opened last works in the gym and
+      // the other shows an error page. Responses cannot cross between them
+      // even so, because the cache keys are full URLs and the two live under
+      // different paths; it is only the deleting that reaches too far.
       .then((keys) => Promise.all(
-        keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))
+        keys.filter((k) => k.startsWith(PREFIX) && k !== CACHE).map((k) => caches.delete(k))
       ))
       .then(() => self.clients.claim())
       // Taking control is not enough on the visit that installs this worker:

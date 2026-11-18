@@ -12,13 +12,18 @@
     "game at somebody else's arena.",
     "",
     "Keys are 'date|normalized opponent'; run scripts/update-seed.py to see the",
-    "site it derived for every game."
+    "site it derived for every game.",
+    "",
+    "These venues are read off the men's 2026-27 schedule page captured in",
+    "scripts/fixtures/schedule-page-2026-11-18.txt. The list that arrived with",
+    "the fork was the women's: a WBIT final and the Fort Myers Tip-Off, neither",
+    "of which this team plays. Left alone it would have matched nothing while",
+    "the men's own neutral floors were quietly stored as road games."
   ],
-  "games": {
-    "2026-03-30|byu": "WBIT championship at Charles Koch Arena, Wichita — a neutral floor, not BYU's"
-  },
+  "games": {},
   "venues": {
-    "T-Mobile Center": "Kansas City showcase and Big 12 Tournament games",
-    "Suncoast Credit Union Arena": "Fort Myers Tip-Off"
+    "T-Mobile Center": "Kansas City — the Missouri showcase and the Big 12 Tournament",
+    "Michelob Ultra Arena": "Las Vegas — the Players Era Festival",
+    "Madison Square Garden": "New York — the CBS Sports Classic. A single visit, so the two-opponent auto-detect cannot find it and this entry is the only thing keeping it off the road record."
   }
 }
