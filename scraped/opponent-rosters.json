@@ -1,0 +1,2155 @@
+{
+ "arizona st": {
+  "url": "https://thesundevils.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:06:03.772Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "JRob Croy",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Ben Defty",
+    "jerseyNumber": "14",
+    "position": "C",
+    "height": "7-1",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Bryce Ford",
+    "jerseyNumber": "4",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Joel Foxwell",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Nate Garcia",
+    "jerseyNumber": "35",
+    "position": "C",
+    "height": "7-0",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Jonathan Griman",
+    "jerseyNumber": "8",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Emmanuel Innocenti",
+    "jerseyNumber": "5",
+    "position": "G/F",
+    "height": "6-5",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Filip Malesevic",
+    "jerseyNumber": "25",
+    "position": "C",
+    "height": "7-3",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Paulius Murauskas",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Ajak Nyuon",
+    "jerseyNumber": "9",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Jokubas Rudaitis",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Dillan Shaw",
+    "jerseyNumber": "11",
+    "position": "G/F",
+    "height": "6-7",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Marcus Vaughns",
+    "jerseyNumber": "1",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Vijay Wallace",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   }
+  ]
+ },
+ "arizona": {
+  "url": "https://arizonawildcats.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:06:12.986Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "RJ Godfrey",
+    "jerseyNumber": "0",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "5th",
+    "hometown": "Suwanee, Ga.",
+    "lastSchool": "North Gwinnett HS"
+   },
+   {
+    "name": "Cameron Holmes",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "Fr.",
+    "hometown": "Goodyear, Ariz.",
+    "lastSchool": "Millenium HS"
+   },
+   {
+    "name": "Caleb Holt",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Fr.",
+    "hometown": "Huntsville, Ala.",
+    "lastSchool": "Prolific Prep (Fla.)"
+   },
+   {
+    "name": "Bryce James",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "So.",
+    "hometown": "Akron, Ohio",
+    "lastSchool": "Sierra Canyon H.S."
+   },
+   {
+    "name": "Derek Dixon",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "So.",
+    "hometown": "Vienna, Va.",
+    "lastSchool": "Gonzaga College HS"
+   },
+   {
+    "name": "Ivan Kharchenkov",
+    "jerseyNumber": "8",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "So.",
+    "hometown": "Munich, Germany",
+    "lastSchool": "Bayern Munich"
+   },
+   {
+    "name": "Jackson Cook",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Sr.",
+    "hometown": "Oxford, England",
+    "lastSchool": "Montverde Academy"
+   },
+   {
+    "name": "Ugnius Jarusevicius",
+    "jerseyNumber": "12",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "5th",
+    "hometown": "Alytus, Lithuania",
+    "lastSchool": "Zalgiris Kaunas 2"
+   },
+   {
+    "name": "Motiejus Krivas",
+    "jerseyNumber": "13",
+    "position": "C",
+    "height": "7-2",
+    "academicYear": "Sr.",
+    "hometown": "Siauliai, Lithuania",
+    "lastSchool": "Zalgiris Kaunas 2"
+   },
+   {
+    "name": "Endurance Aiyamenkhue",
+    "jerseyNumber": "14",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "Fr.",
+    "hometown": "Amsterdam, Netherlands",
+    "lastSchool": "Ratiopharm Ulm"
+   },
+   {
+    "name": "Mabil Mawut",
+    "jerseyNumber": "20",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "So.",
+    "hometown": "Bor, South Sudan",
+    "lastSchool": "Our Savior Lutheran [N.Y.]"
+   },
+   {
+    "name": "Joaquin Rigdon",
+    "jerseyNumber": "21",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Fr.",
+    "hometown": "Costa Mesa, Calif.",
+    "lastSchool": "Pacifica Christian HS (Orange County)"
+   },
+   {
+    "name": "Addison Arnold",
+    "jerseyNumber": "22",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Jr.",
+    "hometown": "Simi Valley, Calif.",
+    "lastSchool": "Royal HS"
+   },
+   {
+    "name": "JJ Mandaquit",
+    "jerseyNumber": "23",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "So.",
+    "hometown": "Hilo, Hawaii",
+    "lastSchool": "Utah Prep"
+   },
+   {
+    "name": "Evan Otten",
+    "jerseyNumber": "30",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "Sr.",
+    "hometown": "Redmond, Ore.",
+    "lastSchool": "Redmond HS"
+   },
+   {
+    "name": "Maksim Brnovic",
+    "jerseyNumber": "35",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "Fr.",
+    "hometown": "Podgorica, Montenegro",
+    "lastSchool": "Zalgiris Kaunas-2"
+   }
+  ]
+ },
+ "baylor": {
+  "url": "https://baylorbears.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:06:22.190Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Elijah Williams",
+    "jerseyNumber": "0",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "Fr.",
+    "hometown": "San Antonio, Texas",
+    "lastSchool": "TMI Episcopal"
+   },
+   {
+    "name": "Brett Decker Jr.",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Jr.",
+    "hometown": "Elizabethtown, Ky.",
+    "lastSchool": "Central Hardin HS"
+   },
+   {
+    "name": "Drew Perry",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "5-10",
+    "academicYear": "So.",
+    "hometown": "Dallas, Texas",
+    "lastSchool": "Lakehill Prep"
+   },
+   {
+    "name": "Kayden Mingo",
+    "jerseyNumber": "4",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "So.",
+    "hometown": "Farmingdale, N.Y.",
+    "lastSchool": "Long Island Lutheran"
+   },
+   {
+    "name": "Dylan Mingo",
+    "jerseyNumber": "5",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Fr.",
+    "hometown": "Farmingdale, N.Y.",
+    "lastSchool": "Long Island Lutheran"
+   },
+   {
+    "name": "Andre Iguodala II",
+    "jerseyNumber": "7",
+    "position": "G/F",
+    "height": "6-7",
+    "academicYear": "So.",
+    "hometown": "Lafayette, Calif.",
+    "lastSchool": "Link Academy"
+   },
+   {
+    "name": "Isaac Celiscar",
+    "jerseyNumber": "8",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "Jr.",
+    "hometown": "Winter Haven, Fla.",
+    "lastSchool": "Winter Haven HS"
+   },
+   {
+    "name": "Isaac Williams IV",
+    "jerseyNumber": "10",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Jr.",
+    "hometown": "Oklahoma City, Okla.",
+    "lastSchool": "Oak Cliff Faith Family Academy"
+   },
+   {
+    "name": "James Goodis",
+    "jerseyNumber": "13",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Sr.",
+    "hometown": "Winter Park, Fla.",
+    "lastSchool": "Montverde Academy"
+   },
+   {
+    "name": "Evan Chatman",
+    "jerseyNumber": "15",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Sr.",
+    "hometown": "Harker Heights, Texas",
+    "lastSchool": "Harker Heights HS"
+   },
+   {
+    "name": "Maikcol Perez",
+    "jerseyNumber": "20",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "So.",
+    "hometown": "Latina, Italy",
+    "lastSchool": "Orange1 Bassano"
+   },
+   {
+    "name": "Juslin Bodo Bodo",
+    "jerseyNumber": "21",
+    "position": "C",
+    "height": "6-11",
+    "academicYear": "Sr.",
+    "hometown": "Yaounde, Cameroon",
+    "lastSchool": "Southern California Academy"
+   },
+   {
+    "name": "Tegra Makabu",
+    "jerseyNumber": "22",
+    "position": "C",
+    "height": "6-9",
+    "academicYear": "Fr.",
+    "hometown": "Democratic Republic of Congo",
+    "lastSchool": "Northside Christian School (Fla.)"
+   },
+   {
+    "name": "Caden Powell",
+    "jerseyNumber": "44",
+    "position": "C",
+    "height": "6-9",
+    "academicYear": "5th",
+    "hometown": "Waco, Texas",
+    "lastSchool": "Midway"
+   },
+   {
+    "name": "Mayo Soyoye",
+    "jerseyNumber": "46",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "So.",
+    "hometown": "Lagos, Nigeria",
+    "lastSchool": "Blair Academy (N.J.)"
+   }
+  ]
+ },
+ "byu": {
+  "url": "https://byucougars.com/sports/mens-basketball/roster",
+  "failedAt": "2026-11-18T03:06:31.082Z",
+  "failures": 1
+ },
+ "cincinnati": {
+  "url": "https://gobearcats.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:06:40.254Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Trevian Carson",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Elijah Perryman",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Mj Collins Jr.",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Javontae Campbell",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Akai Fleming",
+    "jerseyNumber": "5",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Myles Colvin",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Amani Lyles",
+    "jerseyNumber": "7",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Tyler Tejada",
+    "jerseyNumber": "8",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Adlan Elamin",
+    "jerseyNumber": "9",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Tylen Riley",
+    "jerseyNumber": "10",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "David Iweze",
+    "jerseyNumber": "11",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Grant Darbyshire",
+    "jerseyNumber": "13",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Eric Mahaffey",
+    "jerseyNumber": "20",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Jayden Hastings",
+    "jerseyNumber": "22",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Deshaun Vaden",
+    "jerseyNumber": "32",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Riley Allenspach",
+    "jerseyNumber": "35",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   }
+  ]
+ },
+ "colorado": {
+  "url": "https://cubuffs.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:06:49.437Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Ian Inman",
+    "jerseyNumber": "0",
+    "position": "G/F",
+    "height": "6-6",
+    "academicYear": "2nd",
+    "hometown": "Houston, Texas",
+    "lastSchool": "College Park"
+   },
+   {
+    "name": "Alex Dickeson",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "1st",
+    "hometown": "Adelaide, Australia",
+    "lastSchool": "Center For Excellence"
+   },
+   {
+    "name": "Amir Jones",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "1st",
+    "hometown": "Studio City, Calif.",
+    "lastSchool": "Harvard-Westlake"
+   },
+   {
+    "name": "Josiah Sanders",
+    "jerseyNumber": "5",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "2nd",
+    "hometown": "Denver, Colo.",
+    "lastSchool": "Colorado Prep"
+   },
+   {
+    "name": "David Gomez",
+    "jerseyNumber": "6",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "3rd",
+    "hometown": "Alcala de Guadaira, Spain",
+    "lastSchool": "Hestia Menorca/Charlotte"
+   },
+   {
+    "name": "Goc Malual",
+    "jerseyNumber": "8",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "2nd",
+    "hometown": "Sydney, Australia",
+    "lastSchool": "Sydney Kings"
+   },
+   {
+    "name": "Jalin Holland",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "2nd",
+    "hometown": "Los Lunas, N.M.",
+    "lastSchool": "Dream City Christian [Ariz.]"
+   },
+   {
+    "name": "Justin Neely",
+    "jerseyNumber": "12",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "Gr.",
+    "hometown": "Miami Beach, Fla.",
+    "lastSchool": "West Oaks Academy/UAlbany/UNCG"
+   },
+   {
+    "name": "Luke Mirhashemi",
+    "jerseyNumber": "13",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "1st",
+    "hometown": "Newport Beach, Calif.",
+    "lastSchool": "Corona del Mar"
+   },
+   {
+    "name": "Rider Portela",
+    "jerseyNumber": "15",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "1st",
+    "hometown": "Phoenix, Ariz.",
+    "lastSchool": "Sunnyslope"
+   },
+   {
+    "name": "Chase Hill",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "1st",
+    "hometown": "San Antonio, Texas",
+    "lastSchool": "TMI Episcopal"
+   },
+   {
+    "name": "Barrington Hargress",
+    "jerseyNumber": "24",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "5th",
+    "hometown": "Inglewood, Calif.",
+    "lastSchool": "Heritage Christian/UC Riverside"
+   },
+   {
+    "name": "Eric Jacobsen",
+    "jerseyNumber": "32",
+    "position": "C",
+    "height": "6-11",
+    "academicYear": "1st",
+    "hometown": "Colorado Springs, Colo.",
+    "lastSchool": "Brewster Academy (N.H.)"
+   },
+   {
+    "name": "Iaroslav Niagu",
+    "jerseyNumber": "33",
+    "position": "F",
+    "height": "7-1",
+    "academicYear": "Gr.",
+    "hometown": "Krasnodar, Russia",
+    "lastSchool": "Krasnodar Territory Boarding School/USC/Charlotte/Jax State"
+   },
+   {
+    "name": "Noah Feddersen",
+    "jerseyNumber": "34",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "Gr.",
+    "hometown": "Menomonie, Wis.",
+    "lastSchool": "Menomonie/North Dakota State"
+   },
+   {
+    "name": "Nick Randall",
+    "jerseyNumber": "41",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "4th",
+    "hometown": "Fort Collins, Colo.",
+    "lastSchool": "Fossil Ridge"
+   }
+  ]
+ },
+ "houston": {
+  "url": "https://uhcougars.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:06:58.331Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Kordel Jefferson",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "R-So.",
+    "hometown": "Bogue Chitto, Miss.",
+    "lastSchool": "Martin HS [Arlington, Texas]"
+   },
+   {
+    "name": "Ikenna Alozie",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "Fr.",
+    "hometown": "Lagos, Nigeria",
+    "lastSchool": "Dream City Christian Schools [Glendale, Ariz.])"
+   },
+   {
+    "name": "Corey Hadnot II",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "Sr.",
+    "hometown": "Atlanta, Ga.",
+    "lastSchool": "Cypress Creek [Houston]"
+   },
+   {
+    "name": "Tyus Thomas",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Fr.",
+    "hometown": "Las Vegas, Nev.",
+    "lastSchool": "Liberty"
+   },
+   {
+    "name": "Braden East",
+    "jerseyNumber": "4",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Jr.",
+    "hometown": "Houston, Texas",
+    "lastSchool": "Stafford"
+   },
+   {
+    "name": "Bryce Jackson",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "R-Fr.",
+    "hometown": "Pearland, Texas",
+    "lastSchool": "Shadow Creek"
+   },
+   {
+    "name": "Chendall Weaver",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Gr.",
+    "hometown": "Arlington, Texas",
+    "lastSchool": "Mansfield Timberview"
+   },
+   {
+    "name": "Dedan Thomas Jr.",
+    "jerseyNumber": "9",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Sr.",
+    "hometown": "Las Vegas, Nev.",
+    "lastSchool": "Liberty"
+   },
+   {
+    "name": "Joseph Tugler",
+    "jerseyNumber": "11",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Sr.",
+    "hometown": "Monroe, La.",
+    "lastSchool": "Cypress Falls HS [Houston]"
+   },
+   {
+    "name": "Arafan Diané",
+    "jerseyNumber": "13",
+    "position": "C",
+    "height": "7-0",
+    "academicYear": "Fr.",
+    "hometown": "Conakry, Guinea",
+    "lastSchool": "Iowa United Prep [Des Moines]"
+   },
+   {
+    "name": "Djafar Silimana",
+    "jerseyNumber": "15",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "Fr.",
+    "hometown": "Segou, Mali",
+    "lastSchool": "Utah Prep Academy [Utah]"
+   },
+   {
+    "name": "Delrecco Gillespie",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Sr.",
+    "hometown": "Benton Harbor, Mich.",
+    "lastSchool": "East Coweta [Ga.]"
+   },
+   {
+    "name": "Chase McCarty",
+    "jerseyNumber": "24",
+    "position": "F",
+    "height": "6-5",
+    "academicYear": "R-So.",
+    "hometown": "Madison, Ala.",
+    "lastSchool": "IMG Academy [Bradenton, Fla.]"
+   },
+   {
+    "name": "Mercy Miller",
+    "jerseyNumber": "25",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "Jr.",
+    "hometown": "Los Angeles, Calif.",
+    "lastSchool": "Notre Dame"
+   }
+  ]
+ },
+ "iowa st": {
+  "url": "https://cyclones.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:07:07.470Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Tre Singleton",
+    "jerseyNumber": "0",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "So.",
+    "hometown": "Jeffersonville, Ind.",
+    "lastSchool": "Jefferson"
+   },
+   {
+    "name": "Jamarion Batemon",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "So.",
+    "hometown": "Milwaukee, Wis.",
+    "lastSchool": "Milwaukee Academy of Science"
+   },
+   {
+    "name": "Xzavion Mitchell",
+    "jerseyNumber": "2",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "R-Fr.",
+    "hometown": "Oshkosh, Wis.",
+    "lastSchool": "North"
+   },
+   {
+    "name": "Tamin Lipsey",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Sr.",
+    "hometown": "Ames, Iowa",
+    "lastSchool": "Ames"
+   },
+   {
+    "name": "Ryan Prather Jr.",
+    "jerseyNumber": "4",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "R-Sr.",
+    "hometown": "Clarksburg, Md.",
+    "lastSchool": "Clarksburg"
+   },
+   {
+    "name": "Yusef Gray Jr.",
+    "jerseyNumber": "5",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "Fr.",
+    "hometown": "Milwaukee, Wis.",
+    "lastSchool": "West Allis Central"
+   },
+   {
+    "name": "Leon Bond III",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "R-Sr.",
+    "hometown": "Wauwatosa, Wis.",
+    "lastSchool": "Wauwatosa"
+   },
+   {
+    "name": "Anthony Rise",
+    "jerseyNumber": "9",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "So.",
+    "hometown": "Milwaukee, Wis.",
+    "lastSchool": "Brookfield Central"
+   },
+   {
+    "name": "Jaquan Johnson",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "5-11",
+    "academicYear": "Jr.",
+    "hometown": "Milwaukee, Wis.",
+    "lastSchool": "Pius XI"
+   },
+   {
+    "name": "Taj Manning",
+    "jerseyNumber": "15",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "R-Sr.",
+    "hometown": "Grandview, Mo.",
+    "lastSchool": "La Lumiere School"
+   },
+   {
+    "name": "Dominykas Pleta",
+    "jerseyNumber": "21",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "So.",
+    "hometown": "Gotha, Germany",
+    "lastSchool": "Arnoldi Gymnasium"
+   },
+   {
+    "name": "Christian Wiggins",
+    "jerseyNumber": "22",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Fr.",
+    "hometown": "Plymouth, Minn.",
+    "lastSchool": "Wayzata"
+   },
+   {
+    "name": "Blake Buchanan",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "Sr.",
+    "hometown": "Coeur d'Alene, Idaho",
+    "lastSchool": "Lake City"
+   },
+   {
+    "name": "Dorian Rinaldo-Komlan",
+    "jerseyNumber": "24",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Fr.",
+    "hometown": "Montauban, France",
+    "lastSchool": "SPIRE Academy"
+   },
+   {
+    "name": "Killyan Toure",
+    "jerseyNumber": "27",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "So.",
+    "hometown": "Pamiers, France",
+    "lastSchool": "Brewster Academy"
+   }
+  ]
+ },
+ "kansas st": {
+  "url": "https://kstatesports.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:07:17.103Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Jaylen Alexander",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "Fr.",
+    "hometown": "Oxford, Ala.",
+    "lastSchool": "Oxford"
+   },
+   {
+    "name": "Brandon Rechsteiner",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Sr.",
+    "hometown": "Acworth, Ga.",
+    "lastSchool": "Etowah"
+   },
+   {
+    "name": "Jaden Schutt",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "5th",
+    "hometown": "Yorkville, Ill.",
+    "lastSchool": "Yorkville Christian"
+   },
+   {
+    "name": "Devin Hutcherson",
+    "jerseyNumber": "3",
+    "position": "F",
+    "height": "6-4",
+    "academicYear": "Fr.",
+    "hometown": "Johns Creek, Ga",
+    "lastSchool": "Holy Innocents"
+   },
+   {
+    "name": "Dez Lindsay",
+    "jerseyNumber": "4",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "5th",
+    "hometown": "Louisville, Ky.",
+    "lastSchool": "Male"
+   },
+   {
+    "name": "Brock Vice",
+    "jerseyNumber": "6",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "Sr.",
+    "hometown": "Memphis, Tenn.",
+    "lastSchool": "Houston"
+   },
+   {
+    "name": "Isaiah Abraham",
+    "jerseyNumber": "7",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Jr.",
+    "hometown": "Gainesville, Va.",
+    "lastSchool": "Paul VI"
+   },
+   {
+    "name": "Montana Wheeler",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "5-10",
+    "academicYear": "So.",
+    "hometown": "Houston, Texas",
+    "lastSchool": "Xavier Academy"
+   },
+   {
+    "name": "Matt Gilhool",
+    "jerseyNumber": "13",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "So.",
+    "hometown": "Elizabethtown, Pa.",
+    "lastSchool": "William Penn Charter"
+   },
+   {
+    "name": "Pape N'Diaye",
+    "jerseyNumber": "22",
+    "position": "F",
+    "height": "7-0",
+    "academicYear": "Jr.",
+    "hometown": "Abidjan, Ivory Coast",
+    "lastSchool": "Trinity International"
+   },
+   {
+    "name": "Nash Stark",
+    "jerseyNumber": "33",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Fr.",
+    "hometown": "Nashville, Tenn.",
+    "lastSchool": "Lipscomb Academy"
+   },
+   {
+    "name": "JT Rock",
+    "jerseyNumber": "35",
+    "position": "C",
+    "height": "7-1",
+    "academicYear": "Sr.",
+    "hometown": "Sioux Falls, S.D.",
+    "lastSchool": "Lincoln"
+   },
+   {
+    "name": "Andrej Kostic",
+    "jerseyNumber": "47",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "So.",
+    "hometown": "Belgrade, Serbia",
+    "lastSchool": "Crvena zevda Meridian bet Beograd"
+   },
+   {
+    "name": "Timo Malovec",
+    "jerseyNumber": "88",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Sr.",
+    "hometown": "Ivanka pri Dunaji, Slovakia",
+    "lastSchool": "Miami (Fla.)"
+   }
+  ]
+ },
+ "oklahoma st": {
+  "url": "https://okstate.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:07:26.522Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Kanye Clary",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "5th",
+    "hometown": "Virginia Beach, Va.",
+    "lastSchool": "Massanutten Military Academy"
+   },
+   {
+    "name": "Anthony Felesi",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Fr.",
+    "hometown": "Laie, Hawaii",
+    "lastSchool": "Utah Prep"
+   },
+   {
+    "name": "Kashie Natt",
+    "jerseyNumber": "4",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "5th",
+    "hometown": "Rayville, La.",
+    "lastSchool": "Rayville HS"
+   },
+   {
+    "name": "Parker Robinson",
+    "jerseyNumber": "5",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "Fr.",
+    "hometown": "New Market, Md.",
+    "lastSchool": "Overtime Elite"
+   },
+   {
+    "name": "Jalen Montonati",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-7",
+    "academicYear": "Fr.",
+    "hometown": "Owasso, Okla.",
+    "lastSchool": "Owasso HS"
+   },
+   {
+    "name": "Latrell Allmond",
+    "jerseyNumber": "8",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Fr.",
+    "hometown": "Southern Pines, N.C.",
+    "lastSchool": "Petersburg HS (VA)"
+   },
+   {
+    "name": "Mekhi Ragland",
+    "jerseyNumber": "13",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "So.",
+    "hometown": "Lilburn, Ga.",
+    "lastSchool": "Sunrise Christian Academy (KS)"
+   },
+   {
+    "name": "Andrija Grbovic",
+    "jerseyNumber": "14",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "Sr.",
+    "hometown": "Pljevlja, Montenegro",
+    "lastSchool": "Arizona St."
+   },
+   {
+    "name": "Parsa Fallah",
+    "jerseyNumber": "22",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "5th",
+    "hometown": "Amol, Iran",
+    "lastSchool": "Oregon State"
+   },
+   {
+    "name": "Benjamin Ahmed",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "So.",
+    "hometown": "Kogi State, Nigeria",
+    "lastSchool": "Putnam Science Academy (CT)"
+   },
+   {
+    "name": "Ryan Crotty",
+    "jerseyNumber": "24",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "So.",
+    "hometown": "Holly Springs, N.C.",
+    "lastSchool": "Miller School (VA)"
+   },
+   {
+    "name": "Julius Halaifonua",
+    "jerseyNumber": "25",
+    "position": "C",
+    "height": "7-0",
+    "academicYear": "Jr.",
+    "hometown": "Auckland, New Zealand",
+    "lastSchool": "NBA Academy Australia"
+   },
+   {
+    "name": "Luka Bogavac",
+    "jerseyNumber": "44",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "Sr.",
+    "hometown": "Mojkovac, Montenegro",
+    "lastSchool": "North Carolina"
+   },
+   {
+    "name": "Jacob Walker",
+    "jerseyNumber": "55",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "So.",
+    "hometown": "Memphis, Tenn.",
+    "lastSchool": "Sunrise Christian Academy (KS)"
+   },
+   {
+    "name": "Jordan Burks",
+    "jerseyNumber": "99",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Sr.",
+    "hometown": "Decatur, Ala.",
+    "lastSchool": "Overtime Elite"
+   }
+  ]
+ },
+ "south dakota st": {
+  "url": "https://gojacks.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:07:35.826Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Trey Buchanan",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "So.",
+    "hometown": "Westfield, Ind.",
+    "lastSchool": "Westfield H.S."
+   },
+   {
+    "name": "Semaj Stampley",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Fr.",
+    "hometown": "Alton, Ill.",
+    "lastSchool": "Alton H.S."
+   },
+   {
+    "name": "Joe Sayler",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Jr.",
+    "hometown": "White River, S.D.",
+    "lastSchool": "White River H.S."
+   },
+   {
+    "name": "Youssouf Yatabare",
+    "jerseyNumber": "4",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Fr.",
+    "hometown": "Paris, France",
+    "lastSchool": "Nanterre 92"
+   },
+   {
+    "name": "Jon Mekonnen",
+    "jerseyNumber": "5",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "So.",
+    "hometown": "Eagan, Minn.",
+    "lastSchool": "Eastview H.S."
+   },
+   {
+    "name": "Jaden Rogers",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "So.",
+    "hometown": "Waukee, Iowa",
+    "lastSchool": "Waukee H.S."
+   },
+   {
+    "name": "EJ Ryans",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Jr.",
+    "hometown": "Grand Rapids, Mich.",
+    "lastSchool": "Northview H.S."
+   },
+   {
+    "name": "Kalen Garry",
+    "jerseyNumber": "10",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Sr.",
+    "hometown": "De Smet, S.D.",
+    "lastSchool": "De Smet H.S."
+   },
+   {
+    "name": "Cam Swearengen",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Fr.",
+    "hometown": "Knoxville, Tenn.",
+    "lastSchool": "Webb School of Knoxville"
+   },
+   {
+    "name": "Myles Thompson",
+    "jerseyNumber": "21",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Gr.",
+    "hometown": "Hutchinson, Kan.",
+    "lastSchool": "Hutchinson H.S."
+   },
+   {
+    "name": "Davis Kern",
+    "jerseyNumber": "22",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "R-Fr.",
+    "hometown": "Marion, Iowa",
+    "lastSchool": "Linn-Mar H.S."
+   },
+   {
+    "name": "Blake Ellwein",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Fr.",
+    "hometown": "Huron, S.D.",
+    "lastSchool": "Huron H.S."
+   },
+   {
+    "name": "Jadyn Cascio Jensen",
+    "jerseyNumber": "33",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "So.",
+    "hometown": "Bellevue, Neb.",
+    "lastSchool": "Bellevue West H.S."
+   },
+   {
+    "name": "Alec Squires",
+    "jerseyNumber": "35",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "So.",
+    "hometown": "Volga, S.D.",
+    "lastSchool": "Sioux Valley H.S."
+   },
+   {
+    "name": "Jesse Van Kalsbeek",
+    "jerseyNumber": "42",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "Jr.",
+    "hometown": "Sheldon, Iowa",
+    "lastSchool": "MOC-Floyd Valley H.S."
+   }
+  ]
+ },
+ "tcu": {
+  "url": "https://gofrogs.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:07:46.736Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Trent Lincoln",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Jr.",
+    "hometown": "Baltimore, Md.",
+    "lastSchool": "Warton HS - Fla."
+   },
+   {
+    "name": "Brock Harding",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Sr.",
+    "hometown": "Moline, Ill.",
+    "lastSchool": "Moline HS"
+   },
+   {
+    "name": "Micah Robinson",
+    "jerseyNumber": "5",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "Jr.",
+    "hometown": "Kansas City, Mo.",
+    "lastSchool": "Oak Hill Academy - Va."
+   },
+   {
+    "name": "Ricards Aizpurs",
+    "jerseyNumber": "8",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "Fr.",
+    "hometown": "Gulbene, Latvia",
+    "lastSchool": "Stella Azzura"
+   },
+   {
+    "name": "Luke Bamgboye",
+    "jerseyNumber": "9",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "Jr.",
+    "hometown": "London, U.K.",
+    "lastSchool": "AZ Compass Prep - Ariz."
+   },
+   {
+    "name": "Miloš Šojić",
+    "jerseyNumber": "10",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "Fr.",
+    "hometown": "Belgrade, Serbia",
+    "lastSchool": "KK Beko Belgrade"
+   },
+   {
+    "name": "Gavin Sykes",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "So.",
+    "hometown": "Sacramento, Calif.",
+    "lastSchool": "Modesto Christian HS"
+   },
+   {
+    "name": "DJ Thomas",
+    "jerseyNumber": "15",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "So.",
+    "hometown": "Allen, Texas",
+    "lastSchool": "Allen HS"
+   },
+   {
+    "name": "Robbie Avila",
+    "jerseyNumber": "21",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "5th",
+    "hometown": "Oak Forest, Ill.",
+    "lastSchool": "Oak Forest HS"
+   },
+   {
+    "name": "Jack Wegman",
+    "jerseyNumber": "22",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Fr.",
+    "hometown": "Fort Worth, Texas",
+    "lastSchool": "Country Day"
+   },
+   {
+    "name": "Sam Fleming",
+    "jerseyNumber": "23",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Fr.",
+    "hometown": "Springfield, Mass.",
+    "lastSchool": "Wilbraham & Monson"
+   },
+   {
+    "name": "Xavier Edmonds",
+    "jerseyNumber": "24",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Sr.",
+    "hometown": "Long Beach, Calif.",
+    "lastSchool": "Bishop Montgomery HS"
+   },
+   {
+    "name": "Drew McElroy",
+    "jerseyNumber": "30",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "Sr.",
+    "hometown": "Dallas, Texas",
+    "lastSchool": "Highland Park HS"
+   },
+   {
+    "name": "Ryan Hunt",
+    "jerseyNumber": "33",
+    "position": "F",
+    "height": "7-0",
+    "academicYear": "Jr.",
+    "hometown": "Perth, Australia",
+    "lastSchool": "Willetton Sr. HS"
+   },
+   {
+    "name": "Gavin Murphy",
+    "jerseyNumber": "35",
+    "position": "G",
+    "height": "5-11",
+    "academicYear": "Jr.",
+    "hometown": "Calabasas, Calif.",
+    "lastSchool": "Calabasas HS"
+   },
+   {
+    "name": "Tanner Toolson",
+    "jerseyNumber": "55",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "5th",
+    "hometown": "Vancouver, Wash.",
+    "lastSchool": "Union HS"
+   }
+  ]
+ },
+ "texas tech": {
+  "url": "https://texastech.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:07:56.001Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "DaKari Spear",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Fr.",
+    "hometown": "The Colony, Texas",
+    "lastSchool": "Dynamic Prep"
+   },
+   {
+    "name": "Damarion Dennis",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Jr.",
+    "hometown": "Dallas, Texas",
+    "lastSchool": "Veterans Memorial"
+   },
+   {
+    "name": "Josiah Moseley",
+    "jerseyNumber": "2",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Jr.",
+    "hometown": "Round Rock, Texas",
+    "lastSchool": "Stony Point"
+   },
+   {
+    "name": "Cruz Davis",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "5th",
+    "hometown": "Plano, Texas",
+    "lastSchool": "iSchool of Lewisville"
+   },
+   {
+    "name": "Dra Gibbs-Lawhorn",
+    "jerseyNumber": "4",
+    "position": "G",
+    "height": "6-1",
+    "academicYear": "Sr.",
+    "hometown": "Lafayette, Indiana",
+    "lastSchool": "Word of God Christian Academy"
+   },
+   {
+    "name": "Darrion Williams",
+    "jerseyNumber": "5",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "5th",
+    "hometown": "Sacramento, California",
+    "lastSchool": "Bishop Gorman"
+   },
+   {
+    "name": "Amari Barrett",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "Fr.",
+    "hometown": "Oklahoma City, Oklahoma",
+    "lastSchool": "Millwood"
+   },
+   {
+    "name": "Trey Hall",
+    "jerseyNumber": "11",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "Fr.",
+    "hometown": "Crowley, Texas",
+    "lastSchool": "North Crowley"
+   },
+   {
+    "name": "Donovan Atwell",
+    "jerseyNumber": "12",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "5th",
+    "hometown": "Huntersville, North Carolina",
+    "lastSchool": "Providence Day School"
+   },
+   {
+    "name": "Marial Akuentok",
+    "jerseyNumber": "13",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "R-So.",
+    "hometown": "Edmonton, Alberta, Canada",
+    "lastSchool": "Fort Erie International"
+   },
+   {
+    "name": "JT Toppin",
+    "jerseyNumber": "15",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Sr.",
+    "hometown": "Dallas, Texas",
+    "lastSchool": "Faith Family of Oak Cliff"
+   },
+   {
+    "name": "LaTrell Hoover",
+    "jerseyNumber": "21",
+    "position": "F",
+    "height": "6-11",
+    "academicYear": "R-Fr.",
+    "hometown": "San Antonio, Texas",
+    "lastSchool": "Samuel Clemens"
+   },
+   {
+    "name": "Bassala Bagayoko",
+    "jerseyNumber": "33",
+    "position": "F",
+    "height": "6-10",
+    "academicYear": "Fr.",
+    "hometown": "Bamako, Mali",
+    "lastSchool": "Bilbao Basket (Spain)"
+   },
+   {
+    "name": "Jamichael Stillwell",
+    "jerseyNumber": "55",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "5th",
+    "hometown": "Atlanta, Georgia",
+    "lastSchool": "Elevation Prep"
+   }
+  ]
+ },
+ "ucf": {
+  "url": "https://ucfknights.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:08:04.590Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Cayden Vasko",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Dior Johnson",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Arturo Dean",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "5-11",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Mister Dean",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Ladarius Givan",
+    "jerseyNumber": "4",
+    "position": "F/C",
+    "height": "6-10",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Lewis Walker",
+    "jerseyNumber": "5",
+    "position": "F",
+    "height": "6-6",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "John Bol",
+    "jerseyNumber": "7",
+    "position": "C",
+    "height": "7-2",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Riley Kugel",
+    "jerseyNumber": "8",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Churchill Abass",
+    "jerseyNumber": "9",
+    "position": "F/C",
+    "height": "6-9",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Dylan Mann",
+    "jerseyNumber": "11",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Jahda Swann",
+    "jerseyNumber": "12",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Elijah Hulsewe",
+    "jerseyNumber": "19",
+    "position": "C",
+    "height": "7-0",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Carmelo Pacheco",
+    "jerseyNumber": "24",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Tanner Jones",
+    "jerseyNumber": "30",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Isaiah Malone",
+    "jerseyNumber": "32",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   },
+   {
+    "name": "Jason Asemota",
+    "jerseyNumber": "55",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "",
+    "hometown": "",
+    "lastSchool": ""
+   }
+  ]
+ },
+ "utah": {
+  "url": "https://utahutes.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:08:13.727Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Styles Clemmons",
+    "jerseyNumber": "0",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Fr.",
+    "hometown": "Virginia Beach, Va.",
+    "lastSchool": "OTE"
+   },
+   {
+    "name": "Malek Gomma",
+    "jerseyNumber": "1",
+    "position": "C",
+    "height": "6-8",
+    "academicYear": "Sr.",
+    "hometown": "Anchorage, Alaska",
+    "lastSchool": "Ingraham HS"
+   },
+   {
+    "name": "Jackson Holcombe",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "Jr.",
+    "hometown": "Summerville, S.C.",
+    "lastSchool": "Timpanogos HS"
+   },
+   {
+    "name": "Jaxon Johnson",
+    "jerseyNumber": "3",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Fr.",
+    "hometown": "Alta, Utah",
+    "lastSchool": "Alta HS"
+   },
+   {
+    "name": "Babacar Faye",
+    "jerseyNumber": "5",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "6th",
+    "hometown": "Dakar, Senegal",
+    "lastSchool": "NBA Academy"
+   },
+   {
+    "name": "TJ Burch",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Jr.",
+    "hometown": "Dallas, Texas",
+    "lastSchool": "Texas Alliance Christian Athletes"
+   },
+   {
+    "name": "David Katoa",
+    "jerseyNumber": "7",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "Fr.",
+    "hometown": "Layton, Utah",
+    "lastSchool": "Layton HS"
+   },
+   {
+    "name": "Obomate Abbey",
+    "jerseyNumber": "8",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "So.",
+    "hometown": "Jyväskylä, Finland",
+    "lastSchool": "Jyväskylä Basketball Academy"
+   },
+   {
+    "name": "Trey Campbell",
+    "jerseyNumber": "9",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "5th",
+    "hometown": "Cedar Falls, Iowa",
+    "lastSchool": "Cedar Falls HS"
+   },
+   {
+    "name": "Lucas Langarita",
+    "jerseyNumber": "10",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "So.",
+    "hometown": "Zaragoza, Spain",
+    "lastSchool": "Casademont Zaragoza"
+   },
+   {
+    "name": "Taison Chatman",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Jr.",
+    "hometown": "Minneapolis, Minn.",
+    "lastSchool": "Totino-Grace HS"
+   },
+   {
+    "name": "Fynn Schott",
+    "jerseyNumber": "13",
+    "position": "C",
+    "height": "6-11",
+    "academicYear": "Fr.",
+    "hometown": "Fürstenfeld, Austria",
+    "lastSchool": "Secondary School of Economics and Management"
+   },
+   {
+    "name": "Grayson Gaddis",
+    "jerseyNumber": "15",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Jr.",
+    "hometown": "Salt Lake City, UT",
+    "lastSchool": "Highland HS"
+   },
+   {
+    "name": "Alec Anigbata",
+    "jerseyNumber": "21",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "Fr.",
+    "hometown": "Munich, Germany",
+    "lastSchool": "Gymnasium Munich-North"
+   },
+   {
+    "name": "Lukas McCanna",
+    "jerseyNumber": "55",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "Fr.",
+    "hometown": "Evergreen, Colo.",
+    "lastSchool": "Western Reserve Academy [OH]"
+   },
+   {
+    "name": "Zati Loubaki",
+    "jerseyNumber": "80",
+    "position": "F",
+    "height": "6-8",
+    "academicYear": "Jr.",
+    "hometown": "Nojent Sur Oise, France",
+    "lastSchool": "Monrovian Prep"
+   }
+  ]
+ },
+ "west virginia": {
+  "url": "https://wvusports.com/sports/mens-basketball/roster",
+  "fetchedAt": "2026-11-18T03:08:23.099Z",
+  "parserVersion": 2,
+  "players": [
+   {
+    "name": "Brenen Lorient",
+    "jerseyNumber": "0",
+    "position": "F",
+    "height": "6-9",
+    "academicYear": "5th",
+    "hometown": "Ocala, Fla.",
+    "lastSchool": "Calvary Christian Academy"
+   },
+   {
+    "name": "Miles Sadler",
+    "jerseyNumber": "1",
+    "position": "G",
+    "height": "6-0",
+    "academicYear": "Fr.",
+    "hometown": "Brampton, Ontario",
+    "lastSchool": "Bella Vista Prep (Ariz.)"
+   },
+   {
+    "name": "Amir Jenkins",
+    "jerseyNumber": "2",
+    "position": "G",
+    "height": "6-2",
+    "academicYear": "So.",
+    "hometown": "Worcester, Mass.",
+    "lastSchool": "Worcester Academy"
+   },
+   {
+    "name": "Joson Sanon",
+    "jerseyNumber": "3",
+    "position": "G",
+    "height": "6-5",
+    "academicYear": "Jr.",
+    "hometown": "Fall River, Mass.",
+    "lastSchool": "Vermont Academy (Vt.)"
+   },
+   {
+    "name": "Keonte Greybear",
+    "jerseyNumber": "4",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Fr.",
+    "hometown": "Frisco, Texas",
+    "lastSchool": "iSchool of Lewisville"
+   },
+   {
+    "name": "Amadou Seini",
+    "jerseyNumber": "5",
+    "position": "C",
+    "height": "7-1",
+    "academicYear": "Fr.",
+    "hometown": "Maroua, Cameroon",
+    "lastSchool": "Bella Vista Prep (Ariz.)"
+   },
+   {
+    "name": "Martin Somerville",
+    "jerseyNumber": "6",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Jr.",
+    "hometown": "Bowie, Md.",
+    "lastSchool": "Southern California Academy (Calif.)"
+   },
+   {
+    "name": "Seydou Traore",
+    "jerseyNumber": "7",
+    "position": "G/F",
+    "height": "6-6",
+    "academicYear": "Sr.",
+    "hometown": "Bronx, N.Y.",
+    "lastSchool": "Our Saviour Lutheran School"
+   },
+   {
+    "name": "Finley Bizjack",
+    "jerseyNumber": "11",
+    "position": "G",
+    "height": "6-4",
+    "academicYear": "Sr.",
+    "hometown": "Trophy Club, Texas",
+    "lastSchool": "Byron Nelson HS"
+   },
+   {
+    "name": "Mouhamed Sylla",
+    "jerseyNumber": "14",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "So.",
+    "hometown": "Louga, Senegal",
+    "lastSchool": "Bella Vista Prep (Ariz.)"
+   },
+   {
+    "name": "MJ Feenane",
+    "jerseyNumber": "20",
+    "position": "G",
+    "height": "6-6",
+    "academicYear": "So.",
+    "hometown": "Miami, Fla.",
+    "lastSchool": "Columbus HS"
+   },
+   {
+    "name": "Javan Buchanan",
+    "jerseyNumber": "22",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "5th",
+    "hometown": "Lafayette, Ind.",
+    "lastSchool": "Lafayette Jefferson HS"
+   },
+   {
+    "name": "Jelani McKoy",
+    "jerseyNumber": "23",
+    "position": "G",
+    "height": "6-3",
+    "academicYear": "Fr.",
+    "hometown": "Brampton, Ontario",
+    "lastSchool": "Bella Vista Prep (Ariz.)"
+   },
+   {
+    "name": "Max Olejasz",
+    "jerseyNumber": "24",
+    "position": "F",
+    "height": "6-7",
+    "academicYear": "Fr.",
+    "hometown": "Wheeling, W.Va.",
+    "lastSchool": "Wheeling Central HS"
+   },
+   {
+    "name": "Aliou Dioum",
+    "jerseyNumber": "85",
+    "position": "C",
+    "height": "6-10",
+    "academicYear": "Fr.",
+    "hometown": "Dakar, Senegal",
+    "lastSchool": "Bella Vista Prep (Ariz.)"
+   }
+  ]
+ }
+}
