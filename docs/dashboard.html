@@ -1259,7 +1259,7 @@ const recordOf = list => {
   return { w, l: list.length - w, n: list.length, pf, pa };
 };
 
-// "8-11, 26-17, …" -> [[8,11], …]; nothing at all if any period is malformed,
+// "38-31, 41-35" -> [[38,31], [41,35]]; nothing at all if a period is malformed,
 // since part of a half table skews every total built on it.
 function parsePeriods(text) {
   if (!text) return [];
