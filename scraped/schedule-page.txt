@@ -2,6 +2,7 @@
 Skip to main content
 Pause All Rotators
 University of Kansas Athletics
+Skip Ad
 Skip Scoreboard
 Scoreboard
 Coming Up
@@ -53,7 +54,9 @@ vs Kentucky
 Story Recap
 Boxscore
 Upcoming Event: Men's Basketball versus UNLV on November 17, 2026 at 8:30 p.m. CT
-Live
+Tue. 11/17/26
+-
+8:30 p.m. CT
 Men's Basketball
 vs UNLV
 Audio
@@ -114,11 +117,11 @@ Las Vegas, Nev.
 
 0
 Days
-2
+0
 Hours
-12
+50
 Minutes
-30
+46
 Seconds
 Add To Calendar
 Text Only
@@ -130,7 +133,7 @@ List View
 Table View not selected
 Overall
 Wins
-3
+4
 Losses
 0
 Overall Percentage
@@ -143,7 +146,7 @@ Losses
 Conference Percentage
 .000
 Streak
-W3
+W4
 Home
 Wins
 2
@@ -156,7 +159,7 @@ Losses
 0
 Neutral
 Wins
-1
+2
 Losses
 0
 Skip Ad
@@ -301,14 +304,15 @@ Las Vegas, Nev.
 
 TV: ESPN
 
-Nov 17
-(Tue)
+W, 102-77
 
+Nov 17(Tue)
 8:30 p.m. CT
 
 Game Center
-Listen
+Box Score
 History
+Game Info
 
 Auburn/West Virginia
 
