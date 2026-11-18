@@ -15,7 +15,12 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
 // "6 p.m. CT", "12:30 p.m. CT". A row with no tip time yet (conference games
 // before the TV windows are set) has none of these, and gets null rather than
 // a guessed hour.
-const TIME = /^(\d{1,2})(?::(\d{2}))?\s*([ap])\.m\.\s*(CT|ET|MT|PT)?$/i;
+//
+// The page is typed by hand and once printed Indiana State's tip on Dec 22 2026
+// as "5 p.m.. CT". An exact pattern dropped the time without a word, so the
+// trailing period may repeat. Nothing looser than that: "6:30 or 9 p.m. CT"
+// must still read as no time.
+const TIME = /^(\d{1,2})(?::(\d{2}))?\s*([ap])\.m\.+\s*(CT|ET|MT|PT)?$/i;
 
 /** "6:30 p.m." -> "18:30", "11 a.m." -> "11:00"; null for anything else. */
 export function to24h(text) {

@@ -89,6 +89,16 @@ class NormTeam(unittest.TestCase):
         self.assertEqual(norm_team("La Salle"), "la salle")
 
 
+    def test_a_school_the_ncaa_renames_matches_the_page(self):
+        # No rule reconciles these; each is an alias. Unmatched, Northern Iowa
+        # had no win chance, and once played its "UNI" box score would have
+        # keyed apart from the "Northern Iowa" fixture - two games on one night.
+        self.assertEqual(norm_team("Northern Iowa"), norm_team("UNI"))
+        self.assertEqual(norm_team("LSU New Orleans"), norm_team("New Orleans"))
+        # An alias matches a whole name, never part of one.
+        self.assertEqual(norm_team("Northern Iowa (exh.)"), "northern iowa (exh)")
+
+
 class NormTeamKeepsTeamsApart(unittest.TestCase):
     """Any collapsing rule can merge two real schools. This proves it does not.
 

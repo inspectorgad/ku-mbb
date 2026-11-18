@@ -10,12 +10,9 @@ game going final.
 Built from the [ku-wbb](https://github.com/inspectorgad/ku-wbb) app, which was
 itself modeled on
 [ku-volleyball](https://github.com/inspectorgad/ku-volleyball). The 2026-27
-schedule is 30 games.
-
-**This port is not finished.** The seed ships empty — its shape, with no season
-in it — until the first scrape fills it, so the app has nothing to show until
-then, and the store and signing setup is still to do. The game itself is right:
-the code counts two halves. KU-MBB-PORT.md is the plan and says what is left.
+schedule lists 36 games, three of them exhibitions; the seed also carries the
+whole 2025-26 season. KU-MBB-PORT.md records how the port was done and what
+not to change.
 
 ## The app
 
@@ -139,8 +136,9 @@ for the next scheduled run.
 - **Team figures come from the official team totals, never the sum of the
   player lines.** Team rebounds and team turnovers belong to no individual, so
   the lines add up about four rebounds a game short.
-- **The NCAA leaves non-Division-I opponents out of its records.** KU's 22-14
-  is the 21-14 the NET shows for that reason.
+- **The NCAA leaves non-Division-I opponents out of its records.** Kansas played
+  none in 2025-26, so its 24-11 there is the NET's 24-11; a season that
+  includes one will show a record a game apart from the NET's.
 
 Both are flagged in the app and stated in the instructions Ask is given.
 
@@ -167,7 +165,7 @@ fine — it's only needed while installing.
 ## Tech
 
 - Kotlin + Jetpack Compose (Material 3), KU crimson and blue
-- Room for persistence, currently schema v9. The schema is not exported, so
+- Room for persistence, currently schema v10. The schema is not exported, so
   the migration tests are the only guard that an upgrade on a phone holding
   data survives; they walk a v3 database the whole chain.
 - A pure-Kotlin stats engine in `shared/src/commonMain/kotlin/com/example/stats/` —

@@ -87,6 +87,18 @@ _STATES = {
 }
 _STATE_RE = re.compile(r"\b(" + "|".join(_STATES) + r")\b")
 
+# Schools the two sources name differently in a way no rule could reconcile:
+# the schedule page's name on the left, already normalised, and the NCAA's on
+# the right. Mapped to the NCAA's form because that is what the NET and the box
+# score both carry. Each one cost a game its win chance while unplayed, and
+# would have split it in two once played - the box score keying as "uni" and
+# the fixture as "northern iowa" - so add to this when the build warns that a
+# named opponent has no NET row.
+_ALIASES = {
+    "northern iowa": "uni",
+    "lsu new orleans": "new orleans",
+}
+
 
 def norm_team(name):
     """Canonical key for cross-source name matching ('Iowa State'/'Iowa St.').
@@ -105,7 +117,8 @@ def norm_team(name):
     n = re.sub(r"\bstate\b", "st", n)
     n = re.sub(r"\buniversity\b", "", n)
     n = _STATE_RE.sub(lambda m: _STATES[m.group(1)], n)
-    return re.sub(r"\s+", " ", n).strip()
+    n = re.sub(r"\s+", " ", n).strip()
+    return _ALIASES.get(n, n)
 
 
 MONTHS = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split()

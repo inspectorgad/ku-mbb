@@ -25,7 +25,7 @@ Read this section before anything below it.
 | §1 Verify the data sources | **Done.** `scripts/probe-ku-mbb.mjs` ran against the live NCAA API and passed, twice; §1 records what it found, including the NET slug and the linescore shape. |
 | §2 Rename | **Done.** Identity, paths, URLs, bundle IDs, the database filename and the Keystore alias all say men's/MBB. The parser fixtures are genuine men's pages captured by the probe. |
 | §3 Quarters → halves | **Done**, and it was not only labels — see the correction at the head of §3. |
-| §4 Rebuild the seed | **Done.** The scrape runs six times a day and the seed carries a real season: 71 games, 36 of them this one, 39 played, 29 players, the whole Big 12 table. |
+| §4 Rebuild the seed | **Done.** The scrape runs six times a day and the seed carries a real season: 71 games, 36 of them this one, 29 players, the whole Big 12 table. |
 | §5 Infrastructure | **Done** bar one step only a person can take — below. All nine workflows are live, Pages publishes the dashboard, the four Apple secrets pass all 13 checks, and the app has its own upload key. |
 | §6-§9 | Unchanged guidance, and still worth reading — especially §6 on what not to change. |
 
@@ -36,19 +36,24 @@ Read this section before anything below it.
 - **Android** — the rolling `latest-apk` release carries `app-debug.apk`, the
   season data and the Ask pack. Installed apps sync their season from it, which
   is why §6 says to leave that release alone.
-- **iPhone** — TestFlight, built by hand or from a branch.
+- **iPhone** — TestFlight, built by hand or from a branch. An internal tester
+  group with automatic distribution means each build reaches the phone by itself.
+  Every build so far has been checked on a real iPhone.
+- **Android is the unproven one.** The APK builds, passes its unit tests and
+  publishes, but has not yet been installed on a phone. The first run should
+  check that it opens from cold, seeds its database, syncs from the release, and
+  that Ask works with a key entered on the device. `scripts/adb-install.sh` is
+  the supported install path.
 - **The scrape** — six times a day at :37, and a game-night watcher that polls
   for a result once a game is under way.
 
-### The one thing still outstanding
+### TestFlight tester group — done
 
-TestFlight has **no internal tester group**, so every build processes to `VALID`
-and then reaches nobody. In App Store Connect → KU MBB → TestFlight → Internal
-Testing: create a group, add yourself — owning the account does not make you a
-tester — and turn on automatic distribution so later builds go out by themselves.
-
+This was the last step only a person could take: without an internal tester
+group every build processed to `VALID` and reached nobody. The group exists now,
+with automatic distribution. If builds ever stop arriving,
 `scripts/ios_build_status.py`, run as the **iOS build status** workflow, says
-where any build has got to and prints no secrets. It diagnoses exactly this.
+where any build has got to and prints no secrets.
 
 ### Picking this up elsewhere — another machine, or another Claude account
 
@@ -520,6 +525,17 @@ Each step has a checkpoint. Do not proceed past a red one.
   in the test.
 - **The NCAA scoreboard only shows games day-of**, which is why the schedule comes from
   kuathletics at all. Do not try to build the fixture list from the NCAA API.
+- **A Big 12 opponent is not a Big 12 game.** Kansas met West Virginia in the
+  Players Era in Las Vegas on 2026-11-18, and a membership lookup counted it:
+  19 conference games. `update-seed.py` now takes a played game's conference
+  flag from the feed, treats an unplayed one against a member at a neutral site
+  as non-conference, and refuses to write a seed with more than 18 in a season.
+- **A school can have two names no rule reconciles.** The NCAA's `UNI` is the
+  page's Northern Iowa. Those go in `_ALIASES` in `scripts/seed_text.py`; the
+  build raises a workflow warning for a named opponent with no NET row. The
+  Kotlin `normTeam()` and the dashboard's have neither the aliases nor the
+  state-name rule, so the three no longer agree. That is harmless while no
+  opponent roster is keyed under an affected name, but it has not been fixed.
 - **An "upcoming" game can be in the past** — the date passed but the box score has not
   landed. Branch on whether there is a result, never on the date. The dashboard shows
   "awaiting result" for exactly this.

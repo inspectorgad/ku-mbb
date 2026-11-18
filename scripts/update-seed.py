@@ -560,28 +560,70 @@ big12_members = {}
 for (season, key) in records:
     big12_members.setdefault(season, set()).add(key)
 
-# KU's own games as the sweep saw them, so the bracket flag carries over.
+# Membership alone is not enough either: a member met in a non-conference
+# event is not a conference game. Kansas played West Virginia in the Players
+# Era in Las Vegas in November 2026, three days after UNLV, and a membership
+# lookup counted it — 19 conference games, and a Big 12 record that included a
+# tournament game in Nevada. So once a game is played the feed's own
+# conferenceGame flag decides it; the feed knows, the schedule page does not.
+#
+# Before it is played there is only the fixture, and the page carries no
+# conference marker. A Big 12 regular-season game is played on one of the two
+# schools' floors, so a member met at a neutral site is taken to be
+# non-conference until the result says otherwise.
+
+# KU's own games as the sweep saw them: the bracket flag and the feed's own
+# verdict on whether each was a conference game.
 ku_bracket = set()
+ku_conference_flag = {}  # (date, opponent key) -> the feed's conferenceGame
 for g in big12_games:
     sides = [g.get("home") or {}, g.get("away") or {}]
-    if any((s.get("seo") or "") == TEAM_SEO for s in sides) and g.get("bracket"):
-        other = next((s for s in sides if (s.get("seo") or "") != TEAM_SEO), {})
-        ku_bracket.add((g.get("date", ""), norm_team(other.get("name", ""))))
+    if not any((s.get("seo") or "") == TEAM_SEO for s in sides):
+        continue
+    other = next((s for s in sides if (s.get("seo") or "") != TEAM_SEO), {})
+    key = (g.get("date", ""), norm_team(other.get("name", "")))
+    if g.get("bracket"):
+        ku_bracket.add(key)
+    if g.get("conferenceGame") is not None:
+        ku_conference_flag[key] = bool(g.get("conferenceGame"))
+
+# The Big 12 plays an 18-game conference schedule; the comment above has the
+# arithmetic. More than that is always a bug in this block, and a wrong
+# conference record is worse than a stale one, so the build stops rather than
+# publish it. Fewer is legitimate while the schedule is still being released.
+CONFERENCE_GAMES = 18
 
 conference_counts = {}
 for game in games.values():
     season = game["season"]
     key = norm_team(game["opponent"])
     cutoff = tournament_start.get(season)
-    game["conference"] = bool(
+    member_game = bool(
         key in big12_members.get(season, ())
         and (game["date"], key) not in ku_bracket
         and (cutoff is None or game["date"] < cutoff)
     )
+    feed_flag = ku_conference_flag.get((game["date"], key))
+    if feed_flag is not None:
+        game["conference"] = member_game and feed_flag
+    else:
+        game["conference"] = member_game and game["site"] != "neutral"
+    if member_game and not game["conference"]:
+        why = "feed says non-conference" if feed_flag is not None else "neutral site"
+        print(f"  not a conference game ({why}): {game['date']} vs {game['opponent']}")
     if game["conference"]:
         conference_counts[season] = conference_counts.get(season, 0) + 1
 for season, count in sorted(conference_counts.items()):
     print(f"conference games {season}: {count}")
+    if count < CONFERENCE_GAMES:
+        print(f"::warning title=Conference games::{season} has {count} of "
+              f"{CONFERENCE_GAMES} conference games")
+over = {s: n for s, n in conference_counts.items() if n > CONFERENCE_GAMES}
+if over:
+    raise SystemExit(
+        f"conference games over {CONFERENCE_GAMES}: {over} - a non-conference "
+        "game against a Big 12 member is being counted; refusing to write the seed"
+    )
 
 # --- Rankings snapshots (AP poll + NCAA NET) ---------------------------------
 # Both endpoints serve only the current snapshot, so each is keyed by the
@@ -772,6 +814,18 @@ if WIN_MODEL and upcoming and forecast_season:
             )
             if unrated:
                 print(f"  not rated (no NET row): {', '.join(sorted(set(unrated)))}")
+            # A placeholder ("Houston/Florida", "Big 12 Tournament") has no row
+            # by nature. A named school with none is usually a spelling the two
+            # sources disagree on - Northern Iowa is "UNI" to the NCAA - which
+            # also splits the game in two once it is played, so it is raised
+            # as an annotation on the workflow run rather than left in the log,
+            # where both of those sat unread for days. Not fatal: a non-Division
+            # I opponent truly has no NET row.
+            for name in sorted(set(unrated)):
+                if "/" in name or re.search(r"\b(tournament|tbd|tba)\b", name, re.I):
+                    continue
+                print(f"::warning title=No NET row::{name} matches no NET team; "
+                      "if it is Division I, add it to _ALIASES in scripts/seed_text.py")
 
 
 # Sorted by conference win %, then conference wins, then overall win % — NOT

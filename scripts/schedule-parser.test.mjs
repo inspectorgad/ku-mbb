@@ -25,6 +25,10 @@ test('tip times read in 24-hour form, and nothing else counts as one', () => {
   assert.equal(to24h('3 p.m. CT'), '15:00');
   assert.equal(to24h('History'), null);
   assert.equal(to24h('(Sat)'), null);
+  // A typo the page really printed (Indiana State, Dec 22 2026).
+  assert.equal(to24h('5 p.m.. CT'), '17:00');
+  // An undrawn bracket's either-or slot is still no time at all.
+  assert.equal(to24h('6:30 or 9 p.m. CT'), null);
   assert.equal(to24h(''), null);
 });
 
@@ -166,13 +170,18 @@ test('the saved schedule page yields the whole season', () => {
   const got = parseSchedule(page);
   // As of the 18 Nov capture of the 2026-27 men's season: 36 fixtures - the
   // same count as the page's own game rows - every one with a city, 35 with a
-  // venue, and 29 with a tip time. The one without a venue is the Champions
+  // venue, and 30 with a tip time. The one without a venue is the Champions
   // Classic, which the page gives a city and no building; the times that are
   // missing belong to rows whose hour the page has not settled.
+  //
+  // This said 29 until Dec 22's "5 p.m.. CT" was found: one of the 'unsettled'
+  // rows was a settled time the parser could not read, and the count had been
+  // pinned to the bug. Indiana State is checked by name below so it stays read.
   assert.equal(got.length, 36);
   assert.equal(got.filter((f) => f.venue).length, 35);
   assert.equal(got.filter((f) => f.city).length, 36);
-  assert.equal(got.filter((f) => f.time).length, 29);
+  assert.equal(got.filter((f) => f.time).length, 30);
+  assert.equal(got.find((f) => f.opponent === 'Indiana State').time, '17:00');
 
   const opener = got.find((f) => f.opponent === 'UNLV');
   assert.deepEqual(
