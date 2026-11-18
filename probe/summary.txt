@@ -1,0 +1,58 @@
+Scanning NCAA scoreboard 2025-11-01..2026-04-10 for 'kansas' games
+  2025-11-03: Green Bay 51 at Kansas 94 (final, id 6501512)
+scoreboard 2025-11-07: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2025/11/07
+  2025-11-11: A&M-Corpus Christi 46 at Kansas 77 (final, id 6529265)
+scoreboard 2025-11-15: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2025/11/15
+scoreboard 2025-11-16: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2025/11/16
+  2025-11-18: Kansas 66 at Duke 78 (final, id 6501515)
+  2025-11-24: Notre Dame 61 at Kansas 71 (final, id 6501504)
+  2025-11-25: Syracuse 60 at Kansas 71 (final, id 6501516)
+  2025-11-26: Kansas 81 at Tennessee 76 (final, id 6533927)
+  2025-12-02: UConn 61 at Kansas 56 (final, id 6501518)
+  2025-12-07: Missouri 60 at Kansas 80 (final, id 6501519)
+scoreboard 2025-12-11: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2025/12/11
+  2025-12-13: Kansas 77 at NC State 76 (final, id 6501520)
+  2025-12-16: Towson 49 at Kansas 73 (final, id 6501521)
+  2025-12-22: Davidson 61 at Kansas 90 (final, id 6501522)
+  2026-01-03: Kansas 75 at UCF 81 (final, id 6503998)
+  2026-01-06: TCU 100 at Kansas 104 (final, id 6505649)
+  2026-01-10: Kansas 75 at West Virginia 86 (final, id 6503878)
+scoreboard 2026-01-13: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2026/01/13
+  2026-01-16: Baylor 62 at Kansas 80 (final, id 6504385)
+  2026-01-20: Kansas 75 at Colorado 69 (final, id 6505136)
+  2026-01-24: Kansas 86 at Kansas St. 62 (final, id 6503407)
+scoreboard 2026-01-29: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2026/01/29
+  2026-01-31: BYU 82 at Kansas 90 (final, id 6504980)
+  2026-02-02: Kansas 64 at Texas Tech 61 (final, id 6505936)
+scoreboard 2026-02-03: 502 for https://ncaa-api.henrygd.me/scoreboard/basketball-men/d1/2026/02/03
+  2026-02-07: Utah 59 at Kansas 71 (final, id 6505049)
+  2026-02-09: Arizona 78 at Kansas 82 (final, id 6503867)
+  2026-02-14: Kansas 56 at Iowa St. 74 (final, id 6504402)
+  2026-02-18: Kansas 81 at Oklahoma St. 69 (final, id 6503997)
+  2026-02-21: Cincinnati 84 at Kansas 68 (final, id 6504186)
+  2026-02-23: Houston 56 at Kansas 69 (final, id 6504044)
+  2026-02-28: Kansas 61 at Arizona 84 (final, id 6503872)
+  2026-03-03: Kansas 60 at Arizona St. 70 (final, id 6530689)
+  2026-03-07: Kansas St. 85 at Kansas 104 (final, id 6503418)
+  2026-03-12: TCU 73 at Kansas 78 (final, id 6593578)
+  2026-03-13: Kansas 47 at Houston 69 (final, id 6593574)
+  2026-03-20: California Baptist 60 at Kansas 68 (final, id 6534599)
+  2026-03-22: St. John's (NY) 67 at Kansas 65 (final, id 6534629)
+Found 32 Kansas games (7 scan errors)
+Box scores: 32 captured, 0 failed
+Points consistency: 64/64 team-games where player points sum to the final score
+Player stat fields seen: __typename, assists, blockedShots, elig, fieldGoalsAttempted, fieldGoalsMade, firstName, freeThrowsAttempted, freeThrowsMade, id, lastName, minutesPlayed, number, offensiveRebounds, personalFouls, points, position, starter, steals, threePointsAttempted, threePointsMade, totalRebounds, turnovers, year
+
+Rankings endpoints:
+  OK    rankings/basketball-men/d1/associated-press - 25 rows - first: {"RANK":"1","SCHOOL":"Florida (56)","POINTS":"1,472","RECORD":"4-0","PREVIOUS RANKING":"1"}
+  OK    rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings - 365 rows - first: {"Rank":"1","School":"Michigan","Record":"37-3","Conf":"Big Ten","Road":"11-0","Neutral":"12-2","Home":"14-1","Non-Div I":"0-0","Prev":"2","Quad 1":"21-3","Quad
+  FAIL  rankings/basketball-men/d1/net-rankings - 404 for https://ncaa-api.henrygd.me/rankings/basketball-men/d1/net-rankings
+  FAIL  rankings/basketball-men/d1/ncaa-mens-basketball-net - 404 for https://ncaa-api.henrygd.me/rankings/basketball-men/d1/ncaa-mens-basketball-net
+kuathletics roster: parsed 17 players
+kuathletics schedule page: 8360 chars captured
+
+=== VALIDATION VERDICT ===
+Games discovered: 32 (32 final)
+Box scores captured: 32/32
+Score consistency mismatches: 0
+PASS: season data is retrievable and internally consistent

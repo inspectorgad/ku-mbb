@@ -1,0 +1,18 @@
+{
+ "rankings/basketball-men/d1/associated-press": {
+  "ok": true,
+  "rows": 25
+ },
+ "rankings/basketball-men/d1/ncaa-mens-basketball-net-rankings": {
+  "ok": true,
+  "rows": 365
+ },
+ "rankings/basketball-men/d1/net-rankings": {
+  "ok": false,
+  "error": "404 for https://ncaa-api.henrygd.me/rankings/basketball-men/d1/net-rankings"
+ },
+ "rankings/basketball-men/d1/ncaa-mens-basketball-net": {
+  "ok": false,
+  "error": "404 for https://ncaa-api.henrygd.me/rankings/basketball-men/d1/ncaa-mens-basketball-net"
+ }
+}

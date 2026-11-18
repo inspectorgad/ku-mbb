@@ -1,0 +1,322 @@
+[
+ {
+  "gameId": "6501512",
+  "date": "2025-11-03",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "94",
+  "away": "Green Bay",
+  "awayScore": "51",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6529265",
+  "date": "2025-11-11",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "77",
+  "away": "A&M-Corpus Christi",
+  "awayScore": "46",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6501515",
+  "date": "2025-11-18",
+  "state": "final",
+  "home": "Duke",
+  "homeScore": "78",
+  "away": "Kansas",
+  "awayScore": "66",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6501504",
+  "date": "2025-11-24",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "71",
+  "away": "Notre Dame",
+  "awayScore": "61",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6501516",
+  "date": "2025-11-25",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "71",
+  "away": "Syracuse",
+  "awayScore": "60",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6533927",
+  "date": "2025-11-26",
+  "state": "final",
+  "home": "Tennessee",
+  "homeScore": "76",
+  "away": "Kansas",
+  "awayScore": "81",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6501518",
+  "date": "2025-12-02",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "56",
+  "away": "UConn",
+  "awayScore": "61",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6501519",
+  "date": "2025-12-07",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "80",
+  "away": "Missouri",
+  "awayScore": "60",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6501520",
+  "date": "2025-12-13",
+  "state": "final",
+  "home": "NC State",
+  "homeScore": "76",
+  "away": "Kansas",
+  "awayScore": "77",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6501521",
+  "date": "2025-12-16",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "73",
+  "away": "Towson",
+  "awayScore": "49",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6501522",
+  "date": "2025-12-22",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "90",
+  "away": "Davidson",
+  "awayScore": "61",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6503998",
+  "date": "2026-01-03",
+  "state": "final",
+  "home": "UCF",
+  "homeScore": "81",
+  "away": "Kansas",
+  "awayScore": "75",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6505649",
+  "date": "2026-01-06",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "104",
+  "away": "TCU",
+  "awayScore": "100",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6503878",
+  "date": "2026-01-10",
+  "state": "final",
+  "home": "West Virginia",
+  "homeScore": "86",
+  "away": "Kansas",
+  "awayScore": "75",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6504385",
+  "date": "2026-01-16",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "80",
+  "away": "Baylor",
+  "awayScore": "62",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6505136",
+  "date": "2026-01-20",
+  "state": "final",
+  "home": "Colorado",
+  "homeScore": "69",
+  "away": "Kansas",
+  "awayScore": "75",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6503407",
+  "date": "2026-01-24",
+  "state": "final",
+  "home": "Kansas St.",
+  "homeScore": "62",
+  "away": "Kansas",
+  "awayScore": "86",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6504980",
+  "date": "2026-01-31",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "90",
+  "away": "BYU",
+  "awayScore": "82",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6505936",
+  "date": "2026-02-02",
+  "state": "final",
+  "home": "Texas Tech",
+  "homeScore": "61",
+  "away": "Kansas",
+  "awayScore": "64",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6505049",
+  "date": "2026-02-07",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "71",
+  "away": "Utah",
+  "awayScore": "59",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6503867",
+  "date": "2026-02-09",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "82",
+  "away": "Arizona",
+  "awayScore": "78",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6504402",
+  "date": "2026-02-14",
+  "state": "final",
+  "home": "Iowa St.",
+  "homeScore": "74",
+  "away": "Kansas",
+  "awayScore": "56",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6503997",
+  "date": "2026-02-18",
+  "state": "final",
+  "home": "Oklahoma St.",
+  "homeScore": "69",
+  "away": "Kansas",
+  "awayScore": "81",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6504186",
+  "date": "2026-02-21",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "68",
+  "away": "Cincinnati",
+  "awayScore": "84",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6504044",
+  "date": "2026-02-23",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "69",
+  "away": "Houston",
+  "awayScore": "56",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6503872",
+  "date": "2026-02-28",
+  "state": "final",
+  "home": "Arizona",
+  "homeScore": "84",
+  "away": "Kansas",
+  "awayScore": "61",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6530689",
+  "date": "2026-03-03",
+  "state": "final",
+  "home": "Arizona St.",
+  "homeScore": "70",
+  "away": "Kansas",
+  "awayScore": "60",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6503418",
+  "date": "2026-03-07",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "104",
+  "away": "Kansas St.",
+  "awayScore": "85",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6593578",
+  "date": "2026-03-12",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "78",
+  "away": "TCU",
+  "awayScore": "73",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6593574",
+  "date": "2026-03-13",
+  "state": "final",
+  "home": "Houston",
+  "homeScore": "69",
+  "away": "Kansas",
+  "awayScore": "47",
+  "kuIsHome": false
+ },
+ {
+  "gameId": "6534599",
+  "date": "2026-03-20",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "68",
+  "away": "California Baptist",
+  "awayScore": "60",
+  "kuIsHome": true
+ },
+ {
+  "gameId": "6534629",
+  "date": "2026-03-22",
+  "state": "final",
+  "home": "Kansas",
+  "homeScore": "65",
+  "away": "St. John's (NY)",
+  "awayScore": "67",
+  "kuIsHome": true
+ }
+]
