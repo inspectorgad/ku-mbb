@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T17:49:04Z",
+ "generatedAt": "2026-11-18T21:39:58Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -20048,6 +20048,16 @@
   },
   {
    "season": "2026-27",
+   "team": "Baylor",
+   "seo": "baylor",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
    "team": "UCF",
    "seo": "ucf",
    "confW": 0,
@@ -20065,16 +20075,6 @@
    "overallW": 3,
    "overallL": 1,
    "nationalRank": 12
-  },
-  {
-   "season": "2026-27",
-   "team": "Baylor",
-   "seo": "baylor",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 3,
-   "overallL": 1,
-   "nationalRank": null
   },
   {
    "season": "2026-27",
@@ -22817,6 +22817,15 @@
     "rating": 0.7876
    },
    {
+    "team": "Baylor",
+    "key": "baylor",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.4391,
+    "rating": 0.8243
+   },
+   {
     "team": "UCF",
     "key": "ucf",
     "confW": 0,
@@ -22833,15 +22842,6 @@
     "remaining": 17,
     "pVsAverage": 0.756,
     "rating": 1.4456
-   },
-   {
-    "team": "Baylor",
-    "key": "baylor",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 16,
-    "pVsAverage": 0.4391,
-    "rating": 0.8243
    },
    {
     "team": "Cincinnati",
