@@ -90,10 +90,10 @@ class AskFromGameTest {
 
         assertEquals(recapQuestion("2026-11-03", "vs ", "Omaha"), asked)
         assertTrue(asked.startsWith("Recap the 2026-11-03 game vs Omaha:"))
-        // Basketball, and nothing the pack cannot answer: quarters rather than
+        // Basketball, and nothing the pack cannot answer: halves rather than
         // sets, team totals rather than the performance goals this app has no
         // equivalent of.
-        assertTrue(asked.contains("quarter"))
+        assertTrue(asked.contains("half"))
         assertTrue(asked.contains("team totals"))
         assertFalse(asked.contains("set "))
         assertFalse(asked.contains("goal"))

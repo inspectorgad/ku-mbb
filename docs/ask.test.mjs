@@ -96,7 +96,7 @@ test('the questions promise only what this app can answer', () => {
   const recap = jsBuilder('kuRecapQuestion')('2026-11-03', 'vs ', 'Omaha');
   // Volleyball's wording, which this was ported from, asks about sets, the
   // win model's estimate and the performance goals met or missed. This app
-  // plays quarters, keeps no goals at all, and does not put the win model in
+  // plays halves, keeps no goals at all, and does not put the win model in
   // the data Claude can fetch - so asking for any of them invites an answer
   // made up out of nothing.
   for (const q of [preview, recap]) {
@@ -104,7 +104,7 @@ test('the questions promise only what this app can answer', () => {
     assert.doesNotMatch(q, /\bgoals?\b/);
     assert.doesNotMatch(q, /win model/);
   }
-  assert.match(recap, /\bquarter\b/);
+  assert.match(recap, /\bhalf\b/);
   // Both lean on tables the pack really carries.
   assert.match(recap, /team totals/);
   assert.match(preview, /NET/);

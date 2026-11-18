@@ -147,7 +147,7 @@ for path in sorted(glob.glob("scraped/ncaa-game-*.json")):
         game["opponentRecord"] = opp_record
 
     # Overtime, from the linescore period labels ("OT", "2OT") or the final
-    # message. Four quarters is regulation; anything beyond it is not.
+    # message. Two halves are regulation; anything beyond them is not.
     ot_periods = [
         str(ls.get("period") or "") for ls in (contest.get("linescores") or [])
         if "OT" in str(ls.get("period") or "").upper()

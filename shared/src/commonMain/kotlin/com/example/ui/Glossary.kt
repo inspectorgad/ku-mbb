@@ -72,7 +72,7 @@ val GLOSSARY: Map<String, String> = mapOf(
     "Neutral" to "Played on neither team's floor — a tournament or a showcase. " +
         "The NCAA counts it separately from home and away.",
     "OT" to "Overtime. A five-minute period played when the score is level after " +
-        "four quarters.",
+        "two halves.",
 )
 
 /** The definition for a label, if there is one. */

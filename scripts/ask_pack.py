@@ -55,8 +55,8 @@ DEFINITIONS = {
     "opp_rank": "the opponent's AP rank going into the game (null = unranked)",
     "opp_seed": "the opponent's tournament seed, where the game was a tournament game",
     "opp_record": "the opponent's won-lost record going into the game",
-    "period_scores": "points by quarter from KU's side, e.g. '25-14, 17-23, 29-16, 15-22'; "
-                     "the periods table has the same thing one row per quarter",
+    "period_scores": "points by half from KU's side, e.g. '38-31, 41-35'; "
+                     "the periods table has the same thing one row per half",
     "exhibition": "an exhibition game: it counts for nothing and is not in any record",
     "team_key / opponent_key / home_key / away_key": "one normalized spelling per school, with "
         "'State' folded to 'st', punctuation dropped, a leading poll rank ('#25 Nebraska') and a "
@@ -84,7 +84,7 @@ DEFINITIONS = {
 # Claude's own code through the get_table tool; this only says how.
 SYSTEM_RULES = """You are the analyst behind the Kansas Jayhawks men's basketball app and dashboard. You answer questions from coaches and fans about the team and the teams it plays, using the season data you are given - and the web, when the reader turns web search on for a question.
 
-The complete data is available to your Python code through the get_table tool: tables games, periods (one row per quarter, with each side's points), ku_lines (KU player box score lines per game), team_totals (the official team totals for both sides), opponent_lines, opponent_roster (opposing squads as their schools list them today — the right source for a game not yet played, and the wrong one for a season already played, where it only reaches the players who have not left since), upcoming, standings, poll, roster, definitions, team_records (every Division I team's NET row), big12_results (every final involving a Big 12 team) and d1_results (every final on the NCAA's Division I scoreboard this season). Call it from inside code execution, for example: import json, pandas as pd; lines = pd.DataFrame(json.loads(await get_table({'table': 'ku_lines'}))). Join tables on (season, date, opponent). A summary of the smaller tables is below for orientation.
+The complete data is available to your Python code through the get_table tool: tables games, periods (one row per half, with each side's points), ku_lines (KU player box score lines per game), team_totals (the official team totals for both sides), opponent_lines, opponent_roster (opposing squads as their schools list them today — the right source for a game not yet played, and the wrong one for a season already played, where it only reaches the players who have not left since), upcoming, standings, poll, roster, definitions, team_records (every Division I team's NET row), big12_results (every final involving a Big 12 team) and d1_results (every final on the NCAA's Division I scoreboard this season). Call it from inside code execution, for example: import json, pandas as pd; lines = pd.DataFrame(json.loads(await get_table({'table': 'ku_lines'}))). Join tables on (season, date, opponent). A summary of the smaller tables is below for orientation.
 
 How to answer:
 - Compute every number with code from the tables. Do not estimate, recall, or do arithmetic in your head, even for a simple total.
@@ -97,7 +97,7 @@ How to answer:
 
 Other teams: team_records is every Division I team's NET row — rank, previous rank, conference, and the overall, home, road, neutral, non-Division I and Quadrant 1-4 records. It carries the season it belongs to and the date it was published, and until the NCAA publishes a season's first NET, around the first Monday of December, it is last season's final table: say which season a NET figure is from rather than presenting an old one as current. big12_results is every final involving a Big 12 team, with each side's points and its AP rank going into that game, so records against ranked teams and points for and against can be computed from it; it reaches back a season, but holds no game between two teams from outside the conference. d1_results is the wider sweep — every final the NCAA's Division I scoreboard listed this season, in the same columns — so it is the table to join on for common opponents, and the only one that covers two teams who have both yet to play a Big 12 side. Two warnings about it. It is this season only, and that scoreboard lists a Division I team's games against non-Division I opponents too: about a third of its rows have a side that has no team_records row, and unlike games it carries no non_d1 flag, so drop a side that is missing from team_records before computing a record from it. And neither results table is promised to be complete: a comparison that rests on finding no game, rather than on the games it found, should say so. opponent_roster is the squads of the schools on our schedule, as those schools list them today. Match teams across all of these on the *_key columns, never on the printed names.
 
-Web search: the reader can turn on web search for a question, and each question says whether it is on. When it is off, answer from the data only, and say plainly when the data cannot answer. When it is on, you may use the web_search tool for what the tables cannot tell you — previews, recaps, injuries and line-up news, coaches' comments, transfers, rankings commentary — preferring official athletics sites, the Big 12, the NCAA, the AP, the WBCA and established news outlets. Even then, take every statistic from the tables when they have it, and keep web material for context. Make clear which statements come from the web, and give each article's date when it matters, since news goes out of date. Search only as much as the question needs.
+Web search: the reader can turn on web search for a question, and each question says whether it is on. When it is off, answer from the data only, and say plainly when the data cannot answer. When it is on, you may use the web_search tool for what the tables cannot tell you — previews, recaps, injuries and line-up news, coaches' comments, transfers, rankings commentary — preferring official athletics sites, the Big 12, the NCAA, the AP, the NABC and established news outlets. Even then, take every statistic from the tables when they have it, and keep web material for context. Make clear which statements come from the web, and give each article's date when it matters, since news goes out of date. Search only as much as the question needs.
 """
 
 
@@ -320,8 +320,8 @@ def _site(g):
     return {"home": "H", "away": "A", "neutral": "N"}.get(g.get("site"))
 
 
-def _periods(game_base, period_scores, regulation=4):
-    """One row per quarter. Anything past the fourth is an overtime period;
+def _periods(game_base, period_scores, regulation=2):
+    """One row per half. Anything past the second is an overtime period;
     a row that isn't two numbers is skipped rather than guessed at."""
     rows = []
     for i, part in enumerate((period_scores or "").split(",")):
@@ -334,7 +334,7 @@ def _periods(game_base, period_scores, regulation=4):
             continue
         n = i + 1
         rows.append({**game_base, "period": n,
-                     "name": f"Q{n}" if n <= regulation else f"OT{n - regulation}",
+                     "name": f"H{n}" if n <= regulation else f"OT{n - regulation}",
                      "overtime": n > regulation, "ku_points": ku, "opp_points": opp})
     return rows
 
@@ -493,5 +493,5 @@ if __name__ == "__main__":
     P = build_pack(SEED)
     write_pack(SEED, "docs/ask-data.json")
     print(f"ask data: {len(P['games'])} games, {len(P['ku_lines'])} KU lines, "
-          f"{len(P['periods'])} quarters, {len(P['opponent_lines'])} opponent lines, "
+          f"{len(P['periods'])} halves, {len(P['opponent_lines'])} opponent lines, "
           f"{len(P['upcoming'])} scheduled, {len(P['system_prompt'])}-char prompt")

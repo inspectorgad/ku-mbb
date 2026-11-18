@@ -2,11 +2,11 @@ package com.example
 
 import com.example.data.Game
 import com.example.stats.conferenceSplits
-import com.example.stats.cumulativeQuarterMargin
+import com.example.stats.cumulativeHalfMargin
 import com.example.stats.halftimeSplits
 import com.example.stats.marginSplits
 import com.example.stats.parsePeriods
-import com.example.stats.quarterSplits
+import com.example.stats.halfSplits
 import com.example.stats.recordOf
 import com.example.stats.siteSplits
 import org.junit.Assert.assertEquals
@@ -14,7 +14,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * The splits make claims about the season — "a fourth-quarter team", "8-10 in
+ * The splits make claims about the season — "a second-half team", "8-10 in
  * the Big 12" — so they are checked against the real 2025-26 numbers, which
  * are known independently from the NCAA's own published splits.
  */
@@ -102,57 +102,58 @@ class SplitsTest {
     @Test
     fun `period scores parse, and a malformed one yields nothing at all`() {
         assertEquals(
-            listOf(8 to 11, 26 to 17, 17 to 16, 23 to 20),
-            parsePeriods("8-11, 26-17, 17-16, 23-20")
+            listOf(38 to 31, 36 to 33),
+            parsePeriods("38-31, 36-33")
         )
-        // Five periods: the game went to overtime.
-        assertEquals(5, parsePeriods("14-14, 15-19, 16-19, 18-11, 10-7").size)
-        // Half a quarter table is worse than none: a partial parse would
-        // silently skew every quarter total built on it.
-        assertTrue(parsePeriods("8-11, oops, 17-16").isEmpty())
+        // Three periods: the game went to overtime.
+        assertEquals(3, parsePeriods("35-35, 30-32, 8-3").size)
+        // Part of a half table is worse than none: a partial parse would
+        // silently skew every total built on it.
+        assertTrue(parsePeriods("38-31, oops").isEmpty())
         assertTrue(parsePeriods("8-11-3").isEmpty())
         assertTrue(parsePeriods(null).isEmpty())
         assertTrue(parsePeriods("").isEmpty())
     }
 
     @Test
-    fun `quarter splits label regulation and overtime differently`() {
-        val quarters = quarterSplits(
+    fun `half splits label regulation and overtime differently`() {
+        val halves = halfSplits(
             listOf(
-                game("a", "A", 74, 64, periods = "8-11, 26-17, 17-16, 23-20"),
-                game("b", "B", 73, 70, periods = "14-14, 15-19, 16-19, 18-11, 10-7"),
+                game("a", "A", 74, 64, periods = "38-31, 36-33"),
+                game("b", "B", 73, 70, periods = "35-35, 30-32, 8-3"),
             )
         )
-        assertEquals(listOf("Q1", "Q2", "Q3", "Q4", "OT"), quarters.map { it.label })
-        val q2 = quarters.single { it.label == "Q2" }
-        assertEquals(41, q2.pointsFor)   // 26 + 15
-        assertEquals(36, q2.pointsAgainst)
-        assertEquals(1, q2.won)
-        assertEquals(1, q2.lost)
+        assertEquals(listOf("H1", "H2", "OT"), halves.map { it.label })
+        val h2 = halves.single { it.label == "H2" }
+        assertEquals(66, h2.pointsFor)       // 36 + 30
+        assertEquals(65, h2.pointsAgainst)   // 33 + 32
+        assertEquals(1, h2.won)
+        assertEquals(1, h2.lost)
         // Only the game that needed one contributes to overtime.
-        assertEquals(1, quarters.single { it.label == "OT" }.games)
+        assertEquals(1, halves.single { it.label == "OT" }.games)
     }
 
     @Test
-    fun `cumulative quarter margin shows where games are decided`() {
-        val running = cumulativeQuarterMargin(
+    fun `cumulative half margin shows where games are decided`() {
+        val running = cumulativeHalfMargin(
             listOf(
-                game("a", "A", 74, 64, periods = "8-11, 26-17, 17-16, 23-20"),
+                game("a", "A", 74, 64, periods = "38-31, 36-33"),
             )
         )
-        // -3 after Q1, +6 after Q2, +7 after Q3, +10 at the buzzer.
-        assertEquals(listOf("Q1" to -3, "Q2" to 6, "Q3" to 7, "Q4" to 10), running)
+        // +7 at the break, +10 at the buzzer.
+        assertEquals(listOf("H1" to 7, "H2" to 10), running)
     }
 
     @Test
-    fun `halftime splits read the first two quarters, not the final score`() {
+    fun `halftime splits read the first half, not the whole game`() {
         val splits = halftimeSplits(
             listOf(
                 // Led at half and won.
-                game("a", "A", 74, 64, periods = "8-11, 26-17, 17-16, 23-20"),
-                // Trailed at half and still won — the case a final-score
-                // reading would get backwards.
-                game("b", "B", 74, 62, periods = "6-16, 24-18, 26-13, 18-15"),
+                game("a", "A", 74, 64, periods = "38-31, 36-33"),
+                // Trailed at half and still won. This is the case that catches
+                // the women's app's periods[0] + periods[1]: that sum is this
+                // game's FINAL score, 74-62, which reads as leading.
+                game("b", "B", 74, 62, periods = "30-36, 44-26"),
             )
         ).associate { it.label to it.record }
         assertEquals("1-0", splits.getValue("Leading at half").toString())
@@ -164,7 +165,7 @@ class SplitsTest {
         val splits = halftimeSplits(
             listOf(
                 game("a", "A", 74, 64, periods = null),
-                game("b", "B", 80, 70, periods = "20-15, 20-15, 20-20, 20-20"),
+                game("b", "B", 80, 70, periods = "40-35, 40-35"),
             )
         )
         assertEquals(1, splits.sumOf { it.record.games })

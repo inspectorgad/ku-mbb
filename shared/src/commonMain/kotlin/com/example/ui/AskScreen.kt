@@ -70,7 +70,7 @@ import com.example.text.todayIso
 
 const val EXPLAIN_ASK =
     "Type a question about the team and Claude, Anthropic's AI, answers it from the season data: " +
-        "every game, every quarter's score, both teams' box scores, the official team totals, the " +
+        "every game, every half's score, both teams' box scores, the official team totals, the " +
         "schedule, the Big 12 standings, the AP poll and the roster — and, for other teams, the " +
         "rosters of the schools we play, every Division I team's NET row, and every result involving " +
         "a Big 12 team. Claude works each answer out by running Python on the data rather than from " +
@@ -94,10 +94,10 @@ const val EXPLAIN_ASK_KEY =
         "phone only, encrypted, and is sent only to api.anthropic.com. Get one at console.anthropic.com."
 
 private val EXAMPLES = listOf(
-    "How does S'Mya Nichols shoot against ranked opponents compared with unranked ones?",
-    "What is our record when we lead after the first quarter, and when we trail at the half?",
+    "How does Trey Kaufman-Renn shoot against ranked opponents compared with unranked ones?",
+    "What is our record when we lead at the half, and when we trail?",
     "Compare our rebounding at home, on the road and at neutral sites.",
-    "Which quarter do we lose ground in most often in Big 12 losses?",
+    "Which half do we lose ground in most often in Big 12 losses?",
     // Needs the web: nothing in the season data says who is fit to play.
     "What injury or line-up news is there for our next opponent? (turn web search on)",
 )
@@ -573,10 +573,10 @@ fun previewQuestion(date: String, versus: String, opponent: String) =
         "standings."
 
 /**
- * The Recap button's question, for a game with a final score. Quarters, not
+ * The Recap button's question, for a game with a final score. Halves, not
  * sets; team_totals, not the sum of the player lines.
  */
 fun recapQuestion(date: String, versus: String, opponent: String) =
-    "Recap the $date game $versus$opponent: the result and how each quarter went, our standout " +
+    "Recap the $date game $versus$opponent: the result and how each half went, our standout " +
         "players and theirs, how our shooting, rebounding and turnovers compared with our season " +
         "averages, and where the game was won or lost in the team totals."

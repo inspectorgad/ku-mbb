@@ -18,7 +18,7 @@ SEED = {
     "games": [
         {"date": "2025-12-07", "opponent": "Missouri St.", "season": "2025-26", "site": "home",
          "home": True, "conference": False, "teamScore": 73, "opponentScore": 70, "overtime": 1,
-         "periodScores": "14-14, 15-19, 16-19, 18-11, 10-7", "opponentRecord": "6-3",
+         "periodScores": "35-35, 30-32, 8-3", "opponentRecord": "6-3",
          "venue": "Allen Fieldhouse", "city": "Lawrence, KS",
          "lines": [{"player": "S'Mya Nichols", "min": 38, "fgm": 9, "fga": 20, "tpm": 2, "tpa": 6,
                     "ftm": 4, "fta": 5, "oreb": 1, "reb": 5, "ast": 6, "to": 3, "stl": 2, "blk": 0,
@@ -37,7 +37,7 @@ SEED = {
                             "gs": 1}]},
         {"date": "2025-12-17", "opponent": "Haskell", "season": "2025-26", "site": "home",
          "home": True, "conference": False, "nonD1": True, "teamScore": 107, "opponentScore": 39,
-         "periodScores": "30-8, 27-11, 26-9, 24-11"},
+         "periodScores": "57-19, 50-20"},
         {"date": "2026-10-29", "opponent": "Washburn (exh.)", "season": "2026-27", "site": "home",
          "home": True, "conference": False, "venue": "Allen Fieldhouse", "city": "Lawrence, KS",
          "event": "Late Night in the Phog", "time": "18:30"},
@@ -64,12 +64,12 @@ class AskPackTest(unittest.TestCase):
         # The NCAA leaves Haskell out of its records, so the flag has to survive.
         self.assertEqual([g["non_d1"] for g in self.p["games"]], [False, True])
 
-    def test_overtime_quarters_are_named_as_overtime(self):
+    def test_overtime_halves_are_named_as_overtime(self):
         rows = [r for r in self.p["periods"] if r["opponent"] == "Missouri St."]
-        self.assertEqual([r["name"] for r in rows], ["Q1", "Q2", "Q3", "Q4", "OT1"])
-        self.assertEqual(rows[-1]["ku_points"], 10)
-        self.assertEqual([r["overtime"] for r in rows], [False, False, False, False, True])
-        # The quarters must add up to the final score, or a split built from
+        self.assertEqual([r["name"] for r in rows], ["H1", "H2", "OT1"])
+        self.assertEqual(rows[-1]["ku_points"], 8)
+        self.assertEqual([r["overtime"] for r in rows], [False, False, True])
+        # The halves must add up to the final score, or a split built from
         # them would quietly disagree with the game row.
         self.assertEqual(sum(r["ku_points"] for r in rows), 73)
         self.assertEqual(sum(r["opp_points"] for r in rows), 70)

@@ -507,7 +507,7 @@
   <section id="seasonSec" hidden>
     <div class="sec-head">
       <h2>How the season went</h2>
-      <span class="note">shooting efficiency, splits, and the quarter that decided games</span>
+      <span class="note">shooting efficiency, splits, and the half that decided games</span>
       <div class="rule"></div>
     </div>
     <div class="b12-grid" id="seasonCards"></div>
@@ -673,7 +673,7 @@
       <ul class="facts" id="gFacts"></ul>
     </div>
     <div class="m-sec">
-      <h4>By quarter</h4>
+      <h4>By half</h4>
       <div class="tbl-wrap"><table id="gQtrTbl"><thead></thead><tbody></tbody></table></div>
     </div>
     <div class="m-sec">
@@ -996,7 +996,7 @@ function marginChart() {
     const g = games[+r.dataset.g];
     showTip(`<b>${g.won ? "W" : "L"} ${g.teamScore}–${g.opponentScore}</b> ${g.won ? "over" : "to"} ${g.opponent} (${siteOf(g) || "site n/a"})<br>
       ${fmtDate(g.date)} · ${phaseOf(g)}<br>
-      <span style="opacity:.8">Quarters: ${g.periodScores || "—"}</span><br>
+      <span style="opacity:.8">Halves: ${g.periodScores || "—"}</span><br>
       <span style="opacity:.8">Top: ${g.top ? g.top.name + " " + g.top.pts : "—"}</span>` +
       (g.opponentRank ? `<br><span style="opacity:.8">They came in #${g.opponentRank}${g.opponentRecord ? " (" + g.opponentRecord + ")" : ""}</span>` : "") +
       (g.overtime ? `<br><span style="opacity:.8">${g.overtime > 1 ? g.overtime + "OT" : "OT"}</span>` : ""), ev);
@@ -1041,13 +1041,13 @@ function gamesTable() {
     : `Schedule — ${upcoming.length} games`;
 
   // A season still to be played has no scores to head, and no need for the
-  // result columns at all: showing them would both label a venue "Quarters"
+  // result columns at all: showing them would both label a venue "Halves"
   // and push the phase off the right edge.
   const hasResults = games.length > 0;
   document.querySelector("#gamesTbl thead").innerHTML = hasResults
     ? `<tr><th class="lft">#</th><th class="lft">Date</th><th class="lft">Site</th>
          <th class="lft">Opponent</th><th class="lft"></th><th>Score</th>
-         <th class="lft">Quarters</th><th class="lft">Top scorer</th><th class="lft"></th></tr>`
+         <th class="lft">Halves</th><th class="lft">Top scorer</th><th class="lft"></th></tr>`
     : `<tr><th class="lft">#</th><th class="lft">Date</th><th class="lft">Site</th>
          <th class="lft">Opponent</th><th class="lft">Tip</th>
          <th class="lft">Win chance</th>
@@ -1213,7 +1213,7 @@ const EXPLAIN = {
   "PCT": "Winning percentage in conference play.",
   "Conf": "Record against Big 12 opponents in the regular season. The conference tournament is not part of it.",
   "Neutral": "Played on neither team's floor — a tournament or a showcase. The NCAA counts it separately from home and away.",
-  "OT": "Overtime. A five-minute period played when the score is level after four quarters.",
+  "OT": "Overtime. A five-minute period played when the score is level after two halves.",
   "Prev": "Where the team sat in the previous poll. NR means it was unranked.",
   "Met": "How many times the team played Kansas.",
 };
@@ -1260,7 +1260,7 @@ const recordOf = list => {
 };
 
 // "8-11, 26-17, …" -> [[8,11], …]; nothing at all if any period is malformed,
-// since half a quarter table skews every total built on it.
+// since part of a half table skews every total built on it.
 function parsePeriods(text) {
   if (!text) return [];
   const out = [];
@@ -1357,13 +1357,18 @@ function seasonInsights() {
   }
 
   // Leading, trailing or level at the break — the one split the app had and
-  // this page did not. A game whose quarters do not parse is skipped rather
+  // this page did not. A game whose halves do not parse is skipped rather
   // than guessed at, same as everywhere else.
+  //
+  // Halftime is the end of the FIRST period. The women's app adds periods 0
+  // and 1 because for it those are Q1 and Q2; here that sum is the whole game,
+  // and this split would quietly become the win-loss record wearing another
+  // name. Must match halftimeSplits() in Splits.kt.
   const atHalf = { "Leading at half": [], "Trailing at half": [], "Level at half": [] };
   for (const g of games) {
     const p = parsePeriods(g.periodScores);
-    if (p.length < 2) continue;
-    const ours = p[0][0] + p[1][0], theirs = p[0][1] + p[1][1];
+    if (!p.length) continue;
+    const [ours, theirs] = p[0];
     atHalf[ours > theirs ? "Leading at half" : ours < theirs ? "Trailing at half" : "Level at half"].push(g);
   }
   const halfRows = Object.entries(atHalf).filter(([, l]) => l.length);
@@ -1376,21 +1381,21 @@ function seasonInsights() {
     ["By 16+", games.filter(g => margin(g) >= 16)],
   ].filter(([, l]) => l.length))));
 
-  // Quarters, with overtime kept separate from regulation.
-  const quarters = [];
+  // Halves, with overtime kept separate from regulation.
+  const halves = [];
   for (const g of games) {
     parsePeriods(g.periodScores).forEach(([ours, theirs], i) => {
-      const q = quarters[i] || (quarters[i] = { label: i < 4 ? `Q${i + 1}` : "OT", f: 0, a: 0, w: 0, l: 0, t: 0, n: 0 });
+      const q = halves[i] || (halves[i] = { label: i < 2 ? `H${i + 1}` : "OT", f: 0, a: 0, w: 0, l: 0, t: 0, n: 0 });
       q.f += ours; q.a += theirs; q.n++;
       if (ours > theirs) q.w++; else if (ours < theirs) q.l++; else q.t++;
     });
   }
-  if (quarters.length) {
+  if (halves.length) {
     let running = 0;
-    const walk = quarters.map(q => { running += q.f - q.a; return `${q.label} ${running >= 0 ? "+" : ""}${running}`; });
-    cards.push(card("By quarter",
+    const walk = halves.map(q => { running += q.f - q.a; return `${q.label} ${running >= 0 ? "+" : ""}${running}`; });
+    cards.push(card("By half",
       `<table><thead><tr><th class="lft"></th><th>For</th><th>Opp</th><th>W-L-T</th></tr></thead><tbody>` +
-      quarters.map(q => `<tr><td class="lft"><b>${q.label}</b></td><td>${f1(q.f / q.n)}</td>
+      halves.map(q => `<tr><td class="lft"><b>${q.label}</b></td><td>${f1(q.f / q.n)}</td>
         <td class="dim">${f1(q.a / q.n)}</td><td>${q.w}-${q.l}${q.t ? "-" + q.t : ""}</td></tr>`).join("") +
       `</tbody></table>`,
       "Running margin: " + walk.join(" · ")));
@@ -1593,7 +1598,12 @@ function streakAt(list, upTo) {
 // One game is not a streak, and saying so would be padding.
 const streakPhrase = s => s >= 2 ? `${s} straight wins` : s <= -2 ? `${-s} straight losses` : null;
 
-const ORDINAL = ["first quarter", "second quarter", "third quarter", "fourth quarter"];
+const ORDINAL = ["first half", "second half"];
+// Must match HALF_SWING in GameFacts.kt: how big a margin inside one period is
+// worth printing. 8 across a 10-minute quarter becomes about 11 across a
+// 20-minute half, because a margin's spread grows with the square root of the
+// minutes; 12 keeps it rare enough to be a fact.
+const HALF_SWING = 12;
 
 function gameFacts(g) {
   const facts = [];
@@ -1609,22 +1619,23 @@ function gameFacts(g) {
   if (g.overtime) facts.push(g.overtime > 1 ? `Went ${g.overtime} overtimes` : "Went to overtime");
 
   const p = parsePeriods(g.periodScores);
-  if (p.length >= 4) {
-    // The quarter that decided it: the biggest swing either way. First one
+  if (p.length >= 2) {
+    // The half that decided it: the biggest swing either way. First one
     // wins a tie, matching the Kotlin's maxBy/minBy.
     let best = 0, worst = 0;
     p.forEach(([f, a], i) => {
       if (f - a > p[best][0] - p[best][1]) best = i;
       if (a - f > p[worst][1] - p[worst][0]) worst = i;
     });
-    if (p[best][0] - p[best][1] >= 8) {
+    if (p[best][0] - p[best][1] >= HALF_SWING) {
       facts.push(`Outscored them ${p[best][0]}-${p[best][1]} in the ${ORDINAL[best] || "overtime"}`);
     }
-    if (p[worst][1] - p[worst][0] >= 8) {
+    if (p[worst][1] - p[worst][0] >= HALF_SWING) {
       facts.push(`Outscored ${p[worst][1]}-${p[worst][0]} in the ${ORDINAL[worst] || "overtime"}`);
     }
-    // Came from behind, which the final score hides.
-    const ours = p[0][0] + p[1][0], theirs = p[0][1] + p[1][1];
+    // Came from behind, which the final score hides. Halftime is the end of
+    // the first period, not the first two — see the "At the half" split.
+    const [ours, theirs] = p[0];
     if (g.won && theirs > ours) facts.push(`Trailed by ${theirs - ours} at the half and won`);
   }
 
@@ -1764,13 +1775,13 @@ function openGame(n) {
   document.getElementById("gFacts").innerHTML =
     facts.map(f => `<li>${f}</li>`).join("");
 
-  // By quarter, from the period scores. Anything past the fourth is overtime.
+  // By half, from the period scores. Anything past the second is overtime.
   const parts = (g.periodScores || "").split(",")
     .map(s => s.trim().split("-").map(Number)).filter(p => p.length === 2 && p.every(Number.isFinite));
   const qtr = document.getElementById("gQtrTbl");
   qtr.closest(".m-sec").hidden = parts.length === 0;
   if (parts.length) {
-    const labels = parts.map((_, i) => (i < 4 ? `Q${i + 1}` : `OT${i - 3}`));
+    const labels = parts.map((_, i) => (i < 2 ? `H${i + 1}` : `OT${i - 1}`));
     qtr.querySelector("thead").innerHTML =
       `<tr><th class="lft"></th>${labels.map(l => `<th>${l}</th>`).join("")}<th>Final</th></tr>`;
     const line = (label, pick, total) =>

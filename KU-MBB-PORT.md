@@ -23,14 +23,16 @@ port, part-done. What is finished here:
 |---|---|
 | §1 Verify the data sources | **Done.** `scripts/probe-ku-mbb.mjs` ran against the live NCAA API on 18 Nov and passed; §1 below records what it found, including the NET slug and the two-period linescore. |
 | §2 Rename | **Done.** Identity, paths, URLs, bundle IDs, the database filename and the Keystore alias all say men's/MBB. The parser fixtures are genuine men's pages captured by the probe. |
-| §3 Quarters → halves | **Not started.** ~93 references across 21 files still count four quarters. |
+| §3 Quarters → halves | **Done**, and it was not only labels — see the correction at the head of §3. |
 | §4 Rebuild the seed | **Not started.** `app/src/main/assets/seed.json` ships its shape with no season in it, so four `ShippedSeedTest` cases skip. |
 | §5 Infrastructure | **Not started.** `.github/workflows` is parked at `.github/workflows-disabled` so nothing fires before it is meant to; Pages, the Apple secrets and a fresh upload keystore are still to do. |
 | §6-§9 | Unchanged guidance; read them. |
 
-One thing §1 could not settle: no overtime game fell inside the 32 the probe read,
-so the **shape of a men's overtime linescore is still unverified**. Find out before
-§3 treats period 3 as overtime.
+~~One thing §1 could not settle: the overtime linescore shape.~~ **Settled.** The
+second probe run, from GitHub's network, caught two overtime games among the 32:
+`info.contests[0].linescores` holds one row per period with a `period` label, and
+across the 32 games 30 have two rows and 2 have three, labelled `1`, `2`, `OT`.
+That is what §3's halves work is built on. See DATA-VALIDATION.md.
 
 ---
 
@@ -203,6 +205,28 @@ log lines are confusing enough that it is worth the five seconds.)
 ---
 
 ## 3. Quarters → halves: the one real domain change
+
+> **Done in this repo, and two things below were wrong.** Read this first.
+>
+> **(a) It is not all labels.** Three places add `periods[0] + periods[1]` to get the
+> halftime score, which is right for Q1 + Q2 and is *the final score* for a men's
+> game: `halftimeSplits()` in `Splits.kt`, the "Came from behind" fact in
+> `GameFacts.kt`, and the "At the half" card in `dashboard.template.html`. Left as
+> labels-only, the "At the half" split would have silently restated the win-loss
+> record — every game "leading at half", by definition — and nothing would have
+> failed. All three now read `periods[0]`. `GameFacts` also gated its whole block on
+> `periods.size >= 4`, so for a two-period game it produced no facts at all.
+>
+> **(b) Point 3 below is wrong: no table collapses.** There is no scoring-by-half
+> table next to the quarter table. "At the half" is a *record* split — how the team
+> fares when leading, trailing or level at the break — and "By quarter" is a
+> *scoring* table. They measure different things, nothing duplicates, and both stay.
+>
+> One judgement call the plan did not raise: `GameFacts` prints "Outscored them
+> 26-17 in the third" when a period margin reaches 8. Across a 20-minute half rather
+> than a 10-minute quarter that fires on almost every game, so the threshold is now
+> `HALF_SWING = 12`, defined in both `GameFacts.kt` and `dashboard.template.html`
+> with the reasoning.
 
 **Men's college basketball plays two 20-minute halves. Women's plays four 10-minute
 quarters.** Confirmed against a real box score in step 1 — the feed returns two
@@ -455,9 +479,11 @@ Each step has a checkpoint. Do not proceed past a red one.
 - **An "upcoming" game can be in the past** — the date passed but the box score has not
   landed. Branch on whether there is a result, never on the date. The dashboard shows
   "awaiting result" for exactly this.
-- ~~Check a men's box score for a `linescore` with two entries.~~ Confirmed in step 1.
-  The overtime detector reads the linescore's period labels, so re-check it the first
-  time a men's game actually goes to overtime — that shape is still unverified.
+- ~~Check a men's box score for a `linescore` with two entries.~~ Confirmed in step 1,
+  and the overtime shape with it: two of the 32 probed games carry a third row, and
+  the labels are `1`, `2`, `OT`. The overtime detector reads those labels, so it has
+  what it needs. A fourth period is presumed to read `2OT`, as the women's feed does;
+  nothing in the 32 games shows one.
 
 ---
 

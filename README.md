@@ -12,11 +12,10 @@ itself modeled on
 [ku-volleyball](https://github.com/inspectorgad/ku-volleyball). The 2026-27
 schedule is 30 games.
 
-**This port is not finished**, so the rest of this README describes the app it
-is being ported into rather than what runs today. The seed ships empty — its
-shape, with no season in it — until the first scrape fills it, and the code
-still counts a game in four quarters rather than two halves. KU-MBB-PORT.md is
-the plan and says what is left.
+**This port is not finished.** The seed ships empty — its shape, with no season
+in it — until the first scrape fills it, so the app has nothing to show until
+then, and the store and signing setup is still to do. The game itself is right:
+the code counts two halves. KU-MBB-PORT.md is the plan and says what is left.
 
 ## The app
 
@@ -28,7 +27,7 @@ the plan and says what is left.
   it.
 - **Games** — every game and every fixture, with the site shown three ways —
   home, away or neutral — because a neutral-site game is neither. Inside a
-  game: the quarter scores, both teams' full box scores, the official team
+  game: the half scores, both teams' full box scores, the official team
   totals, and a *Notable* card stating only what is true of that night — a
   streak that is actually a run, a comeback that actually happened, a ranked
   opponent and their record coming in.
@@ -37,8 +36,8 @@ the plan and says what is left.
   per game, plus FG%, FT% and threes.
 - **Season** — the record and margin; shooting as eFG%, TS%, 3PAr, FTr and
   A/TO against the opponent's; splits by site, by conference, by how close the
-  game was, and by the half; and a quarter-by-quarter table with the running
-  margin.
+  game was, and by how it stood at the break; and a half-by-half table with
+  the running margin.
 - **Opponents** — every team Kansas played, their record and production
   *against Kansas* — the only box scores this app holds — with each meeting,
   their shooting against KU's, and every opposing player summed across the
@@ -64,7 +63,7 @@ every result involving a Big 12 team, and every Division I result this season.
 
 Every game carries a button that asks for it: a scouting report before it is
 played, a recap once the box score is in — their season and ours, the last
-meeting, common opponents, who to watch, and where the quarters or the team
+meeting, common opponents, who to watch, and where the halves or the team
 totals decided it. The app puts it on the game page and the dashboard puts a
 *Preview* chip on each scheduled row and a *Recap* button in the game sheet.
 The question lands in the Ask box worded the same on both, and waits there
@@ -186,7 +185,7 @@ The 2025-26 source data was validated before the app was built — see
 
 Site splits reproduce the NCAA's published ones exactly, the conference record
 is the Big 12's own 18-game figure rather than a naive membership count, and
-every game's quarter scores add up to its final.
+every game's half scores add up to its final.
 
 ## Run locally
 

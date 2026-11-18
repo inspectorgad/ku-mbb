@@ -3,11 +3,11 @@ package com.example.stats
 import com.example.data.Game
 
 /**
- * Season splits and quarter-by-quarter shape.
+ * Season splits and half-by-half shape.
  *
  * Plain functions over plain data, deliberately outside the composables, so
  * the arithmetic can be tested without a screen — the answers here are claims
- * about the season ("a fourth-quarter team") that ought to be checkable.
+ * about the season ("a second-half team") that ought to be checkable.
  */
 
 /** A won-lost record, and the scoring behind it. */
@@ -88,11 +88,11 @@ fun marginSplits(games: Collection<Game>): List<Split> {
 }
 
 // ---------------------------------------------------------------------------
-// Quarters
+// Halves
 // ---------------------------------------------------------------------------
 
-/** One quarter's scoring across a set of games. */
-data class QuarterSplit(
+/** One half's scoring across a set of games. */
+data class HalfSplit(
     val label: String,
     val pointsFor: Int = 0,
     val pointsAgainst: Int = 0,
@@ -107,10 +107,10 @@ data class QuarterSplit(
 }
 
 /**
- * Splits "8-11, 26-17, 17-16, 23-20" into ours/theirs pairs.
+ * Splits "38-31, 41-35" into ours/theirs pairs.
  *
  * Returns an empty list rather than a partial one if any period is malformed:
- * a quarter table built from half a game is worse than no quarter table.
+ * a half table built from part of a game is worse than no half table.
  */
 fun parsePeriods(periodScores: String?): List<Pair<Int, Int>> {
     val text = periodScores?.trim().orEmpty()
@@ -126,29 +126,29 @@ fun parsePeriods(periodScores: String?): List<Pair<Int, Int>> {
     return parsed
 }
 
-/** Regulation quarter labels, then OT periods as the data supplies them. */
-private fun quarterLabel(index: Int, total: Int): String = when {
-    index < 4 -> "Q${index + 1}"
-    total == 5 -> "OT"
-    else -> "${index - 3}OT"
+/** Regulation half labels, then OT periods as the data supplies them. */
+private fun halfLabel(index: Int, total: Int): String = when {
+    index < 2 -> "H${index + 1}"
+    total == 3 -> "OT"
+    else -> "${index - 1}OT"
 }
 
 /**
- * Scoring by quarter across a season. Overtime periods are kept separate from
- * regulation — pooling them would flatter the fourth quarter of games that
- * needed five.
+ * Scoring by half across a season. Overtime periods are kept separate from
+ * regulation — pooling them would flatter the second half of games that
+ * needed a third period.
  */
-fun quarterSplits(games: Collection<Game>): List<QuarterSplit> {
+fun halfSplits(games: Collection<Game>): List<HalfSplit> {
     // Plain map, sorted on the way out: sortedMapOf is java.util.SortedMap
     // and the iPhone has no such thing.
-    val byIndex = mutableMapOf<Int, QuarterSplit>()
+    val byIndex = mutableMapOf<Int, HalfSplit>()
     for (g in played(games)) {
         val periods = parsePeriods(g.periodScores)
         periods.forEachIndexed { i, (ours, theirs) ->
-            val current = byIndex[i] ?: QuarterSplit(quarterLabel(i, periods.size))
+            val current = byIndex[i] ?: HalfSplit(halfLabel(i, periods.size))
             byIndex[i] = current.copy(
-                // A game that goes to five periods labels its fifth "OT"; one
-                // that goes to six labels the same slot "2OT". The first
+                // A game that goes to three periods labels its third "OT";
+                // one that goes to four labels the same slot "2OT". The first
                 // sighting names it, which is the common case either way.
                 label = current.label,
                 pointsFor = current.pointsFor + ours,
@@ -163,27 +163,34 @@ fun quarterSplits(games: Collection<Game>): List<QuarterSplit> {
 }
 
 /**
- * The scoring margin accumulated through each quarter — where a season's games
+ * The scoring margin accumulated through each half — where a season's games
  * are actually decided, rather than how they finish.
  */
-fun cumulativeQuarterMargin(games: Collection<Game>): List<Pair<String, Int>> {
+fun cumulativeHalfMargin(games: Collection<Game>): List<Pair<String, Int>> {
     var running = 0
-    return quarterSplits(games).map { q ->
+    return halfSplits(games).map { q ->
         running += q.margin
         q.label to running
     }
 }
 
-/** How the team fares when it leads, trails or is level at the half. */
+/**
+ * How the team fares when it leads, trails or is level at the half.
+ *
+ * Halftime is the end of the FIRST period, not the first two. The men's game
+ * is two 20-minute halves, so periods[0] is the break; the women's app adds
+ * periods[0] and periods[1] because for it that is Q1 + Q2. Carrying that sum
+ * across would read the FINAL score and call it halftime, and this split would
+ * then silently restate the win-loss record.
+ */
 fun halftimeSplits(games: Collection<Game>): List<Split> {
     val leading = mutableListOf<Game>()
     val trailing = mutableListOf<Game>()
     val level = mutableListOf<Game>()
     for (g in played(games)) {
         val periods = parsePeriods(g.periodScores)
-        if (periods.size < 2) continue
-        val ours = periods[0].first + periods[1].first
-        val theirs = periods[0].second + periods[1].second
+        if (periods.isEmpty()) continue
+        val (ours, theirs) = periods[0]
         when {
             ours > theirs -> leading += g
             ours < theirs -> trailing += g

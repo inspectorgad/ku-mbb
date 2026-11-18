@@ -112,7 +112,7 @@ data class Game(
     // Final score. Null until played.
     val teamScore: Int? = null,
     val opponentScore: Int? = null,
-    // Per-quarter (and OT) points from KU's perspective, e.g. "8-11, 26-17, 17-16, 23-20"
+    // Per-half (and OT) points from KU's perspective, e.g. "38-31, 41-35"
     val periodScores: String? = null,
     // The win model's chance that Kansas wins, 0 to 1. Feed-owned and only
     // ever set on a game still to play: once a game has been played the

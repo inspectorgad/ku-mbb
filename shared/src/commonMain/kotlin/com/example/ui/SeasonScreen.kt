@@ -29,11 +29,11 @@ import com.example.data.Game
 import com.example.data.GameTeamStats
 import com.example.data.Player
 import com.example.data.StatLine
-import com.example.stats.QuarterSplit
+import com.example.stats.HalfSplit
 import com.example.stats.Split
 import com.example.stats.conferenceSplits
 import com.example.stats.cumulativeEfficiency
-import com.example.stats.cumulativeQuarterMargin
+import com.example.stats.cumulativeHalfMargin
 import com.example.stats.efficiency
 import com.example.stats.seasonHighlights
 import com.example.stats.formatPct
@@ -41,13 +41,13 @@ import com.example.stats.formatPerGame
 import com.example.stats.halftimeSplits
 import com.example.stats.marginSplits
 import com.example.stats.played
-import com.example.stats.quarterSplits
+import com.example.stats.halfSplits
 import com.example.stats.recordOf
 import com.example.stats.siteSplits
 
 /**
  * How the season actually went: shooting efficiency beyond raw percentages,
- * where the games were won, and which quarter decided them.
+ * where the games were won, and which half decided them.
  *
  * All the arithmetic lives in stats/Efficiency.kt and stats/Splits.kt as plain
  * functions, so it is tested without a screen; this file only arranges it.
@@ -231,12 +231,12 @@ fun SeasonScreen(
                 item { SplitsCard("At the half", it) }
             }
 
-            quarterSplits(finished).takeIf { it.isNotEmpty() }?.let { quarters ->
+            halfSplits(finished).takeIf { it.isNotEmpty() }?.let { halves ->
                 item {
-                    SectionCard("By quarter") {
-                        QuarterTable(quarters)
+                    SectionCard("By half") {
+                        HalfTable(halves)
                         Spacer(modifier = Modifier.height(8.dp))
-                        val running = cumulativeQuarterMargin(finished)
+                        val running = cumulativeHalfMargin(finished)
                         Text(
                             "Running margin: " + running.joinToString(" · ") { (label, m) ->
                                 "$label ${if (m >= 0) "+" else ""}$m"
@@ -289,7 +289,7 @@ private fun SplitsCard(title: String, splits: List<Split>) {
 }
 
 @Composable
-private fun QuarterTable(quarters: List<QuarterSplit>) {
+private fun HalfTable(halves: List<HalfSplit>) {
     Row {
         Text("", modifier = Modifier.weight(0.8f), style = MaterialTheme.typography.labelSmall)
         for (h in listOf("For", "Opp", "W-L-T")) {
@@ -303,7 +303,7 @@ private fun QuarterTable(quarters: List<QuarterSplit>) {
         }
     }
     HorizontalDivider()
-    quarters.forEach { q ->
+    halves.forEach { q ->
         Row(modifier = Modifier.padding(vertical = 3.dp)) {
             Text(
                 q.label,

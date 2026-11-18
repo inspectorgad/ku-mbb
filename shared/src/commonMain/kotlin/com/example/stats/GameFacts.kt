@@ -68,22 +68,22 @@ fun gameFacts(
 
     game.overtime?.let { facts += if (it > 1) "Went $it overtimes" else "Went to overtime" }
 
-    // The quarter that decided it: the biggest swing either way.
+    // The half that decided it: the biggest swing either way.
     val periods = parsePeriods(game.periodScores)
-    if (periods.size >= 4) {
+    if (periods.size >= 2) {
         val best = periods.withIndex().maxByOrNull { (_, p) -> p.first - p.second }
         val worst = periods.withIndex().minByOrNull { (_, p) -> p.first - p.second }
-        if (best != null && best.value.first - best.value.second >= 8) {
+        if (best != null && best.value.first - best.value.second >= HALF_SWING) {
             facts += "Outscored them ${best.value.first}-${best.value.second} " +
                 "in the ${ordinal(best.index + 1)}"
         }
-        if (worst != null && worst.value.second - worst.value.first >= 8) {
+        if (worst != null && worst.value.second - worst.value.first >= HALF_SWING) {
             facts += "Outscored ${worst.value.second}-${worst.value.first} " +
                 "in the ${ordinal(worst.index + 1)}"
         }
-        // Came from behind, which the final score hides.
-        val halfUs = periods[0].first + periods[1].first
-        val halfThem = periods[0].second + periods[1].second
+        // Came from behind, which the final score hides. Halftime is the end
+        // of the first period, not the first two — see halftimeSplits.
+        val (halfUs, halfThem) = periods[0]
         if (won(game) && halfThem > halfUs) {
             facts += "Trailed by ${halfThem - halfUs} at the half and won"
         }
@@ -107,8 +107,14 @@ fun gameFacts(
     return facts
 }
 
+// How big a margin inside one period is worth printing. The women's app uses
+// 8 across a 10-minute quarter; a 20-minute half is twice the minutes, and a
+// margin's spread grows with the square root of them, so the same rarity sits
+// near 11. 12 keeps it a fact rather than a fixture of every box score.
+private const val HALF_SWING = 12
+
 private fun ordinal(n: Int) = when (n) {
-    1 -> "first quarter"; 2 -> "second quarter"; 3 -> "third quarter"; 4 -> "fourth quarter"
+    1 -> "first half"; 2 -> "second half"
     else -> "overtime"
 }
 

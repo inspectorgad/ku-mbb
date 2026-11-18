@@ -181,10 +181,10 @@ const TOOLS = [
 ];
 
 const EXAMPLES = [
-  "How does S'Mya Nichols shoot against ranked opponents compared with unranked ones?",
-  "What is our record when we lead after the first quarter, and when we trail at the half?",
+  "How does Trey Kaufman-Renn shoot against ranked opponents compared with unranked ones?",
+  "What is our record when we lead at the half, and when we trail?",
   "Compare our rebounding at home, on the road and at neutral sites.",
-  "Which quarter do we lose ground in most often in Big 12 losses?",
+  "Which half do we lose ground in most often in Big 12 losses?",
   // Needs the web: nothing in the season data says who is fit to play.
   "What injury or line-up news is there for our next opponent? (turn web search on)",
 ];
@@ -708,7 +708,7 @@ window.kuPreviewQuestion = (date, versus, opponent) =>
   "on each side, how we match up, and where each of us stands in the NET and the Big 12 " +
   "standings.";
 window.kuRecapQuestion = (date, versus, opponent) =>
-  `Recap the ${date} game ${versus}${opponent}: the result and how each quarter went, our standout ` +
+  `Recap the ${date} game ${versus}${opponent}: the result and how each half went, our standout ` +
   "players and theirs, how our shooting, rebounding and turnovers compared with our season " +
   "averages, and where the game was won or lost in the team totals.";
 

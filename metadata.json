@@ -1,5 +1,5 @@
 {
   "name": "KU MBB",
-  "description": "Follows the Kansas Jayhawks Men's Basketball team with game results, quarter scores, per-player box scores, season aggregates, and leaderboards, auto-updated nightly from official NCAA and KU Athletics data.",
+  "description": "Follows the Kansas Jayhawks Men's Basketball team with game results, half-by-half scores, per-player box scores, season aggregates, and leaderboards, auto-updated nightly from official NCAA and KU Athletics data.",
   "requestFramePermissions": []
 }

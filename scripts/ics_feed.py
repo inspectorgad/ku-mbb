@@ -84,7 +84,7 @@ def _description(g):
     if g.get("site") == "neutral":
         parts.append("Neutral site")
     if g.get("periodScores"):
-        parts.append(f"Quarters: {g['periodScores']}")
+        parts.append(f"Halves: {g['periodScores']}")
     if not g.get("time") and g.get("teamScore") is None:
         parts.append("Tip time to be announced")
     return "\n".join(parts)

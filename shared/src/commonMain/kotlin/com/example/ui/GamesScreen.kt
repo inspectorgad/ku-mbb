@@ -364,7 +364,7 @@ fun GameDialog(
                 OutlinedTextField(
                     value = periodScores,
                     onValueChange = { periodScores = it },
-                    label = { Text("Quarter scores (20-15, 18-12, …)") },
+                    label = { Text("Half scores (38-31, 41-35)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -479,7 +479,7 @@ fun GameDetailScreen(
                             )
                             game.periodScores?.let {
                                 Text(
-                                    "Quarters: $it" +
+                                    "Halves: $it" +
                                         (game.overtime?.let { n ->
                                             " · ${if (n > 1) "${n}OT" else "OT"}"
                                         } ?: ""),
@@ -535,7 +535,7 @@ fun GameDetailScreen(
             }
 
             // What a final score does not say: who the opponent was at the
-            // time, which quarter decided it, who had a night.
+            // time, which half decided it, who had a night.
             val facts = gameFacts(game, allGames, statLines, players.associate { it.id to it.name })
             if (facts.isNotEmpty()) {
                 item {
