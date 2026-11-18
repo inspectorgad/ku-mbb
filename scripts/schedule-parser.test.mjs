@@ -274,6 +274,42 @@ test('a game the page gives a city but no building is not a home game', () => {
   assert.equal(siteOf({ away: true, venue: null, city: 'Chicago, IL' }), 'away');
 });
 
+test('a played game carries its result, and a backwards one carries none', () => {
+  // An exhibition is never on the NCAA scoreboard, so the page's own
+  // "W, 80-62" line is the only score there will ever be for one. Without it
+  // the three on this card sat at "awaiting result" a month after they were
+  // played.
+  const got = parseSchedule(page);
+  const scored = got.filter((f) => f.teamScore != null);
+
+  // Six on this capture. The seventh game, UNLV, was being played as the page
+  // was taken: the row is there with its venue and tip time and no result
+  // line, which is the state every game passes through.
+  assert.equal(scored.length, 6);
+  const byName = Object.fromEntries(scored.map((f) => [f.opponent, [f.teamScore, f.opponentScore]]));
+  // KU's points come first whichever way it went - a loss is not reversed.
+  assert.deepEqual(byName['Pittsburg State (Exhibition)'], [80, 62]);
+  assert.deepEqual(byName['Louisville (Exhibition)'], [83, 89]);
+  assert.deepEqual(byName['Fordham'], [95, 65]);
+
+  // A game in progress, and one not played at all, both carry no score.
+  assert.equal(got.find((f) => f.opponent === 'UNLV').teamScore, null);
+  assert.equal(got.find((f) => f.opponent === 'Denver').teamScore, null);
+
+  // The letter and the numbers have to agree. "W, 83-89" is a row nobody
+  // understands, and no result beats a backwards one.
+  const bad = parseSchedule([
+    "2026-27 Men's Basketball Schedule",
+    'vs', 'Denver', '', 'Allen Fieldhouse', 'Lawrence, Kan.', '',
+    'W, 83-89', '', 'Nov 23(Mon)', '7 p.m. CT',
+  ].join('\n'));
+  assert.equal(bad.length, 1);
+  assert.equal(bad[0].teamScore, null);
+  assert.equal(bad[0].opponentScore, null);
+  // And it is still not mistaken for the venue.
+  assert.equal(bad[0].venue, 'Allen Fieldhouse');
+});
+
 test('a game that has been played is read, not skipped', () => {
   // A finished row glues the weekday to the date - "Nov 6(Fri)" - where an
   // upcoming one puts "(Fri)" on its own line. Anchored to "Nov 6" alone the

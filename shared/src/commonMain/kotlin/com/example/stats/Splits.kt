@@ -25,9 +25,34 @@ data class Record(
     override fun toString(): String = "$wins-$losses"
 }
 
-/** Only games with a final score; a fixture has no record to contribute. */
+// An exhibition, by the suffix the schedule page puts on the opponent. Both
+// spellings: kuathletics writes "(exh.)" on some pages and "(Exhibition)" in
+// full on others, and matching only the short one is a mistake this codebase
+// has now made twice.
+private val EXHIBITION = Regex("\\((?:exh\\.?|exhibition)\\)\\s*$", RegexOption.IGNORE_CASE)
+
+/** Whether a game is an exhibition, which counts towards nothing. */
+fun isExhibition(game: Game): Boolean = EXHIBITION.containsMatchIn(game.opponent)
+
+/**
+ * Only games with a final score, and not the exhibitions.
+ *
+ * A fixture has no record to contribute, and neither does an exhibition: it is
+ * not a Division I fixture, the NCAA keeps no box score for one, and it counts
+ * towards nothing. They used to be excluded here by accident rather than on
+ * purpose — the schedule page could not be read for any game already played,
+ * so a played exhibition vanished from the app entirely and never reached a
+ * total. Once the parser learned to read those rows, three arrived carrying
+ * scores, and without this they would have gone straight into the season
+ * record: 5-2 where the record is 4-0.
+ *
+ * Everything downstream takes the exclusion from here — the record, the site
+ * and margin and conference splits, the halves, the game facts. The Games
+ * screen lists games separately, so an exhibition still shows, with its score,
+ * where a reader expects to find it.
+ */
 fun played(games: Collection<Game>): List<Game> =
-    games.filter { it.teamScore != null && it.opponentScore != null }
+    games.filter { it.teamScore != null && it.opponentScore != null && !isExhibition(it) }
 
 fun recordOf(games: Collection<Game>): Record {
     var r = Record()

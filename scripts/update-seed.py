@@ -367,10 +367,18 @@ for game in games.values():
 # time with it. Showing it with no result is the honest state, and the screens
 # can say "awaiting result" from the date alone.
 #
-# Nothing old can come back this way: upcoming.json is this season's schedule
-# and carries no scores. A game leaves only when its box score arrives to
-# replace it (the `key in games` check below) or the schedule page stops
-# listing it.
+# Nothing old can come back this way: upcoming.json is this season's schedule.
+# A game leaves only when its box score arrives to replace it (the
+# `key in games` check below) or the schedule page stops listing it.
+#
+# It DOES carry a score for a game it has already played, which it did not used
+# to. That matters for the games the NCAA scoreboard will never have: an
+# exhibition is not a Division I fixture and gets no box score ever, so before
+# this the three on this season's card sat at "awaiting result" a month after
+# they were played. The page's own "W, 80-62" line is the only source there is.
+# A real game that the feed has simply not reached yet picks its score up the
+# same way, and is then replaced in full - lines and all - when the box score
+# does arrive, because that check above runs first.
 # Central, not UTC. This date decides which games still count as upcoming, and
 # so which ones carry a forecast; both displays decide the same question from
 # the reader's own date. In Kansas the UTC date turns over at 6pm, so a UTC
@@ -407,6 +415,13 @@ for entry in load_json("scraped/upcoming.json", []):
         value = (entry.get(key_name) or "").strip()
         if value:
             fixture[key_name] = value
+    # The result, where the page has played the game and the NCAA has no box
+    # score for it. Both sides or neither: half a score is worse than none.
+    team_score = to_int(entry.get("teamScore"))
+    opponent_score = to_int(entry.get("opponentScore"))
+    if team_score is not None and opponent_score is not None:
+        fixture["teamScore"] = team_score
+        fixture["opponentScore"] = opponent_score
     # Tip-off, local to the venue, as "18:30". Absent until the conference sets
     # the TV windows, so it stays out of the seed rather than being guessed.
     tip = (entry.get("time") or "").strip()

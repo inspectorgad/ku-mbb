@@ -64,6 +64,19 @@ class AskPackTest(unittest.TestCase):
         # The NCAA leaves Haskell out of its records, so the flag has to survive.
         self.assertEqual([g["non_d1"] for g in self.p["games"]], [False, True])
 
+    def test_the_long_spelling_of_exhibition_is_flagged(self):
+        # kuathletics writes "(exh.)" on some pages and "(Exhibition)" in full
+        # on others. The substring test this replaced matched only the short
+        # one, so every men's exhibition reached Claude flagged as a real game
+        # - in a table whose own column note says it "counts for nothing and
+        # is not in any record".
+        from ask_pack import IS_EXHIBITION
+        for name in ("Pittsburg State (Exhibition)", "Washburn (exh.)",
+                     "Northeastern State (exh)"):
+            self.assertIsNotNone(IS_EXHIBITION.search(name), name)
+        for name in ("Denver", "Duke", "Miami (OH)"):
+            self.assertIsNone(IS_EXHIBITION.search(name), name)
+
     def test_overtime_halves_are_named_as_overtime(self):
         rows = [r for r in self.p["periods"] if r["opponent"] == "Missouri St."]
         self.assertEqual([r["name"] for r in rows], ["H1", "H2", "OT1"])

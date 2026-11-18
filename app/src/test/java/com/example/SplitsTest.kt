@@ -4,12 +4,15 @@ import com.example.data.Game
 import com.example.stats.conferenceSplits
 import com.example.stats.cumulativeHalfMargin
 import com.example.stats.halftimeSplits
+import com.example.stats.isExhibition
 import com.example.stats.marginSplits
 import com.example.stats.parsePeriods
+import com.example.stats.played
 import com.example.stats.halfSplits
 import com.example.stats.recordOf
 import com.example.stats.siteSplits
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -33,6 +36,33 @@ class SplitsTest {
         conference = conference, teamScore = us, opponentScore = them,
         periodScores = periods
     )
+
+    @Test
+    fun `an exhibition is scored but counts towards nothing`() {
+        // Exhibitions are not Division I fixtures and the NCAA keeps no box
+        // score for one, so they were excluded by accident until the schedule
+        // parser learned to read played rows - at which point three arrived
+        // carrying the page's own scores. Counted, this reads 5-2.
+        val games = listOf(
+            game("2026-11-02", "Fordham", 95, 65),
+            game("2026-11-06", "Middle Tenn.", 89, 45),
+            game("2026-11-10", "Kentucky", 89, 69),
+            game("2026-11-17", "UNLV", 102, 77),
+            game("2026-10-16", "Pittsburg State (Exhibition)", 80, 62),
+            game("2026-10-21", "Louisville (Exhibition)", 83, 89),
+            game("2026-10-25", "Duke (Exhibition)", 84, 90),
+        )
+
+        assertEquals("4-0", recordOf(games).toString())
+        assertEquals(4, played(games).size)
+
+        // Both spellings, and nothing else.
+        assertTrue(isExhibition(game("2026-10-16", "Washburn (exh.)", 70, 60)))
+        assertTrue(isExhibition(game("2026-10-16", "Emporia St. (exh)", 70, 60)))
+        assertFalse(isExhibition(game("2026-11-02", "Fordham", 95, 65)))
+        // A bracketed suffix that is part of the school's name is not one.
+        assertFalse(isExhibition(game("2026-11-02", "Miami (OH)", 95, 65)))
+    }
 
     @Test
     fun `a record counts only games that have been played`() {

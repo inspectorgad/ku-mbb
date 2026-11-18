@@ -320,6 +320,12 @@ def _site(g):
     return {"home": "H", "away": "A", "neutral": "N"}.get(g.get("site"))
 
 
+# Both spellings, as everywhere else: "(exh.)" and "(Exhibition)". The
+# substring test this replaces matched only the short one, so every men's
+# exhibition was flagged as a real game in the table Claude reads.
+IS_EXHIBITION = re.compile(r"\((?:exh\.?|exhibition)\)\s*$", re.I)
+
+
 def _periods(game_base, period_scores, regulation=2):
     """One row per half. Anything past the second is an overtime period;
     a row that isn't two numbers is skipped rather than guessed at."""
@@ -348,7 +354,7 @@ def build_pack(seed, scraped=SCRAPED):
                 "opponent_key": team_key(g["opponent"])}
         if g.get("teamScore") is None:
             upcoming.append({**base, "site": _site(g), "conference": bool(g.get("conference")),
-                             "exhibition": "(exh." in g["opponent"].lower(),
+                             "exhibition": IS_EXHIBITION.search(g["opponent"] or "") is not None,
                              "venue": g.get("venue") or None, "city": g.get("city") or None,
                              "tip_time_local": g.get("time") or None,
                              "tv": g.get("tv") or None, "event": g.get("event") or None})

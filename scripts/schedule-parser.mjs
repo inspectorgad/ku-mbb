@@ -110,6 +110,11 @@ export function parseSchedule(schedText) {
   const SHORT = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2})(?:\s*\([A-Za-z]{3,}\.?\))?$/;
   // "Lawrence, Kan." / "Cancun, Mexico" — a place, then a region, nothing else.
   const CITY = /^[A-Z][A-Za-z.'\- ]*, ?[A-Z][A-Za-z. ]*\.?$/;
+  // "W, 80-62" on a game that has been played. KU's points are always first,
+  // whichever way it went. The W/L is redundant beside the numbers, which is
+  // what makes it worth reading: if they disagree the row is not understood,
+  // and no result at all beats a backwards one.
+  const RESULT = /^([WL]), (\d{1,3})-(\d{1,3})$/;
   const lines = schedText.split('\n').map((l) => l.trim());
   // Which date lines this pass used, so the one below can tell a row it has
   // already read from a row it has never seen.
@@ -138,11 +143,24 @@ export function parseSchedule(schedText) {
     // optional broadcast note.
     const between = [];
     let tv = null;
+    let teamScore = null;
+    let opponentScore = null;
     for (let k = j + 1; k < dateAt; k++) {
       const line = lines[k];
       if (!line) continue;
-      if (line.startsWith('TV:')) tv = line.slice(3).trim() || null;
-      else between.push(line);
+      if (line.startsWith('TV:')) { tv = line.slice(3).trim() || null; continue; }
+      const r = RESULT.exec(line);
+      if (r) {
+        const ours = Number(r[2]);
+        const theirs = Number(r[3]);
+        // Keep it only if the letter and the numbers tell the same story.
+        if ((r[1] === 'W') === (ours > theirs)) {
+          teamScore = ours;
+          opponentScore = theirs;
+        }
+        continue;
+      }
+      between.push(line);
     }
     // The tip time sits just after the date and its weekday. Looked for in the
     // next few lines only, so a row with no time cannot borrow the one below.
@@ -170,6 +188,8 @@ export function parseSchedule(schedText) {
       time,
       tv,
       event,
+      teamScore,
+      opponentScore,
     });
   }
 
