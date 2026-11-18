@@ -119,9 +119,9 @@ Las Vegas, Nev.
 Days
 0
 Hours
-50
+42
 Minutes
-46
+31
 Seconds
 Add To Calendar
 Text Only
@@ -311,6 +311,7 @@ Nov 17(Tue)
 
 Game Center
 Box Score
+Photos
 History
 Game Info
 
