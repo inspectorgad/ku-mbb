@@ -527,6 +527,31 @@ for game in big12_games:
         if season not in tournament_start or date < tournament_start[season]:
             tournament_start[season] = date
 
+# The feed's conferenceGame flag is NOT "this game counts in the conference".
+# It is set on every game between two members - all 159 Big 12 pairs in the
+# sweep, tournament games included, and on no game with an outsider - so it
+# only says who the two teams are. A non-conference meeting of two members
+# carries it too: Kansas played West Virginia and Houston in the Players Era in
+# Las Vegas in November 2026, both flagged, and both would have gone into three
+# teams' Big 12 records.
+#
+# A Big 12 regular-season game is played on one school's floor. The sweep
+# carries no venue, but KU's own games have one, so a KU game against a member
+# at a neutral site is taken out here as it is for KU's own record below.
+# Another pair's neutral-site meeting cannot be seen from the sweep; the
+# per-team count further down warns if one gets through.
+ku_neutral = {
+    (g["date"], norm_team(g["opponent"]))
+    for g in games.values()
+    if g.get("site") == "neutral"
+}
+
+# The Big 12 plays an 18-game conference schedule; the comment on conference
+# games below has the arithmetic. More than that is always a bug in this block, and a wrong
+# conference record is worse than a stale one, so the build stops rather than
+# publish it. Fewer is legitimate while the schedule is still being released.
+CONFERENCE_GAMES = 18
+
 records = {}  # (season label, key) -> record dict
 for game in big12_games:
     # The sweep stores the season start year; standings use the app's
@@ -534,10 +559,14 @@ for game in big12_games:
     start = to_int(game.get("season")) or to_int(game.get("date", "")[:4])
     season = season_label(start)
     cutoff = tournament_start.get(season)
+    sides = [game.get("home") or {}, game.get("away") or {}]
+    ku_side = any((s.get("seo") or "") == TEAM_SEO for s in sides)
+    other = next((s for s in sides if (s.get("seo") or "") != TEAM_SEO), {})
     conf_game = (
         bool(game.get("conferenceGame"))
         and not game.get("bracket")
         and (cutoff is None or game.get("date", "") < cutoff)
+        and not (ku_side and (game.get("date", ""), norm_team(other.get("name", ""))) in ku_neutral)
     )
     for side in ("home", "away"):
         s = game.get(side) or {}
@@ -562,6 +591,16 @@ for game in big12_games:
             rec["_rankDate"] = game["date"]
             rec["nationalRank"] = s["rank"]
 
+# A team past 18 Big 12 games has a neutral-site meeting of two members in its
+# record that the KU-only exclusion above could not see. Not fatal - the table
+# is everyone's, and one wrong row beats no table - but it is said on the run.
+for (season, _key), rec in sorted(records.items()):
+    played_conf = rec["confW"] + rec["confL"]
+    if played_conf > CONFERENCE_GAMES:
+        print(f"::warning title=Big 12 standings::{rec['team']} has {played_conf} "
+              f"conference games in {season}; a non-conference meeting of two "
+              "members is being counted")
+
 # --- Conference games ---------------------------------------------------------
 # A KU game counts toward the Big 12 record when the opponent is a member that
 # season, the game is regular season, and it falls before the conference
@@ -574,37 +613,28 @@ for (season, key) in records:
     big12_members.setdefault(season, set()).add(key)
 
 # Membership alone is not enough either: a member met in a non-conference
-# event is not a conference game. Kansas played West Virginia in the Players
-# Era in Las Vegas in November 2026, three days after UNLV, and a membership
-# lookup counted it — 19 conference games, and a Big 12 record that included a
-# tournament game in Nevada. So once a game is played the feed's own
-# conferenceGame flag decides it; the feed knows, the schedule page does not.
+# event is not a conference game. Kansas played West Virginia and Houston in
+# the Players Era in Las Vegas in November 2026, and a membership lookup
+# counted both. The feed cannot settle it - its conferenceGame flag is plain
+# membership, see the standings above - and the page carries no conference
+# marker. A Big 12 regular-season game is played on one of the two schools'
+# floors, so a member met at a neutral site is non-conference.
 #
-# Before it is played there is only the fixture, and the page carries no
-# conference marker. A Big 12 regular-season game is played on one of the two
-# schools' floors, so a member met at a neutral site is taken to be
-# non-conference until the result says otherwise.
+# This briefly trusted the feed's flag for a played game, on the belief that
+# the feed knew better. It does not: the night West Virginia went final the
+# flag said conference, the count reached 19, and the check below stopped
+# every scrape until this was put back.
 
-# KU's own games as the sweep saw them: the bracket flag and the feed's own
-# verdict on whether each was a conference game.
+# KU's own games as the sweep saw them, so the bracket flag carries over.
 ku_bracket = set()
-ku_conference_flag = {}  # (date, opponent key) -> the feed's conferenceGame
 for g in big12_games:
     sides = [g.get("home") or {}, g.get("away") or {}]
     if not any((s.get("seo") or "") == TEAM_SEO for s in sides):
         continue
     other = next((s for s in sides if (s.get("seo") or "") != TEAM_SEO), {})
-    key = (g.get("date", ""), norm_team(other.get("name", "")))
     if g.get("bracket"):
-        ku_bracket.add(key)
-    if g.get("conferenceGame") is not None:
-        ku_conference_flag[key] = bool(g.get("conferenceGame"))
+        ku_bracket.add((g.get("date", ""), norm_team(other.get("name", ""))))
 
-# The Big 12 plays an 18-game conference schedule; the comment above has the
-# arithmetic. More than that is always a bug in this block, and a wrong
-# conference record is worse than a stale one, so the build stops rather than
-# publish it. Fewer is legitimate while the schedule is still being released.
-CONFERENCE_GAMES = 18
 
 conference_counts = {}
 for game in games.values():
@@ -616,14 +646,9 @@ for game in games.values():
         and (game["date"], key) not in ku_bracket
         and (cutoff is None or game["date"] < cutoff)
     )
-    feed_flag = ku_conference_flag.get((game["date"], key))
-    if feed_flag is not None:
-        game["conference"] = member_game and feed_flag
-    else:
-        game["conference"] = member_game and game["site"] != "neutral"
+    game["conference"] = member_game and game["site"] != "neutral"
     if member_game and not game["conference"]:
-        why = "feed says non-conference" if feed_flag is not None else "neutral site"
-        print(f"  not a conference game ({why}): {game['date']} vs {game['opponent']}")
+        print(f"  not a conference game (neutral site): {game['date']} vs {game['opponent']}")
     if game["conference"]:
         conference_counts[season] = conference_counts.get(season, 0) + 1
 for season, count in sorted(conference_counts.items()):

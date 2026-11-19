@@ -525,11 +525,16 @@ Each step has a checkpoint. Do not proceed past a red one.
   in the test.
 - **The NCAA scoreboard only shows games day-of**, which is why the schedule comes from
   kuathletics at all. Do not try to build the fixture list from the NCAA API.
-- **A Big 12 opponent is not a Big 12 game.** Kansas met West Virginia in the
-  Players Era in Las Vegas on 2026-11-18, and a membership lookup counted it:
-  19 conference games. `update-seed.py` now takes a played game's conference
-  flag from the feed, treats an unplayed one against a member at a neutral site
-  as non-conference, and refuses to write a seed with more than 18 in a season.
+- **A Big 12 opponent is not a Big 12 game, and the feed cannot tell you
+  which.** Kansas met West Virginia and Houston in the Players Era in Las Vegas
+  in November 2026. The feed's `conferenceGame` flag is set on every game
+  between two members, including tournament games, so it is membership and
+  nothing more. A fix that trusted it for played games stopped every scrape
+  the night West Virginia went final. `update-seed.py` treats a KU game against
+  a member at a neutral site as non-conference, for KU's record and the
+  standings alike. It refuses to write a seed with more than 18 conference
+  games in a season, and warns if any team's Big 12 record passes 18, which is
+  how a neutral meeting of two other members would show.
 - **A school can have two names no rule reconciles.** The NCAA's `UNI` is the
   page's Northern Iowa. Those go in `_ALIASES` in `scripts/seed_text.py`; the
   build raises a workflow warning for a named opponent with no NET row.
