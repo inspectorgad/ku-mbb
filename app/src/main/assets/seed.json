@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-18T21:39:58Z",
+ "generatedAt": "2026-11-19T02:48:58Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -20002,7 +20002,7 @@
    "seo": "houston",
    "confW": 0,
    "confL": 0,
-   "overallW": 4,
+   "overallW": 5,
    "overallL": 0,
    "nationalRank": 8
   },
@@ -20032,7 +20032,7 @@
    "seo": "texas-tech",
    "confW": 0,
    "confL": 0,
-   "overallW": 4,
+   "overallW": 5,
    "overallL": 0,
    "nationalRank": 9
   },
@@ -20058,6 +20058,16 @@
   },
   {
    "season": "2026-27",
+   "team": "Cincinnati",
+   "seo": "cincinnati",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
    "team": "UCF",
    "seo": "ucf",
    "confW": 0,
@@ -20075,16 +20085,6 @@
    "overallW": 3,
    "overallL": 1,
    "nationalRank": 12
-  },
-  {
-   "season": "2026-27",
-   "team": "Cincinnati",
-   "seo": "cincinnati",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 3,
-   "overallL": 1,
-   "nationalRank": null
   },
   {
    "season": "2026-27",
@@ -22826,6 +22826,15 @@
     "rating": 0.8243
    },
    {
+    "team": "Cincinnati",
+    "key": "cincinnati",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.4443,
+    "rating": 0.8338
+   },
+   {
     "team": "UCF",
     "key": "ucf",
     "confW": 0,
@@ -22842,15 +22851,6 @@
     "remaining": 17,
     "pVsAverage": 0.756,
     "rating": 1.4456
-   },
-   {
-    "team": "Cincinnati",
-    "key": "cincinnati",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.4443,
-    "rating": 0.8338
    },
    {
     "team": "Iowa St.",
