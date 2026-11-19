@@ -184,7 +184,8 @@
   "2026-11-17": true,
   "2026-11-18": true,
   "2025-11-15": true,
-  "2025-12-02": true
+  "2025-12-02": true,
+  "2026-11-19": true
  },
  "games": {
   "6501504": {
@@ -10061,6 +10062,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6652888": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Texas Tech",
+    "seo": "texas-tech",
+    "score": 86,
+    "winner": true,
+    "rank": 9,
+    "inConference": true
+   },
+   "away": {
+    "name": "LSU New Orleans ",
+    "seo": "new-orleans",
+    "score": 41,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6653618": {
    "date": "2026-11-10",
    "season": "2026",
@@ -10413,6 +10436,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6655246": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Cincinnati",
+    "seo": "cincinnati",
+    "score": 91,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Youngstown St.",
+    "seo": "youngstown-st",
+    "score": 54,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6655247": {
    "date": "2026-11-05",
    "season": "2026",
@@ -10563,6 +10608,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6664649": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Florida",
+    "seo": "florida",
+    "score": 76,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Houston",
+    "seo": "houston",
+    "score": 86,
+    "winner": true,
+    "rank": null,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false
