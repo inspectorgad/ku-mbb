@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-19T14:52:18Z",
+ "generatedAt": "2026-11-19T21:47:32Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -20485,16 +20485,6 @@
   },
   {
    "season": "2026-27",
-   "team": "West Virginia",
-   "seo": "west-virginia",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 4,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Iowa St.",
    "seo": "iowa-st",
    "confW": 0,
@@ -20531,6 +20521,16 @@
    "confL": 0,
    "overallW": 3,
    "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "West Virginia",
+   "seo": "west-virginia",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 2,
    "nationalRank": null
   },
   {
@@ -23251,15 +23251,6 @@
     "rating": 0.8057
    },
    {
-    "team": "West Virginia",
-    "key": "west va",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.4192,
-    "rating": 0.7876
-   },
-   {
     "team": "Iowa St.",
     "key": "iowa st",
     "confW": 0,
@@ -23294,6 +23285,15 @@
     "remaining": 17,
     "pVsAverage": 0.1842,
     "rating": 0.2626
+   },
+   {
+    "team": "West Virginia",
+    "key": "west va",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.4192,
+    "rating": 0.7876
    },
    {
     "team": "Colorado",
