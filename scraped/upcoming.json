@@ -1,33 +1,5 @@
 [
  {
-  "date": "2026-11-18",
-  "opponent": "West Virginia",
-  "opponentRank": null,
-  "site": "neutral",
-  "home": false,
-  "venue": "Michelob Ultra Arena",
-  "city": "Las Vegas, NV",
-  "time": "18:30",
-  "tv": "ESPN2",
-  "event": null,
-  "teamScore": null,
-  "opponentScore": null
- },
- {
-  "date": "2026-11-19",
-  "opponent": "Houston/Florida",
-  "opponentRank": null,
-  "site": "neutral",
-  "home": false,
-  "venue": "Michelob Ultra Arena",
-  "city": "Las Vegas, NV",
-  "time": null,
-  "tv": "ESPN Family",
-  "event": null,
-  "teamScore": null,
-  "opponentScore": null
- },
- {
   "date": "2026-10-16",
   "opponent": "Pittsburg State (Exhibition)",
   "opponentRank": null,
@@ -110,6 +82,34 @@
   "event": "Players Era",
   "teamScore": 102,
   "opponentScore": 77
+ },
+ {
+  "date": "2026-11-18",
+  "opponent": "West Virginia",
+  "opponentRank": null,
+  "site": "neutral",
+  "home": false,
+  "venue": "Michelob Ultra Arena",
+  "city": "Las Vegas, NV",
+  "time": "18:30",
+  "tv": "ESPN2",
+  "event": null,
+  "teamScore": 86,
+  "opponentScore": 82
+ },
+ {
+  "date": "2026-11-19",
+  "opponent": "Houston",
+  "opponentRank": 8,
+  "site": "neutral",
+  "home": false,
+  "venue": "Michelob Ultra Arena",
+  "city": "Las Vegas, NV",
+  "time": "22:00",
+  "tv": "ESPN",
+  "event": null,
+  "teamScore": null,
+  "opponentScore": null
  },
  {
   "date": "2026-11-23",

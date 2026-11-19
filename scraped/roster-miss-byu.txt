@@ -1,16 +1,6 @@
 SKIP TO MAIN CONTENT
 Sport
 Men's Basketball
-SAT, FEB 21
-/
-FINAL
-No. 6 Iowa State
-69
-BYU Cougars
-79
-HOME
-Men's Basketball
-Links
 TUE, FEB 24
 /
 FINAL
@@ -153,9 +143,11 @@ Men's Basketball
 Links
 WED, NOV 18
 /
-7:00 PM MST
+FINAL
 Northern Colorado
+54
 BYU Cougars
+98
 HOME
 Men's Basketball
 Links
@@ -269,6 +261,14 @@ SAT, JAN 16
 Utah
 BYU Cougars
 HOME
+Men's Basketball
+Links
+WED, JAN 20
+/
+7:00 PM MST
+BYU Cougars
+Iowa State
+Away
 Men's Basketball
 Links
 Calendar
@@ -573,15 +573,3 @@ Your Privacy Choices
 Notice at Collection
 Accessibility
 Opens in a new window
-
-We (byucougars.com) and selected third parties (4) collect personal information as specified in the privacy policy and use cookies or similar technologies for technical purposes and, with your consent, for functionality, experience, measurement and “marketing (personalized ads)” as specified in the cookie policy.
-
-With respect to advertising, we and 1237 selected third parties, may use precise geolocation data, and identification through device scanning in order to store and/or access information on a device and process personal data like your usage data for the following advertising purposes: personalised advertising and content, advertising and content measurement, audience research and services development.
-
-You can freely give, deny, or withdraw your consent at any time by accessing the preferences panel. Your choices apply only to this domain. Denying consent may make related features unavailable.
-
-Use the “Accept” button to consent. Use the “Reject” button to continue without accepting.
-
-Learn more and customize
-Reject
-Accept

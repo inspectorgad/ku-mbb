@@ -2,20 +2,12 @@
 Skip to main content
 Pause All Rotators
 University of Kansas Athletics
+Skip Ad
 Skip Scoreboard
 Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Duke (Exhibition) on October 25, 2026 , Loss , 84, to, 90
-Final
-Oct 25
-Men's Basketball
-84
-vs Duke (Exhibition)
-90
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Fordham on November 2, 2026 , Win , 95, to, 65
 Final
 Nov 2
@@ -51,17 +43,21 @@ Men's Basketball
 vs UNLV
 77
 Boxscore
-Upcoming Event: Men's Basketball versus West Virginia on November 18, 2026 at 6:30 p.m. CT
-Wed. 11/18/26
--
-6:30 p.m. CT
+Completed Event: Men's Basketball versus West Virginia on November 18, 2026 , Win , 86, to, 82
+Final
+Nov 18
 Men's Basketball
+86
 vs West Virginia
-Audio
-Upcoming Event: Men's Basketball versus Houston/Florida on November 19, 2026
+82
+Story Recap
+Boxscore
+Upcoming Event: Men's Basketball versus #8 Houston on November 19, 2026 at 10 p.m. CT
 Thu. 11/19/26
+-
+10 p.m. CT
 Men's Basketball
-vs Houston/Florida
+vs #8 Houston
 Audio
 Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
 Mon. 11/23/26
@@ -87,6 +83,13 @@ Men's Basketball
 vs Northern Iowa
 Audio
 Stats
+Upcoming Event: Men's Basketball versus Missouri on December 6, 2026 at 4 p.m. CT
+Sun. 12/06/26
+-
+4 p.m. CT
+Men's Basketball
+vs Missouri
+Audio
 MENU
 Toggle Navigation
 , Opens in new window
@@ -106,19 +109,21 @@ University of Kansas
 
 vs
 
-Houston/Florida
+#8 Houston
 
 Thursday, November 19
 
 Las Vegas, Nev.
 
+10 p.m. CT
+
 0
 Days
-3
+13
 Hours
-11
+7
 Minutes
-2
+51
 Seconds
 Add To Calendar
 Text Only
@@ -130,7 +135,7 @@ List View
 Table View not selected
 Overall
 Wins
-4
+5
 Losses
 0
 Overall Percentage
@@ -143,7 +148,7 @@ Losses
 Conference Percentage
 .000
 Streak
-W4
+W5
 Home
 Wins
 2
@@ -156,7 +161,7 @@ Losses
 0
 Neutral
 Wins
-2
+3
 Losses
 0
 Skip Ad
@@ -311,7 +316,7 @@ Box Score
 Photos
 History
 Game Info
-
+vs
 West Virginia
 
 Michelob Ultra Arena
@@ -319,26 +324,33 @@ Las Vegas, Nev.
 
 TV: ESPN2
 
-Nov 18
-(Wed)
+W, 86-82
 
+Nov 18(Wed)
 6:30 p.m. CT
 
 Game Center
-Listen
-
-Houston/Florida
+Box Score
+Recap
+Photos
+History
+Game Info
+vs
+#8 Houston
 
 Michelob Ultra Arena
 Las Vegas, Nev.
 
-TV: ESPN Family
+TV: ESPN
 
 Nov 19
 (Thu)
 
+10 p.m. CT
+
 Game Center
 Listen
+History
 vs
 Denver
 
@@ -856,20 +868,20 @@ Listen
 History
 Related News
 All News
+Tre White scores 21 as No. 11 Kansas rallies past West Virginia 86-82 in Las Vegas
+Wednesday, November 18
 Stokes Named to Wooden Award Preseason Top 50
 Wednesday, November 18
 No. 11 Kansas to Face West Virginia Wednesday in Players ERA Eight Semifinals
 Wednesday, November 18
-No. 11 Kansas routs UNLV 102-77 in the Players Era 8
-Tuesday, November 17
 All News
 Related Videos
+Men's Basketball Highlights vs. West Virginia
+Thursday, November 19
 Men's Basketball Highlights vs UNLV
 Wednesday, November 18
 Men's Basketball Highlights vs #24 Kentucky
 Wednesday, November 11
-Men's Basketball Highlights vs. Middle Tennessee
-Saturday, November 07
 All Videos
 Skip Ad
 Footer

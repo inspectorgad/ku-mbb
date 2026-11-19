@@ -8,15 +8,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Duke (Exhibition) on October 25, 2026 , Loss , 84, to, 90
-Final
-Oct 25
-Men's Basketball
-84
-vs Duke (Exhibition)
-90
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Fordham on November 2, 2026 , Win , 95, to, 65
 Final
 Nov 2
@@ -52,17 +43,21 @@ Men's Basketball
 vs UNLV
 77
 Boxscore
-Upcoming Event: Men's Basketball versus West Virginia on November 18, 2026 at 6:30 p.m. CT
-Wed. 11/18/26
--
-6:30 p.m. CT
+Completed Event: Men's Basketball versus West Virginia on November 18, 2026 , Win , 86, to, 82
+Final
+Nov 18
 Men's Basketball
+86
 vs West Virginia
-Audio
-Upcoming Event: Men's Basketball versus Houston/Florida on November 19, 2026
+82
+Story Recap
+Boxscore
+Upcoming Event: Men's Basketball versus #8 Houston on November 19, 2026 at 10 p.m. CT
 Thu. 11/19/26
+-
+10 p.m. CT
 Men's Basketball
-vs Houston/Florida
+vs #8 Houston
 Audio
 Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
 Mon. 11/23/26
@@ -88,6 +83,13 @@ Men's Basketball
 vs Northern Iowa
 Audio
 Stats
+Upcoming Event: Men's Basketball versus Missouri on December 6, 2026 at 4 p.m. CT
+Sun. 12/06/26
+-
+4 p.m. CT
+Men's Basketball
+vs Missouri
+Audio
 MENU
 Toggle Navigation
 , Opens in new window
@@ -496,20 +498,20 @@ bcowgill@ku.edu
 Full Bio 
 for Bill Cowgill, MEd, ATC, LAT
 Related News
+Tre White scores 21 as No. 11 Kansas rallies past West Virginia 86-82 in Las Vegas
+Wednesday, November 18
 Stokes Named to Wooden Award Preseason Top 50
 Wednesday, November 18
 No. 11 Kansas to Face West Virginia Wednesday in Players ERA Eight Semifinals
 Wednesday, November 18
-No. 11 Kansas routs UNLV 102-77 in the Players Era 8
-Tuesday, November 17
 All News
 Related Videos
+Men's Basketball Highlights vs. West Virginia
+Thursday, November 19
 Men's Basketball Highlights vs UNLV
 Wednesday, November 18
 Men's Basketball Highlights vs #24 Kentucky
 Wednesday, November 11
-Men's Basketball Highlights vs. Middle Tennessee
-Saturday, November 07
 All Videos
 Skip Ad
 Skip Ad

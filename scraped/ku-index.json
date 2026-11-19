@@ -461,12 +461,19 @@
    "away": "UNLV",
    "boxscored": true
   },
-  "6664650": {
-   "date": "2026-11-18",
+  "6664644": {
+   "date": "2026-11-19",
    "final": false,
    "home": "Kansas",
-   "away": "West Virginia",
+   "away": "Houston",
    "boxscored": false
+  },
+  "6664650": {
+   "date": "2026-11-18",
+   "final": true,
+   "home": "Kansas",
+   "away": "West Virginia",
+   "boxscored": true
   }
  },
  "big12Games": {
@@ -9226,6 +9233,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650326": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Arizona St.",
+    "seo": "arizona-st",
+    "score": 68,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Oakland",
+    "seo": "oakland",
+    "score": 65,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650334": {
    "date": "2026-11-02",
    "season": "2026",
@@ -9507,6 +9536,50 @@
     "score": 71,
     "winner": false,
     "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6650981": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "BYU",
+    "seo": "byu",
+    "score": 98,
+    "winner": true,
+    "rank": 21,
+    "inConference": true
+   },
+   "away": {
+    "name": "Northern Colo.",
+    "seo": "northern-colo",
+    "score": 54,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6651356": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Arizona",
+    "seo": "arizona",
+    "score": 85,
+    "winner": true,
+    "rank": 12,
+    "inConference": true
+   },
+   "away": {
+    "name": "UConn",
+    "seo": "uconn",
+    "score": 79,
+    "winner": false,
+    "rank": 3,
     "inConference": false
    },
    "conferenceGame": false,
@@ -10238,6 +10311,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6654169": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Colorado",
+    "seo": "colorado",
+    "score": 74,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Portland",
+    "seo": "portland",
+    "score": 77,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6654255": {
    "date": "2026-11-14",
    "season": "2026",
@@ -10632,6 +10727,28 @@
     "inConference": true
    },
    "conferenceGame": false,
+   "bracket": false
+  },
+  "6664650": {
+   "date": "2026-11-18",
+   "season": "2026",
+   "home": {
+    "name": "Kansas",
+    "seo": "kansas",
+    "score": 86,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "West Virginia",
+    "seo": "west-virginia",
+    "score": 82,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "conferenceGame": true,
    "bracket": false
   }
  }
