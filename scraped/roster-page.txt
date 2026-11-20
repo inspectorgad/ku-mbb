@@ -1,6 +1,5 @@
 2026-27 Men's Basketball Roster - University of Kansas
 Skip to main content
-Pause All Rotators
 University of Kansas Athletics
 Skip Ad
 Skip Scoreboard
@@ -8,15 +7,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Fordham on November 2, 2026 , Win , 95, to, 65
-Final
-Nov 2
-Men's Basketball
-95
-vs Fordham
-65
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Middle Tennessee on November 6, 2026 , Win , 89, to, 45
 Final
 Nov 6
@@ -52,13 +42,13 @@ vs West Virginia
 82
 Story Recap
 Boxscore
-Upcoming Event: Men's Basketball versus #8 Houston on November 19, 2026 at 10 p.m. CT
-Thu. 11/19/26
--
-10 p.m. CT
+Completed Event: Men's Basketball versus #8 Houston on November 19, 2026 , Loss , 83, to, 92
+Final
+Nov 19
 Men's Basketball
+83
 vs #8 Houston
-Audio
+92
 Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
 Mon. 11/23/26
 -
@@ -90,6 +80,14 @@ Sun. 12/06/26
 Men's Basketball
 vs Missouri
 Audio
+Upcoming Event: Men's Basketball at UConn on December 12, 2026 at 7 p.m. CT
+Sat. 12/12/26
+-
+7 p.m. CT
+Men's Basketball
+at UConn
+Audio
+Stats
 MENU
 Toggle Navigation
 , Opens in new window

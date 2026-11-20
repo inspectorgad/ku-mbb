@@ -8,15 +8,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Fordham on November 2, 2026 , Win , 95, to, 65
-Final
-Nov 2
-Men's Basketball
-95
-vs Fordham
-65
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Middle Tennessee on November 6, 2026 , Win , 89, to, 45
 Final
 Nov 6
@@ -52,13 +43,13 @@ vs West Virginia
 82
 Story Recap
 Boxscore
-Upcoming Event: Men's Basketball versus #8 Houston on November 19, 2026 at 10 p.m. CT
-Thu. 11/19/26
--
-10 p.m. CT
+Completed Event: Men's Basketball versus #8 Houston on November 19, 2026 , Loss , 83, to, 92
+Final
+Nov 19
 Men's Basketball
+83
 vs #8 Houston
-Audio
+92
 Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
 Mon. 11/23/26
 -
@@ -90,6 +81,14 @@ Sun. 12/06/26
 Men's Basketball
 vs Missouri
 Audio
+Upcoming Event: Men's Basketball at UConn on December 12, 2026 at 7 p.m. CT
+Sat. 12/12/26
+-
+7 p.m. CT
+Men's Basketball
+at UConn
+Audio
+Stats
 MENU
 Toggle Navigation
 , Opens in new window
@@ -109,21 +108,21 @@ University of Kansas
 
 vs
 
-#8 Houston
+Denver
 
-Thursday, November 19
+Monday, November 23
 
-Las Vegas, Nev.
+Lawrence, Kan.
 
-10 p.m. CT
+7 p.m. CT
 
-0
+3
 Days
-1
+18
 Hours
-20
+8
 Minutes
-52
+49
 Seconds
 Add To Calendar
 Text Only
@@ -137,9 +136,9 @@ Overall
 Wins
 5
 Losses
-0
+1
 Overall Percentage
-1.000
+.833
 Conf
 Wins
 0
@@ -148,7 +147,7 @@ Losses
 Conference Percentage
 .000
 Streak
-W5
+L1
 Home
 Wins
 2
@@ -163,7 +162,7 @@ Neutral
 Wins
 3
 Losses
-0
+1
 Skip Ad
 Late Night in the Phog
 vs
@@ -343,13 +342,12 @@ Las Vegas, Nev.
 
 TV: ESPN
 
-Nov 19
-(Thu)
+L, 83-92
 
+Nov 19(Thu)
 10 p.m. CT
 
 Game Center
-Listen
 History
 vs
 Denver

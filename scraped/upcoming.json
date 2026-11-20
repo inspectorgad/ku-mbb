@@ -108,8 +108,8 @@
   "time": "22:00",
   "tv": "ESPN",
   "event": null,
-  "teamScore": null,
-  "opponentScore": null
+  "teamScore": 83,
+  "opponentScore": 92
  },
  {
   "date": "2026-11-23",
