@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-20T06:51:11Z",
+ "generatedAt": "2026-11-20T21:31:31Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21133,16 +21133,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Oklahoma St.",
-   "seo": "oklahoma-st",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 3,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Utah",
    "seo": "utah",
    "confW": 0,
@@ -21158,6 +21148,16 @@
    "confW": 0,
    "confL": 0,
    "overallW": 4,
+   "overallL": 2,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Oklahoma St.",
+   "seo": "oklahoma-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 3,
    "overallL": 2,
    "nationalRank": null
   },
@@ -23889,15 +23889,6 @@
     "rating": 0.4596
    },
    {
-    "team": "Oklahoma St.",
-    "key": "okla st",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.3118,
-    "rating": 0.5773
-   },
-   {
     "team": "Utah",
     "key": "utah",
     "confW": 0,
@@ -23914,6 +23905,15 @@
     "remaining": 17,
     "pVsAverage": 0.4192,
     "rating": 0.7876
+   },
+   {
+    "team": "Oklahoma St.",
+    "key": "okla st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.3118,
+    "rating": 0.5773
    },
    {
     "team": "Colorado",
