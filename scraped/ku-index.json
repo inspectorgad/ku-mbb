@@ -10746,7 +10746,7 @@
     "seo": "houston",
     "score": 92,
     "winner": true,
-    "rank": null,
+    "rank": 8,
     "inConference": true
    },
    "conferenceGame": true,
@@ -10768,7 +10768,7 @@
     "seo": "florida",
     "score": 85,
     "winner": true,
-    "rank": null,
+    "rank": 1,
     "inConference": false
    },
    "conferenceGame": false,
@@ -10782,7 +10782,7 @@
     "seo": "florida",
     "score": 76,
     "winner": false,
-    "rank": null,
+    "rank": 1,
     "inConference": false
    },
    "away": {
@@ -10790,7 +10790,7 @@
     "seo": "houston",
     "score": 86,
     "winner": true,
-    "rank": null,
+    "rank": 8,
     "inConference": true
    },
    "conferenceGame": false,
@@ -10804,7 +10804,7 @@
     "seo": "kansas",
     "score": 86,
     "winner": true,
-    "rank": null,
+    "rank": 11,
     "inConference": true
    },
    "away": {
