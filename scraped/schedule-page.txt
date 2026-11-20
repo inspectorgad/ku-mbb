@@ -119,11 +119,11 @@ Las Vegas, Nev.
 
 0
 Days
-4
+1
 Hours
-11
+20
 Minutes
-32
+52
 Seconds
 Add To Calendar
 Text Only
