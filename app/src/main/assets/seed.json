@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-21T02:49:56Z",
+ "generatedAt": "2026-11-21T08:45:35Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21103,16 +21103,6 @@
   },
   {
    "season": "2026-27",
-   "team": "UCF",
-   "seo": "ucf",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 4,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Iowa St.",
    "seo": "iowa-st",
    "confW": 0,
@@ -21123,12 +21113,12 @@
   },
   {
    "season": "2026-27",
-   "team": "Kansas St.",
-   "seo": "kansas-st",
+   "team": "UCF",
+   "seo": "ucf",
    "confW": 0,
    "confL": 0,
-   "overallW": 3,
-   "overallL": 1,
+   "overallW": 4,
+   "overallL": 2,
    "nationalRank": null
   },
   {
@@ -21138,6 +21128,16 @@
    "confW": 0,
    "confL": 0,
    "overallW": 4,
+   "overallL": 2,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Kansas St.",
+   "seo": "kansas-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 3,
    "overallL": 2,
    "nationalRank": null
   },
@@ -23862,15 +23862,6 @@
     "rating": 0.9371
    },
    {
-    "team": "UCF",
-    "key": "ucf",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.429,
-    "rating": 0.8057
-   },
-   {
     "team": "Iowa St.",
     "key": "iowa st",
     "confW": 0,
@@ -23880,13 +23871,13 @@
     "rating": 1.5704
    },
    {
-    "team": "Kansas St.",
-    "key": "kansas st",
+    "team": "UCF",
+    "key": "ucf",
     "confW": 0,
     "confL": 0,
-    "remaining": 16,
-    "pVsAverage": 0.2588,
-    "rating": 0.4596
+    "remaining": 17,
+    "pVsAverage": 0.429,
+    "rating": 0.8057
    },
    {
     "team": "West Virginia",
@@ -23896,6 +23887,15 @@
     "remaining": 17,
     "pVsAverage": 0.4192,
     "rating": 0.7876
+   },
+   {
+    "team": "Kansas St.",
+    "key": "kansas st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.2588,
+    "rating": 0.4596
    },
    {
     "team": "Oklahoma St.",
