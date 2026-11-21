@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-20T21:31:31Z",
+ "generatedAt": "2026-11-21T02:49:56Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21133,16 +21133,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Utah",
-   "seo": "utah",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 3,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "West Virginia",
    "seo": "west-virginia",
    "confW": 0,
@@ -21155,6 +21145,16 @@
    "season": "2026-27",
    "team": "Oklahoma St.",
    "seo": "oklahoma-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 3,
+   "overallL": 2,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Utah",
+   "seo": "utah",
    "confW": 0,
    "confL": 0,
    "overallW": 3,
@@ -23889,15 +23889,6 @@
     "rating": 0.4596
    },
    {
-    "team": "Utah",
-    "key": "utah",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.1842,
-    "rating": 0.2626
-   },
-   {
     "team": "West Virginia",
     "key": "west va",
     "confW": 0,
@@ -23914,6 +23905,15 @@
     "remaining": 17,
     "pVsAverage": 0.3118,
     "rating": 0.5773
+   },
+   {
+    "team": "Utah",
+    "key": "utah",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.1842,
+    "rating": 0.2626
    },
    {
     "team": "Colorado",
