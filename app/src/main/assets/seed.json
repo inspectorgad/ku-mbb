@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-21T08:45:35Z",
+ "generatedAt": "2026-11-22T22:47:38Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21053,6 +21053,16 @@
   },
   {
    "season": "2026-27",
+   "team": "Cincinnati",
+   "seo": "cincinnati",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 5,
+   "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
    "team": "Kansas",
    "seo": "kansas",
    "confW": 0,
@@ -21083,16 +21093,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Cincinnati",
-   "seo": "cincinnati",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 4,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "TCU",
    "seo": "tcu",
    "confW": 0,
@@ -21109,6 +21109,16 @@
    "confL": 0,
    "overallW": 3,
    "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Oklahoma St.",
+   "seo": "oklahoma-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 2,
    "nationalRank": null
   },
   {
@@ -21135,16 +21145,6 @@
    "season": "2026-27",
    "team": "Kansas St.",
    "seo": "kansas-st",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 3,
-   "overallL": 2,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
-   "team": "Oklahoma St.",
-   "seo": "oklahoma-st",
    "confW": 0,
    "confL": 0,
    "overallW": 3,
@@ -23826,6 +23826,15 @@
     "rating": 1.5549
    },
    {
+    "team": "Cincinnati",
+    "key": "cincinnati",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.4443,
+    "rating": 0.8338
+   },
+   {
     "team": "Arizona",
     "key": "ariz",
     "confW": 0,
@@ -23844,15 +23853,6 @@
     "rating": 0.8243
    },
    {
-    "team": "Cincinnati",
-    "key": "cincinnati",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.4443,
-    "rating": 0.8338
-   },
-   {
     "team": "TCU",
     "key": "tcu",
     "confW": 0,
@@ -23869,6 +23869,15 @@
     "remaining": 16,
     "pVsAverage": 0.8033,
     "rating": 1.5704
+   },
+   {
+    "team": "Oklahoma St.",
+    "key": "okla st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.3118,
+    "rating": 0.5773
    },
    {
     "team": "UCF",
@@ -23896,15 +23905,6 @@
     "remaining": 16,
     "pVsAverage": 0.2588,
     "rating": 0.4596
-   },
-   {
-    "team": "Oklahoma St.",
-    "key": "okla st",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.3118,
-    "rating": 0.5773
    },
    {
     "team": "Utah",
