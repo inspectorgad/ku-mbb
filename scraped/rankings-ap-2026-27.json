@@ -1,184 +1,184 @@
 {
  "sport": "Men's Basketball",
  "title": "DI Men's Basketball: Associated Press",
- "updated": "Through Games NOV. 15, 2026",
+ "updated": "Through Games NOV. 22, 2026",
  "page": 1,
  "pages": 1,
  "data": [
   {
    "RANK": "1",
-   "SCHOOL": "Florida (56)",
-   "POINTS": "1,472",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "1"
-  },
-  {
-   "RANK": "2",
-   "SCHOOL": "Michigan State (3)",
-   "POINTS": "1,391",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "5"
-  },
-  {
-   "RANK": "3",
-   "SCHOOL": "UConn",
-   "POINTS": "1,368",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "4"
-  },
-  {
-   "RANK": "4",
-   "SCHOOL": "Virginia",
-   "POINTS": "1,218",
-   "RECORD": "5-0",
-   "PREVIOUS RANKING": "6"
-  },
-  {
-   "RANK": "5",
-   "SCHOOL": "Duke",
-   "POINTS": "1,185",
-   "RECORD": "3-1",
-   "PREVIOUS RANKING": "2"
-  },
-  {
-   "RANK": "6",
-   "SCHOOL": "Texas",
-   "POINTS": "1,106",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "7"
-  },
-  {
-   "RANK": "7",
-   "SCHOOL": "UCLA",
-   "POINTS": "1,055",
-   "RECORD": "3-0",
-   "PREVIOUS RANKING": "9"
-  },
-  {
-   "RANK": "8",
-   "SCHOOL": "Houston",
-   "POINTS": "1,004",
-   "RECORD": "3-0",
+   "SCHOOL": "Houston (55)",
+   "POINTS": "1,466",
+   "RECORD": "6-0",
    "PREVIOUS RANKING": "8"
   },
   {
-   "RANK": "9",
+   "RANK": "2",
+   "SCHOOL": "Virginia (4)",
+   "POINTS": "1,316",
+   "RECORD": "7-0",
+   "PREVIOUS RANKING": "4"
+  },
+  {
+   "RANK": "3",
+   "SCHOOL": "Florida",
+   "POINTS": "1,262",
+   "RECORD": "6-1",
+   "PREVIOUS RANKING": "1"
+  },
+  {
+   "RANK": "4",
+   "SCHOOL": "Illinois",
+   "POINTS": "1,200",
+   "RECORD": "5-1",
+   "PREVIOUS RANKING": "10"
+  },
+  {
+   "RANK": "5",
    "SCHOOL": "Texas Tech",
-   "POINTS": "984",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "16"
+   "POINTS": "1,185",
+   "RECORD": "5-0",
+   "PREVIOUS RANKING": "9"
+  },
+  {
+   "RANK": "6",
+   "SCHOOL": "UCLA",
+   "POINTS": "1,183",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "5"
+  },
+  {
+   "RANK": "7",
+   "SCHOOL": "Texas",
+   "POINTS": "1,114",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "6"
+  },
+  {
+   "RANK": "8",
+   "SCHOOL": "Arizona",
+   "POINTS": "1,073",
+   "RECORD": "4-1",
+   "PREVIOUS RANKING": "12"
+  },
+  {
+   "RANK": "9",
+   "SCHOOL": "Tennessee",
+   "POINTS": "1,047",
+   "RECORD": "5-0",
+   "PREVIOUS RANKING": "14"
   },
   {
    "RANK": "10",
-   "SCHOOL": "Illinois",
-   "POINTS": "966",
-   "RECORD": "3-1",
+   "SCHOOL": "UConn",
+   "POINTS": "976",
+   "RECORD": "4-1",
    "PREVIOUS RANKING": "3"
   },
   {
    "RANK": "11",
-   "SCHOOL": "Kansas",
-   "POINTS": "919",
-   "RECORD": "3-0",
-   "PREVIOUS RANKING": "15"
+   "SCHOOL": "Michigan State",
+   "POINTS": "924",
+   "RECORD": "5-1",
+   "PREVIOUS RANKING": "2"
   },
   {
    "RANK": "12",
-   "SCHOOL": "Arizona",
-   "POINTS": "798",
-   "RECORD": "3-1",
-   "PREVIOUS RANKING": "12"
+   "SCHOOL": "Kansas",
+   "POINTS": "852",
+   "RECORD": "5-1",
+   "PREVIOUS RANKING": "13"
   },
   {
    "RANK": "13",
    "SCHOOL": "St. John's",
-   "POINTS": "785",
-   "RECORD": "4-0",
+   "POINTS": "768",
+   "RECORD": "5-0",
    "PREVIOUS RANKING": "13"
   },
   {
    "RANK": "14",
-   "SCHOOL": "Tennessee",
-   "POINTS": "749",
-   "RECORD": "3-0",
-   "PREVIOUS RANKING": "11"
+   "SCHOOL": "Vanderbilt",
+   "POINTS": "688",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "15"
   },
   {
    "RANK": "15",
-   "SCHOOL": "Vanderbilt",
-   "POINTS": "565",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "22"
+   "SCHOOL": "Alabama",
+   "POINTS": "586",
+   "RECORD": "5-0",
+   "PREVIOUS RANKING": "14"
   },
   {
    "RANK": "16",
-   "SCHOOL": "Alabama",
-   "POINTS": "514",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "18"
+   "SCHOOL": "Duke",
+   "POINTS": "468",
+   "RECORD": "4-2",
+   "PREVIOUS RANKING": "5"
   },
   {
    "RANK": "17",
    "SCHOOL": "Miami (FL)",
-   "POINTS": "457",
-   "RECORD": "3-1",
+   "POINTS": "467",
+   "RECORD": "5-1",
    "PREVIOUS RANKING": "17"
   },
   {
-   "RANK": "T18",
-   "SCHOOL": "Michigan",
-   "POINTS": "341",
-   "RECORD": "3-1",
-   "PREVIOUS RANKING": "20"
+   "RANK": "18",
+   "SCHOOL": "Southern Cal",
+   "POINTS": "454",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "18"
   },
   {
-   "RANK": "T18",
-   "SCHOOL": "Southern Cal",
-   "POINTS": "341",
-   "RECORD": "4-0",
+   "RANK": "19",
+   "SCHOOL": "BYU",
+   "POINTS": "418",
+   "RECORD": "5-0",
    "PREVIOUS RANKING": "21"
   },
   {
    "RANK": "20",
-   "SCHOOL": "Arkansas",
-   "POINTS": "315",
-   "RECORD": "3-1",
-   "PREVIOUS RANKING": "19"
+   "SCHOOL": "LSU",
+   "POINTS": "325",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "25"
   },
   {
    "RANK": "21",
-   "SCHOOL": "BYU",
-   "POINTS": "311",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "23"
+   "SCHOOL": "Nebraska",
+   "POINTS": "319",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "24"
   },
   {
    "RANK": "22",
    "SCHOOL": "Gonzaga",
-   "POINTS": "294",
-   "RECORD": "2-1",
-   "PREVIOUS RANKING": "14"
+   "POINTS": "262",
+   "RECORD": "3-1",
+   "PREVIOUS RANKING": "22"
   },
   {
    "RANK": "23",
-   "SCHOOL": "Louisville",
-   "POINTS": "263",
-   "RECORD": "2-1",
-   "PREVIOUS RANKING": "10"
+   "SCHOOL": "Indiana",
+   "POINTS": "237",
+   "RECORD": "6-0",
+   "PREVIOUS RANKING": "23"
   },
   {
    "RANK": "24",
-   "SCHOOL": "Nebraska",
-   "POINTS": "236",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "25"
+   "SCHOOL": "Memphis",
+   "POINTS": "203",
+   "RECORD": "4-1",
+   "PREVIOUS RANKING": "22"
   },
   {
    "RANK": "25",
-   "SCHOOL": "LSU",
-   "POINTS": "229",
-   "RECORD": "4-0",
-   "PREVIOUS RANKING": "25"
+   "SCHOOL": "Louisville",
+   "POINTS": "183",
+   "RECORD": "3-1",
+   "PREVIOUS RANKING": "23"
   }
  ]
 }
