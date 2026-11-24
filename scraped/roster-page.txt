@@ -8,15 +8,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Middle Tennessee on November 6, 2026 , Win , 89, to, 45
-Final
-Nov 6
-Men's Basketball
-89
-vs Middle Tennessee
-45
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Kentucky on November 10, 2026 , Win , 89, to, 69
 Final
 Nov 10
@@ -51,14 +42,13 @@ Men's Basketball
 vs #8 Houston
 92
 Boxscore
-Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
-Live
+Completed Event: Men's Basketball versus Denver on November 23, 2026 , Win , 84, to, 67
+Final
+Nov 23
 Men's Basketball
-11
+84
 vs Denver
-10
-Audio
-Stats
+67
 Upcoming Event: Men's Basketball versus Villanova on November 27, 2026 at 4 p.m. CT
 Fri. 11/27/26
 -
@@ -88,6 +78,14 @@ Sat. 12/12/26
 7 p.m. CT
 Men's Basketball
 at UConn
+Audio
+Stats
+Upcoming Event: Men's Basketball versus Ohio State on December 19, 2026 at 11 a.m. CT
+Sat. 12/19/26
+-
+11 a.m. CT
+Men's Basketball
+vs Ohio State
 Audio
 Stats
 MENU

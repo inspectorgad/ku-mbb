@@ -468,10 +468,10 @@
   },
   "6655110": {
    "date": "2026-11-23",
-   "final": false,
+   "final": true,
    "home": "Kansas",
    "away": "Denver",
-   "boxscored": false
+   "boxscored": true
   },
   "6664644": {
    "date": "2026-11-19",
@@ -10690,6 +10690,28 @@
     "name": "UNLV",
     "seo": "unlv",
     "score": 77,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655110": {
+   "date": "2026-11-23",
+   "season": "2026",
+   "home": {
+    "name": "Kansas",
+    "seo": "kansas",
+    "score": 84,
+    "winner": true,
+    "rank": 12,
+    "inConference": true
+   },
+   "away": {
+    "name": "Denver",
+    "seo": "denver",
+    "score": 67,
     "winner": false,
     "rank": null,
     "inConference": false

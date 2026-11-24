@@ -8,15 +8,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Middle Tennessee on November 6, 2026 , Win , 89, to, 45
-Final
-Nov 6
-Men's Basketball
-89
-vs Middle Tennessee
-45
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus Kentucky on November 10, 2026 , Win , 89, to, 69
 Final
 Nov 10
@@ -51,14 +42,13 @@ Men's Basketball
 vs #8 Houston
 92
 Boxscore
-Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
-Live
+Completed Event: Men's Basketball versus Denver on November 23, 2026 , Win , 84, to, 67
+Final
+Nov 23
 Men's Basketball
-11
+84
 vs Denver
-10
-Audio
-Stats
+67
 Upcoming Event: Men's Basketball versus Villanova on November 27, 2026 at 4 p.m. CT
 Fri. 11/27/26
 -
@@ -90,6 +80,14 @@ Men's Basketball
 at UConn
 Audio
 Stats
+Upcoming Event: Men's Basketball versus Ohio State on December 19, 2026 at 11 a.m. CT
+Sat. 12/19/26
+-
+11 a.m. CT
+Men's Basketball
+vs Ohio State
+Audio
+Stats
 MENU
 Toggle Navigation
 , Opens in new window
@@ -119,11 +117,11 @@ Lawrence, Kan.
 
 3
 Days
-20
+18
 Hours
-47
+50
 Minutes
-15
+53
 Seconds
 Add To Calendar
 Text Only
@@ -135,11 +133,11 @@ List View
 Table View not selected
 Overall
 Wins
-5
+6
 Losses
 1
 Overall Percentage
-.833
+.857
 Conf
 Wins
 0
@@ -148,10 +146,10 @@ Losses
 Conference Percentage
 .000
 Streak
-L1
+W1
 Home
 Wins
-2
+3
 Losses
 0
 Away
@@ -360,19 +358,20 @@ Lawrence, Kan.
 
 TV: ESPN+
 
-Nov 23
-(Mon)
+W, 84-67
 
+Nov 23(Mon)
 7 p.m. CT
 
 Game Center
-Listen
-Live Stats
+Box Score
+Photos
 History
 
 Sponsored by:
 
 Explore Lawrence
+Game Info
 vs
 Villanova
 
