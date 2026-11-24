@@ -2,7 +2,6 @@
 Skip to main content
 Pause All Rotators
 University of Kansas Athletics
-Skip Ad
 Skip Scoreboard
 Scoreboard
 Coming Up
@@ -120,9 +119,9 @@ Lawrence, Kan.
 Days
 18
 Hours
-42
+30
 Minutes
-42
+53
 Seconds
 Add To Calendar
 Text Only
