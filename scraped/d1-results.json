@@ -7232,6 +7232,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6651508": {
+   "date": "2026-11-23",
+   "season": "2026",
+   "home": {
+    "name": "Arizona",
+    "seo": "arizona",
+    "score": 96,
+    "winner": true,
+    "rank": 8,
+    "inConference": true
+   },
+   "away": {
+    "name": "Colorado St.",
+    "seo": "colorado-st",
+    "score": 83,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6651526": {
    "date": "2026-11-02",
    "season": "2026",
@@ -28016,6 +28038,28 @@
     "seo": "loyola-chicago",
     "score": 63,
     "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6678359": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "UC San Diego",
+    "seo": "uc-san-diego",
+    "score": 79,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "San Jose St.",
+    "seo": "san-jose-st",
+    "score": 88,
+    "winner": true,
     "rank": null,
     "inConference": false
    },

@@ -9707,6 +9707,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6651508": {
+   "date": "2026-11-23",
+   "season": "2026",
+   "home": {
+    "name": "Arizona",
+    "seo": "arizona",
+    "score": 96,
+    "winner": true,
+    "rank": 8,
+    "inConference": true
+   },
+   "away": {
+    "name": "Colorado St.",
+    "seo": "colorado-st",
+    "score": 83,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6651744": {
    "date": "2026-11-06",
    "season": "2026",
