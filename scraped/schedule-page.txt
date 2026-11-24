@@ -52,11 +52,11 @@ vs #8 Houston
 92
 Boxscore
 Upcoming Event: Men's Basketball versus Denver on November 23, 2026 at 7 p.m. CT
-Mon. 11/23/26
--
-7 p.m. CT
+Live
 Men's Basketball
+11
 vs Denver
+10
 Audio
 Stats
 Upcoming Event: Men's Basketball versus Villanova on November 27, 2026 at 4 p.m. CT
@@ -109,21 +109,21 @@ University of Kansas
 
 vs
 
-Denver
+Villanova
 
-Monday, November 23
+Friday, November 27
 
 Lawrence, Kan.
 
-7 p.m. CT
+4 p.m. CT
 
-0
-Days
 3
+Days
+20
 Hours
-18
+47
 Minutes
-37
+15
 Seconds
 Add To Calendar
 Text Only

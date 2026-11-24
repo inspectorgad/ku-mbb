@@ -189,7 +189,8 @@
   "2026-11-20": true,
   "2026-11-21": true,
   "2026-11-22": true,
-  "2026-11-23": true
+  "2026-11-23": true,
+  "2026-11-24": true
  },
  "games": {
   "6501504": {
@@ -10887,6 +10888,28 @@
     "name": "California",
     "seo": "california",
     "score": 68,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6660664": {
+   "date": "2026-11-23",
+   "season": "2026",
+   "home": {
+    "name": "BYU",
+    "seo": "byu",
+    "score": 83,
+    "winner": true,
+    "rank": 19,
+    "inConference": true
+   },
+   "away": {
+    "name": "Washington",
+    "seo": "washington",
+    "score": 77,
     "winner": false,
     "rank": null,
     "inConference": false
