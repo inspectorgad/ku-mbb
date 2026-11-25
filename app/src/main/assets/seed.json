@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-25T10:28:22Z",
+ "generatedAt": "2026-11-25T22:44:41Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21665,16 +21665,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Arizona St.",
-   "seo": "arizona-st",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 0,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Houston",
    "seo": "houston",
    "confW": 0,
@@ -21689,7 +21679,7 @@
    "seo": "arizona",
    "confW": 0,
    "confL": 0,
-   "overallW": 6,
+   "overallW": 7,
    "overallL": 1,
    "nationalRank": 8
   },
@@ -21712,6 +21702,16 @@
    "overallW": 6,
    "overallL": 1,
    "nationalRank": 12
+  },
+  {
+   "season": "2026-27",
+   "team": "Arizona St.",
+   "seo": "arizona-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 5,
+   "overallL": 1,
+   "nationalRank": null
   },
   {
    "season": "2026-27",
@@ -21769,7 +21769,7 @@
    "seo": "oklahoma-st",
    "confW": 0,
    "confL": 0,
-   "overallW": 4,
+   "overallW": 5,
    "overallL": 2,
    "nationalRank": null
   },
@@ -24434,15 +24434,6 @@
   ],
   "others": [
    {
-    "team": "Arizona St.",
-    "key": "ariz st",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.372,
-    "rating": 0.6343
-   },
-   {
     "team": "Houston",
     "key": "houston",
     "confW": 0,
@@ -24468,6 +24459,15 @@
     "remaining": 17,
     "pVsAverage": 0.6852,
     "rating": 1.2222
+   },
+   {
+    "team": "Arizona St.",
+    "key": "ariz st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.372,
+    "rating": 0.6343
    },
    {
     "team": "Baylor",
