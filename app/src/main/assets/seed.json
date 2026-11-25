@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-25T04:37:44Z",
+ "generatedAt": "2026-11-25T10:28:22Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21715,6 +21715,16 @@
   },
   {
    "season": "2026-27",
+   "team": "Baylor",
+   "seo": "baylor",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 5,
+   "overallL": 1,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
    "team": "Cincinnati",
    "seo": "cincinnati",
    "confW": 0,
@@ -21742,16 +21752,6 @@
    "overallW": 5,
    "overallL": 1,
    "nationalRank": 5
-  },
-  {
-   "season": "2026-27",
-   "team": "Baylor",
-   "seo": "baylor",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 4,
-   "overallL": 1,
-   "nationalRank": null
   },
   {
    "season": "2026-27",
@@ -21795,12 +21795,22 @@
   },
   {
    "season": "2026-27",
+   "team": "Colorado",
+   "seo": "colorado",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 3,
+   "overallL": 3,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
    "team": "Kansas St.",
    "seo": "kansas-st",
    "confW": 0,
    "confL": 0,
    "overallW": 3,
-   "overallL": 2,
+   "overallL": 3,
    "nationalRank": null
   },
   {
@@ -21810,16 +21820,6 @@
    "confW": 0,
    "confL": 0,
    "overallW": 3,
-   "overallL": 3,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
-   "team": "Colorado",
-   "seo": "colorado",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 2,
    "overallL": 3,
    "nationalRank": null
   }
@@ -24470,6 +24470,15 @@
     "rating": 1.2222
    },
    {
+    "team": "Baylor",
+    "key": "baylor",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.4742,
+    "rating": 0.8243
+   },
+   {
     "team": "Cincinnati",
     "key": "cincinnati",
     "confW": 0,
@@ -24495,15 +24504,6 @@
     "remaining": 17,
     "pVsAverage": 0.5582,
     "rating": 0.9765
-   },
-   {
-    "team": "Baylor",
-    "key": "baylor",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 16,
-    "pVsAverage": 0.4742,
-    "rating": 0.8243
    },
    {
     "team": "Iowa St.",
@@ -24542,6 +24542,15 @@
     "rating": 0.7876
    },
    {
+    "team": "Colorado",
+    "key": "colo",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.3608,
+    "rating": 0.6125
+   },
+   {
     "team": "Kansas St.",
     "key": "kansas st",
     "confW": 0,
@@ -24558,15 +24567,6 @@
     "remaining": 17,
     "pVsAverage": 0.2064,
     "rating": 0.2626
-   },
-   {
-    "team": "Colorado",
-    "key": "colo",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.3608,
-    "rating": 0.6125
    }
   ],
   "unrated": [
