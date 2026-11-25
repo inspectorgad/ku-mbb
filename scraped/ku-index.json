@@ -10588,6 +10588,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6654712": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Louisville",
+    "seo": "louisville",
+    "score": 72,
+    "winner": true,
+    "rank": 25,
+    "inConference": false
+   },
+   "away": {
+    "name": "Texas Tech",
+    "seo": "texas-tech",
+    "score": 64,
+    "winner": false,
+    "rank": 5,
+    "inConference": true
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6654720": {
    "date": "2026-11-02",
    "season": "2026",

@@ -1,7 +1,7 @@
 {
  "arizona st": {
   "url": "https://thesundevils.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:06:03.772Z",
+  "fetchedAt": "2026-11-25T04:35:23.596Z",
   "parserVersion": 2,
   "players": [
    {
@@ -134,7 +134,7 @@
  },
  "arizona": {
   "url": "https://arizonawildcats.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:06:12.986Z",
+  "fetchedAt": "2026-11-25T04:35:33.254Z",
   "parserVersion": 2,
   "players": [
    {
@@ -285,7 +285,7 @@
  },
  "baylor": {
   "url": "https://baylorbears.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:06:22.190Z",
+  "fetchedAt": "2026-11-25T04:35:42.588Z",
   "parserVersion": 2,
   "players": [
    {
@@ -432,7 +432,7 @@
  },
  "cincinnati": {
   "url": "https://gobearcats.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:06:40.254Z",
+  "fetchedAt": "2026-11-25T04:35:51.753Z",
   "parserVersion": 2,
   "players": [
    {
@@ -583,7 +583,7 @@
  },
  "colorado": {
   "url": "https://cubuffs.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:06:49.437Z",
+  "fetchedAt": "2026-11-25T04:36:01.314Z",
   "parserVersion": 2,
   "players": [
    {
@@ -734,7 +734,7 @@
  },
  "houston": {
   "url": "https://uhcougars.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:06:58.331Z",
+  "fetchedAt": "2026-11-25T04:36:10.791Z",
   "parserVersion": 2,
   "players": [
    {
@@ -867,7 +867,7 @@
  },
  "iowa st": {
   "url": "https://cyclones.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:07:07.470Z",
+  "fetchedAt": "2026-11-25T04:36:20.496Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1009,7 +1009,7 @@
  },
  "kansas st": {
   "url": "https://kstatesports.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:07:17.103Z",
+  "fetchedAt": "2026-11-25T04:36:29.841Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1142,7 +1142,7 @@
  },
  "oklahoma st": {
   "url": "https://okstate.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:07:26.522Z",
+  "fetchedAt": "2026-11-25T04:36:39.287Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1284,7 +1284,7 @@
  },
  "south dakota st": {
   "url": "https://gojacks.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:07:35.826Z",
+  "fetchedAt": "2026-11-25T04:36:48.753Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1426,7 +1426,7 @@
  },
  "tcu": {
   "url": "https://gofrogs.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:07:46.736Z",
+  "fetchedAt": "2026-11-25T04:36:58.243Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1577,7 +1577,7 @@
  },
  "texas tech": {
   "url": "https://texastech.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:07:56.001Z",
+  "fetchedAt": "2026-11-25T04:37:07.953Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1710,7 +1710,7 @@
  },
  "ucf": {
   "url": "https://ucfknights.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:08:04.590Z",
+  "fetchedAt": "2026-11-25T04:37:17.304Z",
   "parserVersion": 2,
   "players": [
    {
@@ -1861,7 +1861,7 @@
  },
  "utah": {
   "url": "https://utahutes.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:08:13.727Z",
+  "fetchedAt": "2026-11-25T04:37:34.918Z",
   "parserVersion": 2,
   "players": [
    {
@@ -2012,7 +2012,7 @@
  },
  "west virginia": {
   "url": "https://wvusports.com/sports/mens-basketball/roster",
-  "fetchedAt": "2026-11-18T03:08:23.099Z",
+  "fetchedAt": "2026-11-25T04:37:44.432Z",
   "parserVersion": 2,
   "players": [
    {
