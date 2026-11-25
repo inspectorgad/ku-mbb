@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-25T01:36:19Z",
+ "generatedAt": "2026-11-25T04:37:44Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21685,16 +21685,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Texas Tech",
-   "seo": "texas-tech",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 0,
-   "nationalRank": 5
-  },
-  {
-   "season": "2026-27",
    "team": "Arizona",
    "seo": "arizona",
    "confW": 0,
@@ -21742,6 +21732,16 @@
    "overallW": 5,
    "overallL": 1,
    "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Texas Tech",
+   "seo": "texas-tech",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 5,
+   "overallL": 1,
+   "nationalRank": 5
   },
   {
    "season": "2026-27",
@@ -22086,7 +22086,7 @@
  "opponentRosters": [
   {
    "team": "ariz",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "RJ Godfrey",
@@ -22236,7 +22236,7 @@
   },
   {
    "team": "ariz st",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "JRob Croy",
@@ -22368,7 +22368,7 @@
   },
   {
    "team": "baylor",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Elijah Williams",
@@ -22509,7 +22509,7 @@
   },
   {
    "team": "cincinnati",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Trevian Carson",
@@ -22659,7 +22659,7 @@
   },
   {
    "team": "colo",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Ian Inman",
@@ -22809,7 +22809,7 @@
   },
   {
    "team": "houston",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Kordel Jefferson",
@@ -22941,7 +22941,7 @@
   },
   {
    "team": "iowa st",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Tre Singleton",
@@ -23082,7 +23082,7 @@
   },
   {
    "team": "kansas st",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Jaylen Alexander",
@@ -23214,7 +23214,7 @@
   },
   {
    "team": "okla st",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Kanye Clary",
@@ -23355,7 +23355,7 @@
   },
   {
    "team": "south dakota st",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Trey Buchanan",
@@ -23496,7 +23496,7 @@
   },
   {
    "team": "tcu",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Trent Lincoln",
@@ -23646,7 +23646,7 @@
   },
   {
    "team": "texas tech",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "DaKari Spear",
@@ -23778,7 +23778,7 @@
   },
   {
    "team": "ucf",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Cayden Vasko",
@@ -23928,7 +23928,7 @@
   },
   {
    "team": "utah",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Styles Clemmons",
@@ -24078,7 +24078,7 @@
   },
   {
    "team": "west va",
-   "fetchedAt": "2026-11-18",
+   "fetchedAt": "2026-11-25",
    "players": [
     {
      "name": "Brenen Lorient",
@@ -24452,15 +24452,6 @@
     "rating": 0.9765
    },
    {
-    "team": "Texas Tech",
-    "key": "texas tech",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.5582,
-    "rating": 0.9765
-   },
-   {
     "team": "Arizona",
     "key": "ariz",
     "confW": 0,
@@ -24495,6 +24486,15 @@
     "remaining": 17,
     "pVsAverage": 0.5366,
     "rating": 0.9371
+   },
+   {
+    "team": "Texas Tech",
+    "key": "texas tech",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.5582,
+    "rating": 0.9765
    },
    {
     "team": "Baylor",
