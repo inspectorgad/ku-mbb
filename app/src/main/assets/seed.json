@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-24T23:16:03Z",
+ "generatedAt": "2026-11-25T01:36:19Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21695,6 +21695,16 @@
   },
   {
    "season": "2026-27",
+   "team": "Arizona",
+   "seo": "arizona",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 6,
+   "overallL": 1,
+   "nationalRank": 8
+  },
+  {
+   "season": "2026-27",
    "team": "BYU",
    "seo": "byu",
    "confW": 0,
@@ -21712,16 +21722,6 @@
    "overallW": 6,
    "overallL": 1,
    "nationalRank": 12
-  },
-  {
-   "season": "2026-27",
-   "team": "Arizona",
-   "seo": "arizona",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 1,
-   "nationalRank": 8
   },
   {
    "season": "2026-27",
@@ -21759,7 +21759,7 @@
    "seo": "iowa-st",
    "confW": 0,
    "confL": 0,
-   "overallW": 3,
+   "overallW": 4,
    "overallL": 1,
    "nationalRank": null
   },
@@ -24461,15 +24461,6 @@
     "rating": 0.9765
    },
    {
-    "team": "BYU",
-    "key": "byu",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.6852,
-    "rating": 1.2222
-   },
-   {
     "team": "Arizona",
     "key": "ariz",
     "confW": 0,
@@ -24477,6 +24468,15 @@
     "remaining": 17,
     "pVsAverage": 0.5582,
     "rating": 0.9765
+   },
+   {
+    "team": "BYU",
+    "key": "byu",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.6852,
+    "rating": 1.2222
    },
    {
     "team": "Cincinnati",
