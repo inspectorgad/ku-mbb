@@ -189,7 +189,8 @@
   "2026-11-21": true,
   "2026-11-22": true,
   "2026-11-23": true,
-  "2026-11-24": true
+  "2026-11-24": true,
+  "2026-11-25": true
  },
  "games": {
   "6648874": {
@@ -3448,6 +3449,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650073": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Kennesaw St.",
+    "seo": "kennesaw-st",
+    "score": 56,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Eastern Mich.",
+    "seo": "eastern-mich",
+    "score": 60,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650118": {
    "date": "2026-11-04",
    "season": "2026",
@@ -5362,6 +5385,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650777": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Wagner",
+    "seo": "wagner",
+    "score": 96,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Bloomsburg",
+    "seo": "bloomsburg",
+    "score": 44,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650807": {
    "date": "2026-11-02",
    "season": "2026",
@@ -6235,6 +6280,28 @@
     "name": "Winthrop",
     "seo": "winthrop",
     "score": 86,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6651011": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Wofford",
+    "seo": "wofford",
+    "score": 86,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Queens (NC)",
+    "seo": "queens-nc",
+    "score": 77,
     "winner": false,
     "rank": null,
     "inConference": false
@@ -8530,6 +8597,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6652066": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Iowa St.",
+    "seo": "iowa-st",
+    "score": 81,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "San Diego St.",
+    "seo": "san-diego-st",
+    "score": 68,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6652078": {
    "date": "2026-11-20",
    "season": "2026",
@@ -10042,6 +10131,28 @@
     "seo": "eureka",
     "score": 48,
     "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6652514": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Tulsa",
+    "seo": "tulsa",
+    "score": 67,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Illinois St.",
+    "seo": "illinois-st",
+    "score": 79,
+    "winner": true,
     "rank": null,
     "inConference": false
    },
@@ -11999,6 +12110,28 @@
     "name": "FDU",
     "seo": "fdu",
     "score": 58,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6652880": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Fla. Atlantic",
+    "seo": "fla-atlantic",
+    "score": 95,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Mercer",
+    "seo": "mercer",
+    "score": 84,
     "winner": false,
     "rank": null,
     "inConference": false
@@ -14492,6 +14625,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6653554": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Furman",
+    "seo": "furman",
+    "score": 82,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Elon",
+    "seo": "elon",
+    "score": 60,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6653555": {
    "date": "2026-11-20",
    "season": "2026",
@@ -16511,6 +16666,28 @@
     "score": 73,
     "winner": false,
     "rank": 18,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6654034": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Michigan",
+    "seo": "michigan",
+    "score": 73,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Creighton",
+    "seo": "creighton",
+    "score": 99,
+    "winner": true,
+    "rank": null,
     "inConference": false
    },
    "conferenceGame": false,
@@ -19794,6 +19971,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6654871": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Rutgers",
+    "seo": "rutgers",
+    "score": 106,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Sacred Heart",
+    "seo": "sacred-heart",
+    "score": 73,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6654882": {
    "date": "2026-11-02",
    "season": "2026",
@@ -20294,6 +20493,28 @@
     "seo": "detroit",
     "score": 70,
     "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6654989": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Purdue",
+    "seo": "purdue",
+    "score": 56,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "DePaul",
+    "seo": "depaul",
+    "score": 65,
+    "winner": true,
     "rank": null,
     "inConference": false
    },
@@ -21239,6 +21460,28 @@
     "name": "Kent St.",
     "seo": "kent-st",
     "score": 69,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655163": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Wyoming",
+    "seo": "wyoming",
+    "score": 75,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Kent St.",
+    "seo": "kent-st",
+    "score": 78,
     "winner": true,
     "rank": null,
     "inConference": false
@@ -27670,6 +27913,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6662630": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Quinnipiac",
+    "seo": "quinnipiac",
+    "score": 85,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Emerson",
+    "seo": "emerson",
+    "score": 57,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6662972": {
    "date": "2026-11-03",
    "season": "2026",
@@ -28346,6 +28611,28 @@
     "seo": "ole-miss",
     "score": 73,
     "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6667299": {
+   "date": "2026-11-24",
+   "season": "2026",
+   "home": {
+    "name": "Arizona",
+    "seo": "arizona",
+    "score": 84,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Providence",
+    "seo": "providence",
+    "score": 66,
+    "winner": false,
     "rank": null,
     "inConference": false
    },
