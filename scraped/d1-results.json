@@ -3757,6 +3757,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650130": {
+   "date": "2026-11-25",
+   "season": "2026",
+   "home": {
+    "name": "Saint Joseph's",
+    "seo": "saint-josephs",
+    "score": 0,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Penn St.-Abington",
+    "seo": "penn-st-abington",
+    "score": 0,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650141": {
    "date": "2026-11-02",
    "season": "2026",
@@ -9580,6 +9602,28 @@
     "name": "UNI",
     "seo": "uni",
     "score": 48,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6652300": {
+   "date": "2026-11-25",
+   "season": "2026",
+   "home": {
+    "name": "Charlotte",
+    "seo": "charlotte",
+    "score": 85,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "UNI",
+    "seo": "uni",
+    "score": 72,
     "winner": false,
     "rank": null,
     "inConference": false
@@ -23689,6 +23733,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6655398": {
+   "date": "2026-11-25",
+   "season": "2026",
+   "home": {
+    "name": "FDU",
+    "seo": "fdu",
+    "score": 123,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "VTSU Randolph",
+    "seo": "vermont-tech",
+    "score": 48,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6655421": {
    "date": "2026-11-07",
    "season": "2026",
@@ -24892,6 +24958,28 @@
     "name": "Ohio",
     "seo": "ohio",
     "score": 69,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655616": {
+   "date": "2026-11-25",
+   "season": "2026",
+   "home": {
+    "name": "Ohio",
+    "seo": "ohio",
+    "score": 74,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Rice",
+    "seo": "rice",
+    "score": 82,
     "winner": true,
     "rank": null,
     "inConference": false
@@ -26499,6 +26587,28 @@
     "seo": "belmont",
     "score": 64,
     "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655994": {
+   "date": "2026-11-25",
+   "season": "2026",
+   "home": {
+    "name": "Belmont",
+    "seo": "belmont",
+    "score": 68,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "St. Bonaventure",
+    "seo": "st-bonaventure",
+    "score": 71,
+    "winner": true,
     "rank": null,
     "inConference": false
    },
@@ -29248,6 +29358,28 @@
     "name": "Saint Vincent",
     "seo": "saint-vincent",
     "score": 52,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6663376": {
+   "date": "2026-11-25",
+   "season": "2026",
+   "home": {
+    "name": "Fordham",
+    "seo": "fordham",
+    "score": 104,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Mercy",
+    "seo": "mercy",
+    "score": 56,
     "winner": false,
     "rank": null,
     "inConference": false
