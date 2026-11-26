@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-26T19:16:41Z",
+ "generatedAt": "2026-11-26T22:34:58Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21715,16 +21715,6 @@
   },
   {
    "season": "2026-27",
-   "team": "Arizona St.",
-   "seo": "arizona-st",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Baylor",
    "seo": "baylor",
    "confW": 0,
@@ -21765,8 +21755,8 @@
   },
   {
    "season": "2026-27",
-   "team": "Oklahoma St.",
-   "seo": "oklahoma-st",
+   "team": "Arizona St.",
+   "seo": "arizona-st",
    "confW": 0,
    "confL": 0,
    "overallW": 5,
@@ -21775,11 +21765,11 @@
   },
   {
    "season": "2026-27",
-   "team": "UCF",
-   "seo": "ucf",
+   "team": "Oklahoma St.",
+   "seo": "oklahoma-st",
    "confW": 0,
    "confL": 0,
-   "overallW": 4,
+   "overallW": 5,
    "overallL": 2,
    "nationalRank": null
   },
@@ -21791,6 +21781,16 @@
    "confL": 0,
    "overallW": 4,
    "overallL": 2,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "UCF",
+   "seo": "ucf",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 3,
    "nationalRank": null
   },
   {
@@ -24470,15 +24470,6 @@
     "rating": 0.8338
    },
    {
-    "team": "Arizona St.",
-    "key": "ariz st",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.372,
-    "rating": 0.6343
-   },
-   {
     "team": "Baylor",
     "key": "baylor",
     "confW": 0,
@@ -24515,6 +24506,15 @@
     "rating": 1.5704
    },
    {
+    "team": "Arizona St.",
+    "key": "ariz st",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.372,
+    "rating": 0.6343
+   },
+   {
     "team": "Oklahoma St.",
     "key": "okla st",
     "confW": 0,
@@ -24524,15 +24524,6 @@
     "rating": 0.5773
    },
    {
-    "team": "UCF",
-    "key": "ucf",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.464,
-    "rating": 0.8057
-   },
-   {
     "team": "West Virginia",
     "key": "west va",
     "confW": 0,
@@ -24540,6 +24531,15 @@
     "remaining": 17,
     "pVsAverage": 0.454,
     "rating": 0.7876
+   },
+   {
+    "team": "UCF",
+    "key": "ucf",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.464,
+    "rating": 0.8057
    },
    {
     "team": "Kansas St.",
