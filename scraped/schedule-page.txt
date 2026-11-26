@@ -119,9 +119,9 @@ Lawrence, Kan.
 
 1
 Days
-11
+6
 Hours
-57
+16
 Minutes
 31
 Seconds
