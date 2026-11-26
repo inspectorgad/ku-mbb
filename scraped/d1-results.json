@@ -6464,6 +6464,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650931": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "Texas",
+    "seo": "texas",
+    "score": 92,
+    "winner": true,
+    "rank": 7,
+    "inConference": false
+   },
+   "away": {
+    "name": "Georgetown",
+    "seo": "georgetown",
+    "score": 83,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650961": {
    "date": "2026-11-05",
    "season": "2026",
@@ -14358,6 +14380,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6653212": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "South Carolina",
+    "seo": "south-carolina",
+    "score": 80,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Arizona St.",
+    "seo": "arizona-st",
+    "score": 73,
+    "winner": false,
+    "rank": null,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false
@@ -27760,6 +27804,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6655996": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "UCF",
+    "seo": "ucf",
+    "score": 73,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Boston College",
+    "seo": "boston-college",
+    "score": 75,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6656000": {
    "date": "2026-11-17",
    "season": "2026",
@@ -30745,6 +30811,28 @@
     "name": "Tougaloo",
     "seo": "tougaloo",
     "score": 35,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6664123": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "San Diego St.",
+    "seo": "san-diego-st",
+    "score": 75,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Maryland",
+    "seo": "maryland",
+    "score": 71,
     "winner": false,
     "rank": null,
     "inConference": false
