@@ -5453,6 +5453,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650583": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "Liberty",
+    "seo": "liberty",
+    "score": 76,
+    "winner": true,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "St. Thomas (MN)",
+    "seo": "st-thomas-mn",
+    "score": 67,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650631": {
    "date": "2026-11-10",
    "season": "2026",
@@ -12794,6 +12816,28 @@
     "name": "Virginia",
     "seo": "virginia",
     "score": 60,
+    "winner": true,
+    "rank": 2,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6652807": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "Xavier",
+    "seo": "xavier",
+    "score": 71,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Virginia",
+    "seo": "virginia",
+    "score": 83,
     "winner": true,
     "rank": 2,
     "inConference": false
