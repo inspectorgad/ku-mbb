@@ -192,7 +192,8 @@
   "2026-11-23": true,
   "2026-11-24": true,
   "2026-11-25": true,
-  "2026-11-26": true
+  "2026-11-26": true,
+  "2026-11-27": true
  },
  "games": {
   "6501504": {
@@ -474,6 +475,13 @@
    "home": "Kansas",
    "away": "Denver",
    "boxscored": true
+  },
+  "6655111": {
+   "date": "2026-11-27",
+   "final": false,
+   "home": "Kansas",
+   "away": "Villanova",
+   "boxscored": false
   },
   "6664644": {
    "date": "2026-11-19",
@@ -11200,6 +11208,28 @@
     "score": 77,
     "winner": false,
     "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6664124": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "Iowa St.",
+    "seo": "iowa-st",
+    "score": 64,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Tennessee",
+    "seo": "tennessee",
+    "score": 75,
+    "winner": true,
+    "rank": 9,
     "inConference": false
    },
    "conferenceGame": false,
