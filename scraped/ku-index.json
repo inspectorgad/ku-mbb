@@ -11235,6 +11235,50 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6664117": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "Kansas St.",
+    "seo": "kansas-st",
+    "score": 91,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Alabama",
+    "seo": "alabama",
+    "score": 104,
+    "winner": true,
+    "rank": 15,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6664118": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "Gonzaga",
+    "seo": "gonzaga",
+    "score": 72,
+    "winner": true,
+    "rank": 22,
+    "inConference": false
+   },
+   "away": {
+    "name": "Baylor",
+    "seo": "baylor",
+    "score": 64,
+    "winner": false,
+    "rank": null,
+    "inConference": true
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6664124": {
    "date": "2026-11-26",
    "season": "2026",
@@ -11253,6 +11297,28 @@
     "winner": true,
     "rank": 9,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6664126": {
+   "date": "2026-11-26",
+   "season": "2026",
+   "home": {
+    "name": "Oregon",
+    "seo": "oregon",
+    "score": 59,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Texas Tech",
+    "seo": "texas-tech",
+    "score": 62,
+    "winner": true,
+    "rank": 5,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false
