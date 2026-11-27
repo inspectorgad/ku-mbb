@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-27T01:09:58Z",
+ "generatedAt": "2026-11-27T03:48:04Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21725,16 +21725,6 @@
   },
   {
    "season": "2026-27",
-   "team": "TCU",
-   "seo": "tcu",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 1,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Texas Tech",
    "seo": "texas-tech",
    "confW": 0,
@@ -21757,6 +21747,16 @@
    "season": "2026-27",
    "team": "Oklahoma St.",
    "seo": "oklahoma-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 5,
+   "overallL": 2,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "TCU",
+   "seo": "tcu",
    "confW": 0,
    "confL": 0,
    "overallW": 5,
@@ -24479,15 +24479,6 @@
     "rating": 0.8243
    },
    {
-    "team": "TCU",
-    "key": "tcu",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.5366,
-    "rating": 0.9371
-   },
-   {
     "team": "Texas Tech",
     "key": "texas tech",
     "confW": 0,
@@ -24513,6 +24504,15 @@
     "remaining": 17,
     "pVsAverage": 0.343,
     "rating": 0.5773
+   },
+   {
+    "team": "TCU",
+    "key": "tcu",
+    "confW": 0,
+    "confL": 0,
+    "remaining": 17,
+    "pVsAverage": 0.5366,
+    "rating": 0.9371
    },
    {
     "team": "Iowa St.",
