@@ -1,6 +1,6 @@
 {
  "formatVersion": 1,
- "generatedAt": "2026-11-27T10:07:41Z",
+ "generatedAt": "2026-11-27T22:19:55Z",
  "team": "Kansas Jayhawks Men's Basketball",
  "players": [
   {
@@ -21488,6 +21488,16 @@
  ],
  "standings": [
   {
+   "season": "2026-27",
+   "team": "TCU",
+   "seo": "tcu",
+   "confW": 1,
+   "confL": 0,
+   "overallW": 6,
+   "overallL": 2,
+   "nationalRank": null
+  },
+  {
    "season": "2025-26",
    "team": "Arizona",
    "seo": "arizona",
@@ -21735,41 +21745,11 @@
   },
   {
    "season": "2026-27",
-   "team": "Baylor",
-   "seo": "baylor",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 2,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
    "team": "Oklahoma St.",
    "seo": "oklahoma-st",
    "confW": 0,
    "confL": 0,
    "overallW": 5,
-   "overallL": 2,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
-   "team": "TCU",
-   "seo": "tcu",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 5,
-   "overallL": 2,
-   "nationalRank": null
-  },
-  {
-   "season": "2026-27",
-   "team": "Iowa St.",
-   "seo": "iowa-st",
-   "confW": 0,
-   "confL": 0,
-   "overallW": 4,
    "overallL": 2,
    "nationalRank": null
   },
@@ -21781,6 +21761,26 @@
    "confL": 0,
    "overallW": 4,
    "overallL": 2,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Baylor",
+   "seo": "baylor",
+   "confW": 0,
+   "confL": 1,
+   "overallW": 5,
+   "overallL": 3,
+   "nationalRank": null
+  },
+  {
+   "season": "2026-27",
+   "team": "Iowa St.",
+   "seo": "iowa-st",
+   "confW": 0,
+   "confL": 0,
+   "overallW": 4,
+   "overallL": 3,
    "nationalRank": null
   },
   {
@@ -24434,6 +24434,15 @@
   ],
   "others": [
    {
+    "team": "TCU",
+    "key": "tcu",
+    "confW": 1,
+    "confL": 0,
+    "remaining": 16,
+    "pVsAverage": 0.5366,
+    "rating": 0.9371
+   },
+   {
     "team": "Houston",
     "key": "houston",
     "confW": 0,
@@ -24488,15 +24497,6 @@
     "rating": 0.6343
    },
    {
-    "team": "Baylor",
-    "key": "baylor",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 16,
-    "pVsAverage": 0.4742,
-    "rating": 0.8243
-   },
-   {
     "team": "Oklahoma St.",
     "key": "okla st",
     "confW": 0,
@@ -24506,13 +24506,22 @@
     "rating": 0.5773
    },
    {
-    "team": "TCU",
-    "key": "tcu",
+    "team": "West Virginia",
+    "key": "west va",
     "confW": 0,
     "confL": 0,
     "remaining": 17,
-    "pVsAverage": 0.5366,
-    "rating": 0.9371
+    "pVsAverage": 0.454,
+    "rating": 0.7876
+   },
+   {
+    "team": "Baylor",
+    "key": "baylor",
+    "confW": 0,
+    "confL": 1,
+    "remaining": 15,
+    "pVsAverage": 0.4742,
+    "rating": 0.8243
    },
    {
     "team": "Iowa St.",
@@ -24522,15 +24531,6 @@
     "remaining": 16,
     "pVsAverage": 0.8247,
     "rating": 1.5704
-   },
-   {
-    "team": "West Virginia",
-    "key": "west va",
-    "confW": 0,
-    "confL": 0,
-    "remaining": 17,
-    "pVsAverage": 0.454,
-    "rating": 0.7876
    },
    {
     "team": "UCF",
