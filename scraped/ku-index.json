@@ -9344,6 +9344,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6650328": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "Houston",
+    "seo": "houston",
+    "score": 77,
+    "winner": true,
+    "rank": 1,
+    "inConference": true
+   },
+   "away": {
+    "name": "Oakland",
+    "seo": "oakland",
+    "score": 46,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6650334": {
    "date": "2026-11-02",
    "season": "2026",
@@ -9802,6 +9824,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6651636": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "North Carolina",
+    "seo": "north-carolina",
+    "score": 59,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "West Virginia",
+    "seo": "west-virginia",
+    "score": 72,
+    "winner": true,
+    "rank": null,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false
@@ -11141,6 +11185,28 @@
     "name": "Niagara",
     "seo": "niagara",
     "score": 45,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655520": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "UCF",
+    "seo": "ucf",
+    "score": 88,
+    "winner": true,
+    "rank": null,
+    "inConference": true
+   },
+   "away": {
+    "name": "Georgia",
+    "seo": "georgia",
+    "score": 76,
     "winner": false,
     "rank": null,
     "inConference": false
