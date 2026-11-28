@@ -136,8 +136,8 @@
   "time": "16:00",
   "tv": "ESPN2",
   "event": null,
-  "teamScore": null,
-  "opponentScore": null
+  "teamScore": 65,
+  "opponentScore": 50
  },
  {
   "date": "2026-12-01",

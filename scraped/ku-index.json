@@ -193,7 +193,8 @@
   "2026-11-24": true,
   "2026-11-25": true,
   "2026-11-26": true,
-  "2026-11-27": true
+  "2026-11-27": true,
+  "2026-11-28": true
  },
  "games": {
   "6501504": {
@@ -478,10 +479,10 @@
   },
   "6655111": {
    "date": "2026-11-27",
-   "final": false,
+   "final": true,
    "home": "Kansas",
    "away": "Villanova",
-   "boxscored": false
+   "boxscored": true
   },
   "6664644": {
    "date": "2026-11-19",
@@ -10949,6 +10950,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6655111": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "Kansas",
+    "seo": "kansas",
+    "score": 65,
+    "winner": true,
+    "rank": 12,
+    "inConference": true
+   },
+   "away": {
+    "name": "Villanova",
+    "seo": "villanova",
+    "score": 50,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6655246": {
    "date": "2026-11-18",
    "season": "2026",
@@ -11033,6 +11056,28 @@
     "winner": false,
     "rank": null,
     "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
+  "6655250": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "Boston College",
+    "seo": "boston-college",
+    "score": 59,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "away": {
+    "name": "Cincinnati",
+    "seo": "cincinnati",
+    "score": 70,
+    "winner": true,
+    "rank": null,
+    "inConference": true
    },
    "conferenceGame": false,
    "bracket": false

@@ -8,15 +8,6 @@ Scoreboard
 Coming Up
 View Calendar 
 Skip Ad
-Completed Event: Men's Basketball versus Kentucky on November 10, 2026 , Win , 89, to, 69
-Final
-Nov 10
-Men's Basketball
-89
-vs Kentucky
-69
-Story Recap
-Boxscore
 Completed Event: Men's Basketball versus UNLV on November 17, 2026 , Win , 102, to, 77
 Final
 Nov 17
@@ -51,14 +42,14 @@ vs Denver
 67
 Story Recap
 Boxscore
-Upcoming Event: Men's Basketball versus Villanova on November 27, 2026 at 4 p.m. CT
-Live
+Completed Event: Men's Basketball versus Villanova on November 27, 2026 , Win , 65, to, 50
+Final
+Nov 27
 Men's Basketball
-6
+65
 vs Villanova
-9
-Audio
-Stats
+50
+Boxscore
 Upcoming Event: Men's Basketball versus Northern Iowa on December 1, 2026 at 7 p.m. CT
 Tue. 12/01/26
 -
@@ -90,6 +81,14 @@ Men's Basketball
 vs Ohio State
 Audio
 Stats
+Upcoming Event: Men's Basketball versus Indiana State on December 22, 2026 at 5 p.m.. CT
+Tue. 12/22/26
+-
+5 p.m.. CT
+Men's Basketball
+vs Indiana State
+Audio
+Stats
 MENU
 Toggle Navigation
 , Opens in new window
@@ -119,11 +118,11 @@ Lawrence, Kan.
 
 4
 Days
-2
+0
 Hours
-40
+30
 Minutes
-5
+53
 Seconds
 Add To Calendar
 Text Only
@@ -135,11 +134,11 @@ List View
 Table View not selected
 Overall
 Wins
-6
+7
 Losses
 1
 Overall Percentage
-.857
+.875
 Conf
 Wins
 0
@@ -148,10 +147,10 @@ Losses
 Conference Percentage
 .000
 Streak
-W1
+W2
 Home
 Wins
-3
+4
 Losses
 0
 Away
@@ -383,19 +382,20 @@ Lawrence, Kan.
 
 TV: ESPN2
 
-Nov 27
-(Fri)
+W, 65-50
 
+Nov 27(Fri)
 4 p.m. CT
 
 Game Center
-Listen
-Live Stats
+Box Score
+Photos
 History
 
 Sponsored by:
 
 Explore Lawrence
+Game Info
 vs
 Northern Iowa
 
