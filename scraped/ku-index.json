@@ -11434,6 +11434,28 @@
    "conferenceGame": false,
    "bracket": false
   },
+  "6664121": {
+   "date": "2026-11-27",
+   "season": "2026",
+   "home": {
+    "name": "Texas Tech",
+    "seo": "texas-tech",
+    "score": 78,
+    "winner": true,
+    "rank": 5,
+    "inConference": true
+   },
+   "away": {
+    "name": "San Diego St.",
+    "seo": "san-diego-st",
+    "score": 75,
+    "winner": false,
+    "rank": null,
+    "inConference": false
+   },
+   "conferenceGame": false,
+   "bracket": false
+  },
   "6664122": {
    "date": "2026-11-27",
    "season": "2026",
